@@ -11,40 +11,53 @@ import {
   View
 } from 'react-native';
 
-class BudgetWatch_ReactNative extends Component {
-  render() {
+// logo={require('./app_logo.png')}
+
+var ToolbarAndroid = require('ToolbarAndroid');
+
+var BudgetWatch_ReactNative = React.createClass({
+  getInitialState: function() {
+    return {
+      actionText: 'Example app with toolbar component',
+      colorProps: {
+        titleColor: '#FFFFFF',
+        subtitleColor: '#6a7180',
+      },
+    };
+  },
+  render: function() {
     return (
       <View style={styles.container}>
+
+        <ToolbarAndroid 
+          style={styles.toolbar} 
+          title="AwesomeApp" 
+          {...this.state.colorProps}
+        />
+
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to React Native Wiliam!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+
       </View>
     );
   }
-}
+});
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
+  },
+  toolbar: {
+    height: 56,
+    backgroundColor: '#3F51B5'
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
 
