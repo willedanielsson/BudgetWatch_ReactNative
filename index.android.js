@@ -23,15 +23,18 @@ import {
 
 var ToolbarAndroid = require('ToolbarAndroid');
 
+var Main = require('./MainComponent.js');
+
 var BudgetWatch_ReactNative = React.createClass({
   renderScene(route, navigator){
+    console.log(route);
+
     if(route.name == 'Main'){
-      return (
-        <Main navigator={navigator} {...route.passProps}/>
-        )
+      return React.createElement(route.component, {navigator});
     }
-    if(route.name == 'Home'){
-      return <Home navigator={navigator} {...route.passProps} />
+    if(route.name == 'Budgets'){
+      // {...route.passProps}
+      return React.createElement(route.component, {navigator});
     }
   },
 
@@ -39,75 +42,46 @@ var BudgetWatch_ReactNative = React.createClass({
     return (
       <Navigator
         style={{flex:1}}
-        initialRoute={{ name: 'Main'}}
-        renderScene={this.renderScene} />
+        initialRoute={{ name: 'Main', component: Main}}
+        renderScene={this.renderScene} 
+        navigationBar={
+        <Navigator.NavigationBar
+          style= {styles.navigationBar}
+          routeMapper={NavigationBarRouteMapper}
+        />
+      }/>
     )
   }
 });
 
-var Toolbar = React.createClass({
-getInitialState: function() {
-    return {
-      colorProps: {
-        titleColor: '#FFFFFF',
-        subtitleColor: '#6a7180',
-      },
-    };
+var NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    if(index > 0) {
+      return (
+        <TouchableHighlight
+          underlayColor="transparent"
+          onPress={() => { if (index > 0) { navigator.pop() } }}>
+          <Text style={ styles.leftNavButtonText }>Back</Text>
+        </TouchableHighlight>)
+    } 
+    else { return null }
   },
-  render: function() {
-    return (
-      <ToolbarAndroid 
-        style={styles.toolbar} 
-        title="AwesomeApp" 
-        {...this.state.colorProps}
-      />
-    )
-  }
-
-});
-
-var Main = React.createClass({
-  _navigate(name){
-    this.props.navigator.push({
-      name: 'Home',
-      passProps: {
-        name: name
-      }
-    })
+  RightButton(route, navigator, index, navState) {
+    if (route.onPress) return (
+      <TouchableHighlight
+         onPress={ () => route.onPress() }>
+         <Text style={ styles.rightNavButtonText }>
+              { route.rightText || 'Right Button' }
+         </Text>
+       </TouchableHighlight>)
   },
-  render(){
-    return(
-      <View style={styles.container}>
-      <Toolbar />
-        <Text style={styles.heading}>
-          Hello from Main
-        </Text>
-        <TouchableHighlight style={styles.button} onPress={ () => this._navigate('yoyoyo')}>
-          <Text style={styles.buttonText}>Go</Text>
-        </TouchableHighlight>  
-      </View>
-    )
+  Title(route, navigator, index, navState) {
+    return <Text style={ styles.title }>{route.name}</Text>
   }
-});
-
-
-var Home = React.createClass({
-  render(){
-    return (
-      <View style={styles.container}>
-        <Text style={styles.heading}>
-          Hi from {this.props.name}
-        </Text>
-        <TouchableHighlight style={styles.button} onPress={ () => this.props.navigator.pop()}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableHighlight>  
-      </View>
-    )
-  }
-})
+};
 
 var styles = StyleSheet.create({
-  toolbar: {
+  navigationBar: {
     height: 56,
     backgroundColor: '#3F51B5'
   },
