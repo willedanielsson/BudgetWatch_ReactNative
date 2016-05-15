@@ -9,6 +9,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+var BudgetList = require('./BudgetList.js');
+
 class Budgets extends React.Component{
   addBudgetPress(){
         this.props.navigator.push({
@@ -22,14 +24,12 @@ class Budgets extends React.Component{
   render(){
     return (
       <View style={styles.container}>
-      <View style={styles.dateContainer}>
-        <Text style={styles.date}>
-          05/1/16 ~ 5/31/16
-        </Text>
-      </View>
-        <TouchableHighlight style={styles.button} onPress={ () => this.props.navigator.pop()}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableHighlight>  
+        <View style={styles.dateContainer}>
+          <Text style={styles.date}>
+            05/1/16 ~ 5/31/16
+          </Text>
+        </View>
+        <BudgetList />
       </View>
     )
   }
