@@ -7,8 +7,13 @@ import {
   Navigator,
   Image,
   ListView,
+  UIExplorerBlock,
+  UIExplorerPage,
   TouchableHighlight
 } from 'react-native';
+
+var ProgressBar = require('ProgressBarAndroid');
+
 
 var BudgetList = React.createClass({
   getInitialState: function() {
@@ -36,10 +41,15 @@ var BudgetList = React.createClass({
         </View>
         <View style={styles.lowerContainer}>
           <View style={styles.leftContainer}>
-
+              <ProgressBar 
+                styleAttr="Horizontal" 
+                indeterminate={false} 
+                backgroundStyle={{backgroundColor: 'blue', borderRadius: 5}}
+                color="grey" 
+                progress={rowData.value/rowData.maxValue}/>
           </View>
           <View style={styles.rightContainer}>
-            <Text> {rowData.value}/{rowData.maxValue}</Text>
+            <Text style={styles.progressText}> {rowData.value}/{rowData.maxValue}</Text>
           </View>
           
         </View>
@@ -52,7 +62,9 @@ var styles = StyleSheet.create({
   itemContainer: {
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
-    padding: 5
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   headerContainer: {
     
@@ -67,7 +79,10 @@ var styles = StyleSheet.create({
     flex:1
   },
   rightContainer: {
-    flex:1
+    flex:1,
+    alignItems: 'flex-end'
+  },
+  progressText: {
   }
 });
 
