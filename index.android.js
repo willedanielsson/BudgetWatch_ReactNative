@@ -29,6 +29,7 @@ var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
 
 var BudgetWatch_ReactNative = React.createClass({
   renderScene(route, navigator){
+    console.log("render says ");
     console.log(route);
 
     if(route.name == 'Main'){
@@ -38,6 +39,15 @@ var BudgetWatch_ReactNative = React.createClass({
       // {...route.passProps}
       return React.createElement(route.component, {navigator});
     }
+    if(route.name == 'Transactions'){
+      // {...route.passProps}
+      return React.createElement(route.component, {navigator});
+    }
+    if(route.name == 'Add budget'){
+      // {...route.passProps}
+      return React.createElement(route.component, {navigator});
+    }
+
   },
 
   render() {

@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 
 var Budgets = require('./BudgetsComponent.js');
+var Transactions = require('./TransactionsComponent.js');
+var AddBudget = require('./AddBudgetComponent.js');
 
 var MainListItem = React.createClass({
   setNativeProps(nativeProps) {
@@ -35,7 +37,7 @@ var MainListItem = React.createClass({
 class Main extends React.Component{
 
   addBudgetPress(){
-    alert("Hello")
+    alert("Main")
   }
 
   goToBudgets(name){
@@ -52,7 +54,7 @@ class Main extends React.Component{
   goToTransactions(name){
     this.props.navigator.push({
       name: 'Transactions',
-      component: Budgets,
+      component: Transactions,
       passProps: {
         name: name
       }

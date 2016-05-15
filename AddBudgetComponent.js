@@ -9,23 +9,14 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-class Budgets extends React.Component{
-  addBudgetPress(){
-        this.props.navigator.push({
-      name: 'Transactions',
-      component: Transactions,
-      passProps: {
-        name: name
-      }
-    })
-  }
+class AddBudget extends React.Component{
   render(){
-    console.log("RENDER BUDGETS");
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
           Hi from {this.props.name}
         </Text>
+        <Text>Adding budget yao</Text>
         <TouchableHighlight style={styles.button} onPress={ () => this.props.navigator.pop()}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableHighlight>  
@@ -57,4 +48,4 @@ var styles = StyleSheet.create({
 });
 
 
-module.exports = Budgets;
+module.exports = AddBudget;

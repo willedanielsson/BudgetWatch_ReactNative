@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 var Budgets = require('./BudgetsComponent.js');
+var AddBudget = require('./AddBudgetComponent.js');
 
 var NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
@@ -25,12 +26,14 @@ var NavigationBarRouteMapper = {
   },
 
   RightButton(route, navigator, index, navState) {
-    console.log("Route is");
-    console.log(route);
-    console.log(navigator);
     if (route.name == "Budgets") 
       return (
-        <TouchableHighlight onPress={ () => route.addBudgetPress() }>
+        <TouchableHighlight onPress={ () => navigator.push({ 
+          name: 'Add budget',
+          component: AddBudget,
+          passProps: {
+            name: 'Test'
+          }})}>
            <Text style={ styles.rightNavButtonText }>
               Add budget
            </Text>
