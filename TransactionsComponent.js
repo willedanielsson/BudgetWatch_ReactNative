@@ -26,7 +26,8 @@ var styles = StyleSheet.create({
   container: {
     flex:1,
     alignItems: 'stretch',
-    marginTop: 56
+    marginTop: 56,
+    padding: 16
   },
   heading: {
     fontSize:22,

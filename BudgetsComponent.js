@@ -20,12 +20,13 @@ class Budgets extends React.Component{
     })
   }
   render(){
-    console.log("RENDER BUDGETS");
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>
-          Hi from {this.props.name}
+      <View style={styles.dateContainer}>
+        <Text style={styles.date}>
+          05/1/16 ~ 5/31/16
         </Text>
+      </View>
         <TouchableHighlight style={styles.button} onPress={ () => this.props.navigator.pop()}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableHighlight>  
@@ -39,10 +40,14 @@ var styles = StyleSheet.create({
     flex:1,
     alignItems: 'stretch',
     marginTop: 56,
+    padding: 16
   },
-  heading: {
-    fontSize:22,
-    marginBottom:10
+  dateContainer: {
+    alignItems: 'center'
+  },
+  date: {
+    fontSize:20,
+    padding: 5
   },
   button: {
     height: 60,

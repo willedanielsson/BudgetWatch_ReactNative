@@ -83,11 +83,11 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: '#F5FCFF',
     marginTop: 56,
+
   },
   listContainer: {
-    padding: 16
+
   },
   item: {
     paddingTop: 10,
