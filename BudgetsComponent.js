@@ -27,7 +27,8 @@ class Budgets extends React.Component{
 
 var styles = StyleSheet.create({
   container: {
-    flex:1
+    flex:1,
+    alignItems: 'stretch',
   },
   heading: {
     fontSize:22,

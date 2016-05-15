@@ -25,6 +25,8 @@ var ToolbarAndroid = require('ToolbarAndroid');
 
 var Main = require('./MainComponent.js');
 
+var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
+
 var BudgetWatch_ReactNative = React.createClass({
   renderScene(route, navigator){
     console.log(route);
@@ -54,52 +56,10 @@ var BudgetWatch_ReactNative = React.createClass({
   }
 });
 
-var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, navState) {
-    if(index > 0) {
-      return (
-        <TouchableHighlight
-          underlayColor="transparent"
-          onPress={() => { if (index > 0) { navigator.pop() } }}>
-          <Text style={ styles.leftNavButtonText }>Back</Text>
-        </TouchableHighlight>)
-    } 
-    else { return null }
-  },
-  RightButton(route, navigator, index, navState) {
-    if (route.onPress) return (
-      <TouchableHighlight
-         onPress={ () => route.onPress() }>
-         <Text style={ styles.rightNavButtonText }>
-              { route.rightText || 'Right Button' }
-         </Text>
-       </TouchableHighlight>)
-  },
-  Title(route, navigator, index, navState) {
-    return <Text style={ styles.title }>{route.name}</Text>
-  }
-};
-
 var styles = StyleSheet.create({
   navigationBar: {
     height: 56,
     backgroundColor: '#3F51B5'
-  },
-  container: {
-    flex:1
-  },
-  heading: {
-    fontSize:22,
-    marginBottom:10
-  },
-  button: {
-    height: 60,
-    justifyContent: 'center',
-    backgroundColor: 'red',
-    alignItems: 'center'
-  },
-  buttonText: {
-    fontSize: 20
   }
 
 });

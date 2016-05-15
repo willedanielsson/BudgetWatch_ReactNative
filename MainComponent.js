@@ -11,26 +11,66 @@ import {
 
 var Budgets = require('./BudgetsComponent.js');
 
+var MainListItem = React.createClass({
+  setNativeProps(nativeProps) {
+    this._root.setNativeProps(nativeProps);
+  },
+  render(){
+    return (
+        <View style={styles.item} ref={component => this._root = component} {...this.props}>
+          <Image
+            style={styles.icon}
+            source={this.props.image}/>
+          <View style={styles.textContainer}>
+
+            <Text style={styles.header}>{this.props.name}</Text>
+            <Text>{this.props.desc}</Text>
+
+          </View>
+        </View>
+    )
+  }
+});
+
 class Main extends React.Component{
-  _navigate(name){
+
+  addBudgetPress(){
+    alert("Hello")
+  }
+
+  goToBudgets(name){
     this.props.navigator.push({
       name: 'Budgets',
       component: Budgets,
       passProps: {
         name: name
-      }
+      },
+      addBudgetPress: this.addBudgetPress
     })
   }
 
+  goToTransactions(name){
+    this.props.navigator.push({
+      name: 'Transactions',
+      component: Budgets,
+      passProps: {
+        name: name
+      }
+    })
+  } 
   render(){
     return(
       <View style={styles.container}>
-        <Text style={styles.heading}>
-          Hello from Main
-        </Text>
-        <TouchableHighlight style={styles.button} onPress={ () => this._navigate('yoyoyo')}>
-          <Text style={styles.buttonText}>Go</Text>
-        </TouchableHighlight>  
+        <View style={styles.listContainer}>
+          <TouchableHighlight style={styles.button} onPress={ () => this.goToBudgets('yoyoyo')}>
+            <MainListItem name={'Test'} desc={'Create and manage budgets'} image={require('./images/purse.png')}/>
+          </TouchableHighlight>
+
+          <TouchableHighlight style={styles.button} onPress={ () => this.goToTransactions('yoyoyo')}>
+            <MainListItem name={'Transactions'} desc={'Enter transactions and revenues'} image={require('./images/transaction.png')}/>
+          </TouchableHighlight>
+
+        </View>
       </View>
     )
   }
@@ -39,21 +79,33 @@ class Main extends React.Component{
 
 var styles = StyleSheet.create({
   container: {
-    flex:1
+    flex: 1,
+    alignItems: 'stretch',
+    backgroundColor: '#F5FCFF',
+    marginTop: 56,
   },
-  heading: {
-    fontSize:22,
-    marginBottom:10
+  listContainer: {
+    padding: 16
   },
-  button: {
-    height: 60,
-    justifyContent: 'center',
-    backgroundColor: 'red',
-    alignItems: 'center'
+  item: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexDirection: 'row',
+    borderBottomColor: '#DDDDDD',
+    borderBottomWidth: 1,
   },
-  buttonText: {
+  icon: {
+   height: 40,
+   width: 40,
+  },
+  textContainer: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    flex: 1,
+  },
+  header: {
     fontSize: 20
-  }
+  },
 
 });
 
