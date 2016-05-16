@@ -28,6 +28,7 @@ var BudgetList = React.createClass({
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this._renderRow}
+        style={styles.list}
         />
     );
   },
@@ -59,6 +60,9 @@ var BudgetList = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  list: {
+    padding: 16
+  },
   itemContainer: {
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,

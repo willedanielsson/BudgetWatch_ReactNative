@@ -40,8 +40,6 @@ var styles = StyleSheet.create({
     flex:1,
     alignItems: 'stretch',
     marginTop: 56,
-    padding: 16,
-    paddingTop: 0
   },
   dateContainer: {
     alignItems: 'center',

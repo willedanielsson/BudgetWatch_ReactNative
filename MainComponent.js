@@ -84,7 +84,6 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     marginTop: 56,
-
   },
   listContainer: {
 

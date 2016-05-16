@@ -19,7 +19,11 @@ var NavigationBarRouteMapper = {
         <TouchableHighlight
           underlayColor="transparent"
           onPress={() => { if (index > 0) { navigator.pop() } }}>
-          <Text style={ styles.leftNavButtonText }>Back</Text>
+          <View style={styles.backButtonContainer}>
+            <Image
+              style={styles.backIcon}
+              source={require('./images/backButton.png')}/>
+          </View>
         </TouchableHighlight>)
     } 
     else { return null }
@@ -28,28 +32,93 @@ var NavigationBarRouteMapper = {
   RightButton(route, navigator, index, navState) {
     if (route.name == "Budgets") 
       return (
-        <TouchableHighlight onPress={ () => navigator.push({ 
-          name: 'Add budget',
-          component: AddBudget,
-          passProps: {
-            name: 'Test'
-          }})}>
-           <Text style={ styles.rightNavButtonText }>
-              Add budget
-           </Text>
-         </TouchableHighlight>
+        <View style={styles.rightButtonContainer}>
+          <TouchableHighlight onPress={ () => navigator.push({ 
+            name: 'Add budget',
+            component: AddBudget,
+            passProps: {
+              name: 'Test'
+            }})}>
+             <View style={styles.calendarContainer}>
+              <Image style={styles.calendarIcon} source={require('./images/calendar.png')}/>
+            </View>
+           </TouchableHighlight>
+
+          <TouchableHighlight onPress={ () => navigator.push({ 
+            name: 'Add budget',
+            component: AddBudget,
+            passProps: {
+              name: 'Test'
+            }})}>
+             <View style={styles.addBudgetButtonContainer}>
+              <Image
+                style={styles.addBudgetIcon}
+                source={require('./images/add.png')}/>
+            </View>
+           </TouchableHighlight>
+         </View>
       )
   },
 
   Title(route, navigator, index, navState) {
-    return <Text style={ styles.title }>{route.name}</Text>
+    return(
+      <View style={styles.titleContainer}>
+      <Text style={ styles.title }>
+        {route.name}
+      </Text>
+      </View>)
   }
 };
 
+//<Image style={styles.addBudgetIcon} source={require('./images/calendar.png')}/>
+
 
 var styles = StyleSheet.create({
+  titleContainer: {
+    marginTop: 14,
+  },
   title: {
-    fontSize: 22
+    fontSize: 22,
+    color: '#FFF',
+  },
+  backButtonContainer: {
+    width: 55,
+    height: 56
+  },
+  backIcon: {
+    marginTop: 19,
+    marginLeft: 12,
+    resizeMode:'contain',
+    height: 20
+  },
+  rightButtonContainer:{
+    height: 56,
+    flexDirection: 'row',
+  },
+  calendarContainer: {
+    flex: 1,
+    paddingRight: 12,
+    paddingLeft: 8
+  },
+  calendarIcon: {
+    marginTop: 12,
+    marginLeft: 0,
+    resizeMode:'contain',
+    height: 32,
+    width: 32,
+  },
+  addBudgetButtonContainer: {
+    flex:1,
+    height: 56,
+    paddingRight: 8,
+    paddingLeft: 11,
+  },
+  addBudgetIcon: {
+    marginTop: 16,
+    marginRight: 0,
+    resizeMode:'contain',
+    height: 25,
+    width: 25,
   }
 });
 
