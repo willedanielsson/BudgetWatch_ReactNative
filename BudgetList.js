@@ -33,8 +33,6 @@ var BudgetList = React.createClass({
     );
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    console.log(rowData);
-    console.log(rowData.name);
     return (
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>

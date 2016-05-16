@@ -69,7 +69,8 @@ var BudgetWatch_ReactNative = React.createClass({
 var styles = StyleSheet.create({
   navigationBar: {
     height: 56,
-    backgroundColor: '#3F51B5'
+    backgroundColor: '#3F51B5',
+    elevation: 3
   }
 
 });

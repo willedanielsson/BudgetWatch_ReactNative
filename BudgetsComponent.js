@@ -47,17 +47,7 @@ var styles = StyleSheet.create({
   },
   date: {
     fontSize:20,
-  },
-  button: {
-    height: 60,
-    justifyContent: 'center',
-    backgroundColor: 'red',
-    alignItems: 'center'
-  },
-  buttonText: {
-    fontSize: 20
   }
-
 });
 
 
