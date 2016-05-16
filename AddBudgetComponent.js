@@ -81,7 +81,7 @@ var styles = StyleSheet.create({
     marginLeft: 3,
     marginRight: 3,
     padding: 10,
-    alignItems:'center',
+    alignItems:'stretch',
     justifyContent:'center',
     elevation: 2
   },
