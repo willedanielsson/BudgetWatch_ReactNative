@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 
 var BudgetList = require('./BudgetList.js');
+//import Realm from 'realm'
+//let persons = realm.objects('Person');
 
 class Budgets extends React.Component{
   addBudgetPress(){
-        this.props.navigator.push({
+    this.props.navigator.push({
       name: 'Transactions',
       component: Transactions,
       passProps: {
@@ -22,16 +24,19 @@ class Budgets extends React.Component{
     })
   }
   render(){
-    return (
-      <View style={styles.container}>
-        <View style={styles.dateContainer}>
-          <Text style={styles.date}>
-            05/1/16 ~ 5/31/16
-          </Text>
+    console.log("BudgetComponent")
+      console.log(this.props);
+      console.log(this.props.realm.objects('Person')[0].name);
+      return (
+        <View style={styles.container}>
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>
+              01/05/16 ~ 31/05/16
+            </Text>
+          </View>
+          <BudgetList realm={this.props.realm}/>
         </View>
-        <BudgetList />
-      </View>
-    )
+      )
   }
 };
 
