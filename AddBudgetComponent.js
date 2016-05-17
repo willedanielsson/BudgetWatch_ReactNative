@@ -13,16 +13,36 @@ import {
 var Button = require('react-native-button');
 
 class AddBudget extends React.Component{
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      inputtype: '',
+      inputvalue: 0,
+    }
+  }
+
   render(){
     return (
       <View style={styles.container}>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Type</Text>
-            <TextInput style={styles.input} placeholder="Grocery"/>
+            <TextInput 
+              ref="inputtype"
+              style={styles.input} 
+              placeholder="Grocery"
+              onChangeText={(inputtype) => this.setState({inputtype})}
+              value={this.state.inputtype}/>
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Value</Text>
-            <TextInput style={styles.input} placeholder="100" keyboardType="numeric"/>
+            <TextInput 
+              ref="inputvalue"
+              style={styles.input} 
+              placeholder="100" 
+              keyboardType="numeric"
+              onChangeText={(inputvalue) => this.setState({inputvalue})}
+              value={this.state.inputvalue}/>
         </View>
         <View style={styles.itemRow}>
            <View style={styles.buttonContainer}>
@@ -37,13 +57,34 @@ class AddBudget extends React.Component{
             <Button
               style={styles.buttonSave}
               styleDisabled={{color: 'red'}}
-              onPress={this._handlePress}>
+              onPress={this._handlePress.bind(this)}>
               SAVE
             </Button>
           </View>
         </View>
       </View>
     )
+  }
+
+  _handlePress(event){
+    console.log("Press");
+    var realm = this.props.realm;
+    var length = realm.objects('Budget').length;
+    var budgetType = this.state.inputtype.trim();
+    var budgetValue = this.state.inputvalue;
+
+    if(budgetType!=='' && budgetValue!==0){
+      realm.write(() => {
+        let budget = realm.create('Budget', {
+          id: length,
+          name: budgetType,
+          maxValue: budgetValue
+        });
+      });
+
+      this.props.navigator.pop()
+    }
+
   }
 };
 

@@ -17,9 +17,6 @@ var ProgressBar = require('ProgressBarAndroid');
 
 var BudgetList = React.createClass({
   getInitialState: function() {
-    console.log("BudgetList")
-    console.log(this.props);
-    console.log(this.props.realm.objects('Budget')[1].name+ " " + this.props.realm.objects('Budget')[1].value);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows(this.props.realm.objects('Budget')),

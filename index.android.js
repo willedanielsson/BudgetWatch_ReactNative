@@ -63,7 +63,7 @@ var BudgetWatch_ReactNative = React.createClass({
     }
     if(route.name == 'Add budget'){
       // {...route.passProps}
-      return React.createElement(route.component, {navigator});
+      return React.createElement(route.component, {navigator, realm});
     }
 
   },
@@ -86,7 +86,7 @@ var BudgetWatch_ReactNative = React.createClass({
     console.log("Create budget");
     realm.write(() => {
       let budget = realm.create('Budget', {
-        id: 1,
+        id: 0,
         name: 'Clothing',
         maxValue: 1500
       });
@@ -96,7 +96,7 @@ var BudgetWatch_ReactNative = React.createClass({
     console.log("Create budget2");
     realm.write(() => {
       let budget = realm.create('Budget', {
-        id: 2,
+        id: 1,
         name: 'Food',
         maxValue: 3500
       });
