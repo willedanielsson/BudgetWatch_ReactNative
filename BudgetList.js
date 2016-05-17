@@ -19,10 +19,10 @@ var BudgetList = React.createClass({
   getInitialState: function() {
     console.log("BudgetList")
     console.log(this.props);
-    console.log(this.props.realm.objects('Person')[0].name);
+    console.log(this.props.realm.objects('Budget')[1].name+ " " + this.props.realm.objects('Budget')[1].value);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows([{name: "Clothing", value: 500, maxValue: 1500 }, {name: "Food", value: 1000, maxValue: 4000 }]),
+      dataSource: ds.cloneWithRows(this.props.realm.objects('Budget')),
     };
   },
 

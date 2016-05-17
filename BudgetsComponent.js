@@ -26,7 +26,7 @@ class Budgets extends React.Component{
   render(){
     console.log("BudgetComponent")
       console.log(this.props);
-      console.log(this.props.realm.objects('Person')[0].name);
+      console.log(this.props.realm.objects('Budget')[0].id + " " + this.props.realm.objects('Budget')[0].name);
       return (
         <View style={styles.container}>
           <View style={styles.dateContainer}>
