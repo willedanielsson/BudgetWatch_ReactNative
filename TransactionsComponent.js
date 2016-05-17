@@ -6,19 +6,67 @@ import {
   View,
   Navigator,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  ViewPagerAndroid
 } from 'react-native';
 
 class Transactions extends React.Component{
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      currentPage: 0
+    }
+  }
+
   render(){
-    console.log("Render Transactions")
+    isFirstActive = function(index){
+      if(index===0){
+        return{
+          borderBottomColor: '#FF4081',
+          borderBottomWidth: 2
+        }
+      }
+    }
+
+    isSecondActive = function(index){
+      if(index===1){
+        return{
+          borderBottomColor: '#FF4081',
+          borderBottomWidth: 2
+        }
+      }
+    }
+    
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>
-          Hi Transaction
-        </Text>
+        <View style={styles.pagerTab}>
+          <View style={[styles.pageTabContainer,isFirstActive(this.state.currentPage)]}>
+            <Text>EXPENSES</Text>
+          </View>
+
+          <View style={[styles.pageTabContainer,isSecondActive(this.state.currentPage)]}>
+            <Text>REVENUES</Text>
+          </View>
+
+        </View>
+        <ViewPagerAndroid
+          style={styles.viewPager}
+          initialPage={0}
+          onPageSelected={this._onPageSelected.bind(this)}>
+          <View style={styles.pageStyle}>
+            <Text>First page</Text>
+          </View>
+          <View style={styles.pageStyle}>
+            <Text>Second page</Text>
+          </View>
+        </ViewPagerAndroid>
       </View>
     )
+  }
+
+  _onPageSelected(e){
+    this.setState({currentPage: e.nativeEvent.position});
   }
 };
 
@@ -26,21 +74,23 @@ var styles = StyleSheet.create({
   container: {
     flex:1,
     alignItems: 'stretch',
-    marginTop: 56,
-    padding: 16
+    marginTop: 56
   },
-  heading: {
-    fontSize:22,
-    marginBottom:10
+  pagerTab:{
+    flexDirection: 'row',
+    height: 56,
+    backgroundColor: 'blue'
   },
-  button: {
-    height: 60,
-    justifyContent: 'center',
-    backgroundColor: 'red',
-    alignItems: 'center'
+  pageTabContainer:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
   },
-  buttonText: {
-    fontSize: 20
+  firstTab:{
+
+  },
+  viewPager: {
+    flex:1,
   }
 
 });
