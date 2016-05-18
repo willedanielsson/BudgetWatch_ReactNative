@@ -45,9 +45,9 @@ const TransactionSchema ={
     transactionType: 'int',
     name: 'string',
     budget: 'string',
-    account: 'string',
+    account: {type: 'string', optional: true},
     value: {type: 'float', default: 0},
-    note: 'string',
+    note: {type: 'string', optional: true},
     date: 'string',
     receipt: {type: 'data', optional: true},
   }
