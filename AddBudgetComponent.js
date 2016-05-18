@@ -23,6 +23,7 @@ class AddBudget extends React.Component{
   }
 
   render(){
+    console.log("AddbudgetComponent");
     return (
       <View style={styles.container}>
         <View style={styles.itemRow}>
@@ -99,15 +100,14 @@ var styles = StyleSheet.create({
     padding: 10,
   },
   label: {
-    flex:1,
     fontSize: 16,
     marginTop: 12,
     marginLeft: 20,
-    marginRight: 4,
+    marginRight: 20,
     fontWeight: 'bold',
   },
   input: {
-    flex:5,
+    flex: 1,
     height: 45,
     borderColor: 'gray', 
     borderWidth: 1,

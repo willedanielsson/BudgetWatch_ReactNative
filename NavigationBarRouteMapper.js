@@ -11,6 +11,7 @@ import {
 
 var Budgets = require('./BudgetsComponent.js');
 var AddBudget = require('./AddBudgetComponent.js');
+var AddTransaction = require('./AddTransactionComponent.js');
 
 var NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
@@ -30,7 +31,7 @@ var NavigationBarRouteMapper = {
   },
 
   RightButton(route, navigator, index, navState) {
-    if (route.name == "Budgets") 
+    if (route.name == "Budgets"){ 
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight onPress={ () => navigator.push({ 
@@ -58,6 +59,37 @@ var NavigationBarRouteMapper = {
            </TouchableHighlight>
          </View>
       )
+    }
+    if(route.name == "Transactions"){
+      return (
+        <View style={styles.rightButtonContainer}>
+          <TouchableHighlight onPress={ () => navigator.push({ 
+            name: 'Add transaction',
+            component: AddTransaction,
+            passProps: {
+              transactionType: 'Test'
+            }})}>
+             <View style={styles.addTransactionButtonContainer}>
+              <Image style={styles.transactionIcon} source={require('./images/add.png')}/>
+            </View>
+           </TouchableHighlight>
+
+          <TouchableHighlight onPress={ () => navigator.push({ 
+            name: 'Add budget',
+            component: AddBudget,
+            passProps: {
+              name: 'Test'
+            }})}>
+             <View style={styles.addBudgetButtonContainer}>
+              <Image
+                style={styles.addBudgetIcon}
+                source={require('./images/purse.png')}/>
+            </View>
+           </TouchableHighlight>
+
+         </View>
+      )
+    }
   },
 
   Title(route, navigator, index, navState) {
@@ -119,7 +151,20 @@ var styles = StyleSheet.create({
     resizeMode:'contain',
     height: 25,
     width: 25,
-  }
+  },
+  addTransactionButtonContainer:{
+    flex: 1,
+    paddingRight: 12,
+    paddingLeft: 8
+  },
+  transactionIcon:{
+    marginTop: 16,
+    marginRight: 0,
+    resizeMode:'contain',
+    height: 25,
+    width: 25,
+  },
+
 });
 
 module.exports = NavigationBarRouteMapper;

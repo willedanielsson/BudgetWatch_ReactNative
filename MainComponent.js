@@ -36,18 +36,13 @@ var MainListItem = React.createClass({
 
 class Main extends React.Component{
 
-  addBudgetPress(){
-    alert("Main")
-  }
-
   goToBudgets(name){
     this.props.navigator.push({
       name: 'Budgets',
       component: Budgets,
       passProps: {
         name: name
-      },
-      addBudgetPress: this.addBudgetPress
+      }
     })
   }
 
