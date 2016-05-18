@@ -7,10 +7,12 @@ import {
   Navigator,
   Image,
   TouchableHighlight,
-  ViewPagerAndroid
+  ViewPagerAndroid,
+  ListView
 } from 'react-native';
 
 import { Tab, TabLayout } from 'react-native-android-tablayout';
+var TransactionList = require('./TransactionList.js');
 
 class Transactions extends React.Component{
   constructor(props) {
@@ -47,7 +49,7 @@ class Transactions extends React.Component{
           ref={viewPager => { this.viewPager = viewPager; }}>
 
           <View style={styles.pageStyle}>
-            <Text>First page</Text>
+            <TransactionList name={'William'} realm={this.props.realm}/>
           </View>
           <View style={styles.pageStyle}>
             <Text>Second page</Text>
@@ -79,8 +81,10 @@ var styles = StyleSheet.create({
   },
   viewPager: {
     flex:1,
-  }
+  },
+  pageStyle: {
+    padding: 16
+  },
 });
-
 
 module.exports = Transactions;
