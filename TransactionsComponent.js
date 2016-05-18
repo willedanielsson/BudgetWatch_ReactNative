@@ -10,6 +10,8 @@ import {
   ViewPagerAndroid
 } from 'react-native';
 
+import { Tab, TabLayout } from 'react-native-android-tablayout';
+
 class Transactions extends React.Component{
   constructor(props) {
     super(props)
@@ -20,40 +22,28 @@ class Transactions extends React.Component{
   }
 
   render(){
-    isFirstActive = function(index){
-      if(index===0){
-        return{
-          borderBottomColor: '#FF4081',
-          borderBottomWidth: 2
-        }
-      }
-    }
-
-    isSecondActive = function(index){
-      if(index===1){
-        return{
-          borderBottomColor: '#FF4081',
-          borderBottomWidth: 2
-        }
-      }
-    }
-    
     return (
       <View style={styles.container}>
-        <View style={styles.pagerTab}>
-          <View style={[styles.pageTabContainer,isFirstActive(this.state.currentPage)]}>
-            <Text>EXPENSES</Text>
-          </View>
-
-          <View style={[styles.pageTabContainer,isSecondActive(this.state.currentPage)]}>
-            <Text>REVENUES</Text>
-          </View>
-
+        <View>
+          <TabLayout
+          selectedTab={this.state.currentPage}
+          selectedTabIndicatorColor='#FF4081'
+          style={styles.tabLayout}>
+            <Tab 
+              name="EXPENSES"
+              textColor='white'
+              style={styles.tab}/>
+            <Tab 
+              name="REVENUES"
+              textColor='white'
+              style={styles.tab}/>
+          </TabLayout>
         </View>
         <ViewPagerAndroid
           style={styles.viewPager}
           initialPage={0}
           onPageSelected={this._onPageSelected.bind(this)}>
+
           <View style={styles.pageStyle}>
             <Text>First page</Text>
           </View>
@@ -66,6 +56,7 @@ class Transactions extends React.Component{
   }
 
   _onPageSelected(e){
+    console.log("The idnex is: "+e.nativeEvent.position)
     this.setState({currentPage: e.nativeEvent.position});
   }
 };
@@ -76,23 +67,14 @@ var styles = StyleSheet.create({
     alignItems: 'stretch',
     marginTop: 56
   },
-  pagerTab:{
-    flexDirection: 'row',
-    height: 56,
-    backgroundColor: 'blue'
+  tabLayout:{
+    backgroundColor: '#3F51B5'
   },
-  pageTabContainer:{
-    flex:1,
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  firstTab:{
-
+  tab:{
   },
   viewPager: {
     flex:1,
   }
-
 });
 
 
