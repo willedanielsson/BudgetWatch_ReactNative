@@ -14,8 +14,9 @@ import {
 var TransactionList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var expenses = this.props.realm.objects('Transaction');
     return {
-      dataSource: ds.cloneWithRows([{name: "Clothing", value: 500, maxValue: 1500 }, {name: "Food", value: 1000, maxValue: 4000 }]),
+      dataSource: ds.cloneWithRows(expenses),
     };
   },
 
@@ -33,22 +34,22 @@ var TransactionList = React.createClass({
       <View style={styles.itemContainer}>
         <View style={styles.upperContainer}>
           <View style={styles.leftContainer}>
-            <Text style={styles.name}>Clothing</Text>
+            <Text style={styles.name}>{rowData.name}</Text>
           </View>
 
           <View style={styles.rightContainer}>
-            <Text style={styles.price}>85.00</Text>
+            <Text style={styles.price}>{rowData.value}</Text>
           </View>
         </View>
 
         <View style={styles.lowerContainer}>
           <View style={styles.leftContainer}>
             <Image style={styles.receiptIcon} source={require('./images/receipt.png')}/>
-            <Text style={styles.budget}>Food</Text>
+            <Text style={styles.budget}>{rowData.budget}</Text>
           </View>
 
           <View style={styles.rightContainer}>
-            <Text style={styles.date}>May 18, 2016</Text>
+            <Text style={styles.date}>{rowData.date}</Text>
           </View>
         </View>
 

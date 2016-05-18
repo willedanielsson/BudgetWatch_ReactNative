@@ -26,14 +26,6 @@ var ToolbarAndroid = require('ToolbarAndroid');
 var Main = require('./MainComponent.js');
 var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
 
-const PersonSchema = {
-  name: 'Person',
-  properties: {
-    name:  'string',
-    last: 'string',
-  }
-};
-
 const BudgetSchema ={
   name: 'Budget',
   primaryKey: 'id',
@@ -45,7 +37,23 @@ const BudgetSchema ={
   }
 };
 
-let realm = new Realm({schema: [PersonSchema, BudgetSchema]});
+const TransactionSchema ={
+  name: 'Transaction',
+  primaryKey: 'id',
+  properties: {
+    id: 'int',
+    transactionType: 'int',
+    name: 'string',
+    budget: 'string',
+    account: 'string',
+    value: {type: 'float', default: 0},
+    note: 'string',
+    date: 'string',
+    receipt: {type: 'data', optional: true},
+  }
+};
+
+let realm = new Realm({schema: [BudgetSchema, TransactionSchema]});
 
 var BudgetWatch_ReactNative = React.createClass({
 
@@ -69,19 +77,8 @@ var BudgetWatch_ReactNative = React.createClass({
   },
 
   render() {
-  let persons = realm.objects('Person');
-
-  if(persons[0]===undefined){
-    realm.write(() => {
-      let person = realm.create('Person', {
-        name: 'William',
-        last: 'Danielsson',
-      });
-      //console.log('Person is ' + person.name + ' ' + person.last);
-    });
-  }
-
   let budgets = realm.objects('Budget');
+
   if(budgets[0]===undefined){
     console.log("Create budget");
     realm.write(() => {
@@ -92,6 +89,7 @@ var BudgetWatch_ReactNative = React.createClass({
       });
     });
   }
+
   if(budgets[1]===undefined){
     console.log("Create budget2");
     realm.write(() => {
@@ -99,6 +97,24 @@ var BudgetWatch_ReactNative = React.createClass({
         id: 1,
         name: 'Food',
         maxValue: 3500
+      });
+    });
+  }
+
+  let transactions = realm.objects('Transaction');
+
+  if(transactions[0]===undefined){
+    console.log("Create first transaction");
+    realm.write(() => {
+      let transaction = realm.create('Transaction', {
+        id: 0,
+        transactionType: 1,
+        name: 'Shirt',
+        budget: 'Clothing',
+        account: 'Personal',
+        value: 499.00,
+        note: 'The blue shirt',
+        date: 'May 18, 2016'
       });
     });
   }
