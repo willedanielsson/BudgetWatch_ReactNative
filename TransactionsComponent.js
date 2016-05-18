@@ -28,6 +28,7 @@ class Transactions extends React.Component{
           <TabLayout
           selectedTab={this.state.currentPage}
           selectedTabIndicatorColor='#FF4081'
+          onTabSelected={this._onTabClicked.bind(this)}
           style={styles.tabLayout}>
             <Tab 
               name="EXPENSES"
@@ -41,8 +42,9 @@ class Transactions extends React.Component{
         </View>
         <ViewPagerAndroid
           style={styles.viewPager}
-          initialPage={0}
-          onPageSelected={this._onPageSelected.bind(this)}>
+          initialPage={this.state.currentPage}
+          onPageSelected={this._onPageSelected.bind(this)}
+          ref={viewPager => { this.viewPager = viewPager; }}>
 
           <View style={styles.pageStyle}>
             <Text>First page</Text>
@@ -56,8 +58,11 @@ class Transactions extends React.Component{
   }
 
   _onPageSelected(e){
-    console.log("The idnex is: "+e.nativeEvent.position)
     this.setState({currentPage: e.nativeEvent.position});
+  }
+  _onTabClicked(e){
+    this.setState({currentPage: e.nativeEvent.position});
+    this.viewPager.setPage(e.nativeEvent.position);
   }
 };
 
