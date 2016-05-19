@@ -8,7 +8,8 @@ import {
   Navigator,
   Image,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  DatePickerAndroid,
 } from 'react-native';
 
 var Button = require('react-native-button');
@@ -16,24 +17,45 @@ var Button = require('react-native-button');
 class AddTransaction extends React.Component{
   constructor(props) {
     super(props)
-
+    var date = new Date();
     this.state = {
       inputName: '',
       inputBudget: '',
       inputAccount: '',
       inputValue: 0,
       inputNote: '',
-      inputDate: '',
+      inputDate: date,
+      displayDate: date.toString().substring(4,10) + "," + date.toString().substring(10,15),
+    }
+  }
+    // Use `new Date()` for current date.
+    // May 25 2020. Month 0 is January.
+  async showPicker(options) {
+    try {
+      var newState = {};
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      var date = new Date(year, month, day);
+      this.setState({ inputDate: date });
+      this.setRightTime();
+      this.setState(newState);
+
+    } catch ({code, message}) {
+      console.warn(`Error in showicker`, message);
     }
   }
 
+  setRightTime(){
+    date = this.state.inputDate.toString();
+    var newDate = date.substring(4,15);
+    var completeDate = newDate.substring(0,6) + "," + newDate.substring(6);
+    this.setState({ displayDate: completeDate });
+  }
+
   render(){
-    console.log("AddTransaction");
     return (
       <View style={styles.container}>
       <ScrollView
         ref={(scrollView) => { _scrollView = scrollView; }}
-        onScroll={() => { console.log('onScroll!'); }}
         style={styles.scrollView}>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Name</Text>
@@ -78,11 +100,9 @@ class AddTransaction extends React.Component{
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Date</Text>
-            <TextInput 
-              ref="inputDate"
-              style={styles.input}
-              onChangeText={(inputDate) => this.setState({inputDate})}
-              value={this.state.inputDate}/>
+            <TouchableHighlight style={styles.dateButton} onPress={ () => this.showPicker({date: this.state.inputDate})}>
+              <Text style={styles.dateText}>{this.state.displayDate}</Text>
+          </TouchableHighlight>
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Receipt</Text>
@@ -172,6 +192,15 @@ var styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
     fontWeight: 'normal',
+  },
+  dateButton:{
+    flex: 1,
+    borderBottomColor: '#6d6d6d',
+    borderBottomWidth: 1,
+  },
+  dateText: {
+    fontSize: 20,
+    marginTop: 5,
   },
 });
 
