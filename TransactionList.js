@@ -14,10 +14,18 @@ import {
 var TransactionList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var expenses = this.props.realm.objects('Transaction');
-    return {
-      dataSource: ds.cloneWithRows(expenses),
-    };
+    var transactions = this.props.realm.objects('Transaction');
+    var expenses = transactions.filtered('transactionType = 1');
+    var revenues = transactions.filtered('transactionType = 2');
+    if(this.props.type==='expenses'){
+      return {
+        dataSource: ds.cloneWithRows(expenses),
+      };
+    }else{
+      return {
+        dataSource: ds.cloneWithRows(revenues),
+      };
+    }
   },
 
   render: function() {
@@ -30,7 +38,6 @@ var TransactionList = React.createClass({
     );
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    console.log(rowData.value);
     return (
       <View style={styles.itemContainer}>
         <View style={styles.upperContainer}>
