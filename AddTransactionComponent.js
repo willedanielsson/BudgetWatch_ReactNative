@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableHighlight,
   DatePickerAndroid,
+  Picker,
 } from 'react-native';
 
 var Button = require('react-native-button');
@@ -26,6 +27,7 @@ class AddTransaction extends React.Component{
       inputNote: '',
       inputDate: date,
       displayDate: date.toString().substring(4,10) + "," + date.toString().substring(10,15),
+      testlang: ["Swed", "Dutch", "English", "meeh"],
     }
   }
     // Use `new Date()` for current date.
@@ -52,6 +54,7 @@ class AddTransaction extends React.Component{
   }
 
   render(){
+    console.log(this.props.realm.objects('Budget'));
     return (
       <View style={styles.container}>
       <ScrollView
@@ -67,11 +70,17 @@ class AddTransaction extends React.Component{
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Budget</Text>
-            <TextInput 
-              ref="inputBudget"
-              style={styles.input}
-              onChangeText={(inputBudget) => this.setState({inputBudget})}
-              value={this.state.inputBudget}/>
+            <Picker
+              style={styles.picker}
+              selectedValue={this.state.inputBudget}
+              mode={'dropdown'}
+              onValueChange={(budget) => this.setState({inputBudget: budget})}>
+                {this.props.realm.objects('Budget').map((budget, i) => {
+                  return (
+                    <Picker.Item value={budget.name} label={budget.name} key={i} style={styles.pickerItem}/>
+                  ) 
+                })}
+            </Picker>
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Account</Text>
@@ -122,7 +131,7 @@ class AddTransaction extends React.Component{
             <Button
               style={styles.button}
               styleDisabled={{color: 'red'}}
-              onPress={this._handlePress}>
+              onPress={this._cancelTransaction.bind(this)}>
               CANCEL
             </Button>
           </View>
@@ -181,32 +190,16 @@ class AddTransaction extends React.Component{
     }
   }
 
+  _cancelTransaction(event){
+      this.props.navigator.pop()
+  }
+
   isRequiredInputEmpty(transName, transValue, transDate){
     console.log("Checker");
     if(transName!=='' && transValue!==0 && transDate!==''){
       return false;
     }else{
       return true;
-    }
-  }
-
-  _handlePress(event){
-    console.log("Press");
-    var realm = this.props.realm;
-    var length = realm.objects('Budget').length;
-    var budgetType = this.state.inputtype.trim();
-    var budgetValue = this.state.inputvalue;
-
-    if(budgetType!=='' && budgetValue!==0){
-      realm.write(() => {
-        let budget = realm.create('Budget', {
-          id: length,
-          name: budgetType,
-          maxValue: budgetValue
-        });
-      });
-
-      this.props.navigator.pop()
     }
   }
 };
@@ -236,6 +229,15 @@ var styles = StyleSheet.create({
     borderColor: 'gray', 
     borderWidth: 1,
     fontSize: 18
+  },
+  picker:{
+    flex:1,
+    height: 45,
+    color: 'gray',
+    fontSize: 10,
+  },
+  pickerItem:{
+    fontSize: 10,
   },
   receiptButtonContainer: {
     flex:1,
