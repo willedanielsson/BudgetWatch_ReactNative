@@ -122,8 +122,6 @@ var BudgetWatch_ReactNative = React.createClass({
       });
     });
   }
-
-
     return (
       <Navigator
         style={{flex:1}}
@@ -132,8 +130,7 @@ var BudgetWatch_ReactNative = React.createClass({
         navigationBar={
         <Navigator.NavigationBar
           style= {styles.navigationBar}
-          routeMapper={NavigationBarRouteMapper}
-        />
+          routeMapper={NavigationBarRouteMapper}/>
       }/>
     )
   }

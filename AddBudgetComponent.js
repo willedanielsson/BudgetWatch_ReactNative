@@ -83,9 +83,8 @@ class AddBudget extends React.Component{
         });
       });
 
-      this.props.navigator.pop()
+      this.props.navigator.pop();
     }
-
   }
 };
 
@@ -95,10 +94,12 @@ var styles = StyleSheet.create({
     alignItems: 'stretch',
     marginTop: 56,
   },
+  
   itemRow:{
     flexDirection: 'row',
     padding: 10,
   },
+
   label: {
     fontSize: 16,
     marginTop: 12,
@@ -106,6 +107,7 @@ var styles = StyleSheet.create({
     marginRight: 20,
     fontWeight: 'bold',
   },
+
   input: {
     flex: 1,
     height: 45,
@@ -113,6 +115,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 18
   },
+
   buttonContainer:{
     flex: 1,
     backgroundColor: 'red',
@@ -126,11 +129,13 @@ var styles = StyleSheet.create({
     justifyContent:'center',
     elevation: 2
   },
+
   buttonCancel: {
     fontSize: 14,
     color: 'black',
     fontWeight: 'normal',
   },
+
   buttonSave: {
     fontSize: 14,
     color: 'black',

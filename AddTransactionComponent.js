@@ -87,7 +87,7 @@ class AddTransaction extends React.Component{
               ref="inputValue"
               style={styles.input} 
               keyboardType="numeric"
-              onChangeText={(inputValue) => this.setState({inputValue})}
+              onChangeText={(inputValue) => this.setNumberToState(inputValue)}
               value={this.state.inputValue}/>
         </View>
         <View style={styles.itemRow}>
@@ -130,7 +130,7 @@ class AddTransaction extends React.Component{
             <Button
               style={styles.button}
               styleDisabled={{color: 'red'}}
-              onPress={this._handlePress}>
+              onPress={this._saveTransaction.bind(this)}>
               SAVE
             </Button>
           </View>
@@ -139,9 +139,75 @@ class AddTransaction extends React.Component{
       </View>
     )
   }
+  setNumberToState(inputString){
+    console.log(inputString);
+    var integer = parseFloat(inputString);
+    this.setState({ inputValue: integer });
+  }
 
-  _viewReceipt(event){
+  _captureReceipt(event){
     console.log("Press");
+  }
+
+  _saveTransaction(event){
+    console.log("Press");
+    var realm = this.props.realm;
+    var length = realm.objects('Transaction').length;
+
+    var transName = this.state.inputName.trim();
+    var transBudget = this.state.inputBudget;
+    var transAccount = this.state.inputAccount.trim();
+    var transValue = this.state.inputValue;
+    var transNote = this.state.inputNote.trim();
+    var transDate = this.state.displayDate;
+
+    if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
+      realm.write(() => {
+        let budget = realm.create('Transaction', {
+          id: length,
+          transactionType: 1,
+          name: transName,
+          budget: transBudget,
+          account: transAccount,
+          value: transValue,
+          note: transNote,
+          date: transDate
+        });
+      });
+      
+      this.props.navigator.pop();
+    } else{
+      console.log("Empty");
+    }
+  }
+
+  isRequiredInputEmpty(transName, transValue, transDate){
+    console.log("Checker");
+    if(transName!=='' && transValue!==0 && transDate!==''){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  _handlePress(event){
+    console.log("Press");
+    var realm = this.props.realm;
+    var length = realm.objects('Budget').length;
+    var budgetType = this.state.inputtype.trim();
+    var budgetValue = this.state.inputvalue;
+
+    if(budgetType!=='' && budgetValue!==0){
+      realm.write(() => {
+        let budget = realm.create('Budget', {
+          id: length,
+          name: budgetType,
+          maxValue: budgetValue
+        });
+      });
+
+      this.props.navigator.pop()
+    }
   }
 };
 
