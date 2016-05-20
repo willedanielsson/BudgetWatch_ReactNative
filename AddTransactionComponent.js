@@ -54,7 +54,6 @@ class AddTransaction extends React.Component{
   }
 
   render(){
-    console.log(this.props.realm.objects('Budget'));
     return (
       <View style={styles.container}>
       <ScrollView
@@ -149,7 +148,6 @@ class AddTransaction extends React.Component{
     )
   }
   setNumberToState(inputString){
-    console.log(inputString);
     var integer = parseFloat(inputString);
     this.setState({ inputValue: integer });
   }
@@ -159,7 +157,6 @@ class AddTransaction extends React.Component{
   }
 
   _saveTransaction(event){
-    console.log("Press");
     var realm = this.props.realm;
     var length = realm.objects('Transaction').length;
 
@@ -171,6 +168,13 @@ class AddTransaction extends React.Component{
     var transDate = this.state.displayDate;
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
+      var budget = this.props.realm.objects('Budget').filtered("name = $0", transBudget);
+      var budgetId = budget[0].id;
+      var sumValue = budget[0].value + transValue;
+      realm.write(() => {
+        realm.create('Budget', {id: budgetId, value: sumValue}, true);
+      });
+
       realm.write(() => {
         let budget = realm.create('Transaction', {
           id: length,
@@ -182,6 +186,8 @@ class AddTransaction extends React.Component{
           note: transNote,
           date: transDate
         });
+
+
       });
       
       this.props.navigator.pop();
@@ -195,7 +201,6 @@ class AddTransaction extends React.Component{
   }
 
   isRequiredInputEmpty(transName, transValue, transDate){
-    console.log("Checker");
     if(transName!=='' && transValue!==0 && transDate!==''){
       return false;
     }else{

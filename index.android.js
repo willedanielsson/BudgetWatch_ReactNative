@@ -81,30 +81,6 @@ var BudgetWatch_ReactNative = React.createClass({
   },
 
   render() {
-  let budgets = realm.objects('Budget');
-
-  if(budgets[0]===undefined){
-    console.log("Create budget");
-    realm.write(() => {
-      let budget = realm.create('Budget', {
-        id: 0,
-        name: 'Clothing',
-        maxValue: 1500
-      });
-    });
-  }
-
-  if(budgets[1]===undefined){
-    console.log("Create budget2");
-    realm.write(() => {
-      let budget = realm.create('Budget', {
-        id: 1,
-        name: 'Food',
-        maxValue: 3500
-      });
-    });
-  }
-
   let transactions = realm.objects('Transaction');
 
   if(transactions[0]===undefined){
@@ -164,6 +140,43 @@ var BudgetWatch_ReactNative = React.createClass({
         value: 17.00,
         note: '',
         date: 'May 17, 2016'
+      });
+    });
+  }
+
+  let budgets = realm.objects('Budget');
+
+  if(budgets[0]===undefined){
+    console.log("Create budget");
+    var trans = realm.objects('Transaction').filtered('budget = "Clothing"');
+    var totalValue = 0;
+    for (var i = 0; i < trans.length; i++) {
+      totalValue = totalValue + trans[i].value;
+    }
+
+    realm.write(() => {
+      let budget = realm.create('Budget', {
+        id: 0,
+        name: 'Clothing',
+        maxValue: 1500,
+        value: totalValue,
+      });
+    });
+  }
+
+  if(budgets[1]===undefined){
+    console.log("Create budget2");
+    var trans = realm.objects('Transaction').filtered('budget = "Food"');
+    var totalValue = 0;
+    for (var i = 0; i < trans.length; i++) {
+      totalValue = totalValue + trans[i].value;
+    }
+    realm.write(() => {
+      let budget = realm.create('Budget', {
+        id: 1,
+        name: 'Food',
+        maxValue: 3500,
+        value: totalValue,
       });
     });
   }

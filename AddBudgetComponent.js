@@ -23,7 +23,6 @@ class AddBudget extends React.Component{
   }
 
   render(){
-    console.log("AddbudgetComponent");
     return (
       <View style={styles.container}>
         <View style={styles.itemRow}>
@@ -68,7 +67,6 @@ class AddBudget extends React.Component{
   }
 
   _handlePress(event){
-    console.log("Press");
     var realm = this.props.realm;
     var length = realm.objects('Budget').length;
     var budgetType = this.state.inputtype.trim();
@@ -79,7 +77,8 @@ class AddBudget extends React.Component{
         let budget = realm.create('Budget', {
           id: length,
           name: budgetType,
-          maxValue: budgetValue
+          maxValue: budgetValue,
+          vale: realm.objects('Transaction').filtered("budget = '\(budgetType)'").length
         });
       });
 
