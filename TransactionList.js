@@ -30,6 +30,7 @@ var TransactionList = React.createClass({
     );
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
+    console.log(rowData.value);
     return (
       <View style={styles.itemContainer}>
         <View style={styles.upperContainer}>
@@ -38,7 +39,7 @@ var TransactionList = React.createClass({
           </View>
 
           <View style={styles.rightContainer}>
-            <Text style={styles.price}>{rowData.value}</Text>
+            <Text style={styles.price}>{Math.round(rowData.value * 100) / 100}</Text>
           </View>
         </View>
 

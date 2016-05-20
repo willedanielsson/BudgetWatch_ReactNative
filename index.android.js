@@ -122,6 +122,51 @@ var BudgetWatch_ReactNative = React.createClass({
       });
     });
   }
+  if(transactions[1]===undefined){
+    console.log("Create second transaction");
+    realm.write(() => {
+      let transaction = realm.create('Transaction', {
+        id: 1,
+        transactionType: 1,
+        name: 'Pants',
+        budget: 'Clothing',
+        account: '',
+        value: 799.00,
+        note: '',
+        date: 'May 20, 2016'
+      });
+    });
+  }
+  if(transactions[2]===undefined){
+    console.log("Create first transaction");
+    realm.write(() => {
+      let transaction = realm.create('Transaction', {
+        id: 2,
+        transactionType: 1,
+        name: 'Groceries',
+        budget: 'Food',
+        account: '',
+        value: 287.62,
+        note: '',
+        date: 'May 10, 2016'
+      });
+    });
+  }
+  if(transactions[3]===undefined){
+    console.log("Create first transaction");
+    realm.write(() => {
+      let transaction = realm.create('Transaction', {
+        id: 3,
+        transactionType: 2,
+        name: 'Pant',
+        budget: 'Food',
+        account: '',
+        value: 17.00,
+        note: '',
+        date: 'May 17, 2016'
+      });
+    });
+  }
     return (
       <Navigator
         style={{flex:1}}
