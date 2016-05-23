@@ -34,12 +34,7 @@ var NavigationBarRouteMapper = props => ({
     if (route.name == "Budgets"){ 
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => navigator.push({ 
-            name: 'Add budget',
-            component: AddBudget,
-            passProps: {
-              name: 'Test'
-            }})}>
+          <TouchableHighlight onPress={ () => this.setTimeForBudget()}>
              <View style={styles.calendarContainer}>
               <Image style={styles.calendarIcon} source={require('./images/calendar.png')}/>
             </View>
@@ -51,10 +46,8 @@ var NavigationBarRouteMapper = props => ({
             passProps: {
               name: 'Test'
             }})}>
-             <View style={styles.addBudgetButtonContainer}>
-              <Image
-                style={styles.addBudgetIcon}
-                source={require('./images/add.png')}/>
+             <View style={styles.calendarContainer}>
+              <Image style={styles.calendarIcon} source={require('./images/add.png')}/>
             </View>
            </TouchableHighlight>
          </View>
@@ -63,7 +56,7 @@ var NavigationBarRouteMapper = props => ({
     if(route.name == "Transactions"){
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => this.goToBudgets(navigator)}>
+          <TouchableHighlight onPress={ () => this.addTransaction(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
               <Image style={styles.transactionIcon} source={require('./images/add.png')}/>
             </View>
@@ -86,7 +79,7 @@ var NavigationBarRouteMapper = props => ({
       )
     }
   },
-  goToBudgets(navigator){
+  addTransaction(navigator){
     var transType;
     var transID;
     if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
@@ -104,6 +97,10 @@ var NavigationBarRouteMapper = props => ({
         transactionType: transId
       }
     })
+  },
+
+  setTimeForBudget(){
+    console.log("SET BDUGET");
   },
 
 

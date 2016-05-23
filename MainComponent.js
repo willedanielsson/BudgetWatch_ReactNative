@@ -81,7 +81,7 @@ var styles = StyleSheet.create({
     marginTop: 56,
   },
   listContainer: {
-
+    padding: 16,
   },
   item: {
     paddingTop: 10,
