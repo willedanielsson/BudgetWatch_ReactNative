@@ -61,22 +61,10 @@ var NavigationBarRouteMapper = props => ({
       )
     }
     if(route.name == "Transactions"){
-      var transType;
-      console.log(navigator.props.realm.objects('AppData')[0].currentTrans);
-      if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
-        transType= "Add transaction";
-      }else{
-        transType= "Add revenue";
-      }
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => navigator.push({ 
-            name: transType,
-            component: AddTransaction,
-            passProps: {
-              transactionType: 'Test'
-            }})}>
-             <View style={styles.addTransactionButtonContainer}>
+          <TouchableHighlight onPress={ () => this.goToBudgets(navigator)}>
+            <View style={styles.addTransactionButtonContainer}>
               <Image style={styles.transactionIcon} source={require('./images/add.png')}/>
             </View>
            </TouchableHighlight>
@@ -98,6 +86,23 @@ var NavigationBarRouteMapper = props => ({
       )
     }
   },
+  goToBudgets(navigator){
+    var transType;
+    if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
+      transType= "Add transaction";
+    }else{
+      transType= "Add revenue";
+    }
+    console.log("ON PRESS");
+    navigator.push({ 
+      name: transType,
+      component: AddTransaction,
+      passProps: {
+        transactionType: transType
+      }
+    })
+  },
+
 
   Title(route, navigator, index, navState) {
     return(
