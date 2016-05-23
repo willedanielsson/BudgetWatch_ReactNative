@@ -238,8 +238,7 @@ var styles = StyleSheet.create({
   picker:{
     flex:1,
     height: 45,
-    color: 'gray',
-    fontSize: 10,
+    color: 'gray'
   },
   pickerItem:{
     fontSize: 10,

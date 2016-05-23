@@ -13,7 +13,7 @@ var Budgets = require('./BudgetsComponent.js');
 var AddBudget = require('./AddBudgetComponent.js');
 var AddTransaction = require('./AddTransactionComponent.js');
 
-var NavigationBarRouteMapper = {
+var NavigationBarRouteMapper = props => ({
   LeftButton(route, navigator, index, navState) {
     if(index > 0) {
       return (
@@ -61,10 +61,17 @@ var NavigationBarRouteMapper = {
       )
     }
     if(route.name == "Transactions"){
+      var transType;
+      console.log(navigator.props.realm.objects('AppData')[0].currentTrans);
+      if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
+        transType= "Add transaction";
+      }else{
+        transType= "Add revenue";
+      }
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight onPress={ () => navigator.push({ 
-            name: 'Add transaction',
+            name: transType,
             component: AddTransaction,
             passProps: {
               transactionType: 'Test'
@@ -100,7 +107,7 @@ var NavigationBarRouteMapper = {
       </Text>
       </View>)
   }
-};
+});
 
 //<Image style={styles.addBudgetIcon} source={require('./images/calendar.png')}/>
 

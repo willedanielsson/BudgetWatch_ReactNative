@@ -15,12 +15,17 @@ import { Tab, TabLayout } from 'react-native-android-tablayout';
 var TransactionList = require('./TransactionList.js');
 
 class Transactions extends React.Component{
+
   constructor(props) {
     super(props)
 
     this.state = {
       currentPage: 0
     }
+    var realm=this.props.realm;
+    realm.write(() => {
+      realm.create('AppData', {id: 0,currentTrans: 0}, true);
+    });
   }
 
   render(){
@@ -61,10 +66,20 @@ class Transactions extends React.Component{
 
   _onPageSelected(e){
     this.setState({currentPage: e.nativeEvent.position});
+    var realm= this.props.realm;
+    realm.write(() => {
+      realm.create('AppData', {id: 0,currentTrans: e.nativeEvent.position}, true);
+    });
+    console.log("Should be: " + e.nativeEvent.position);
+
   }
   _onTabClicked(e){
     this.setState({currentPage: e.nativeEvent.position});
     this.viewPager.setPage(e.nativeEvent.position);
+     var realm=this.props.realm;
+    realm.write(() => {
+      realm.create('AppData', {id: 0,currentTrans: e.nativeEvent.position}, true);
+    });
   }
 };
 

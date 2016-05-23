@@ -53,7 +53,17 @@ const TransactionSchema ={
   }
 };
 
-let realm = new Realm({schema: [BudgetSchema, TransactionSchema]});
+
+const AppDataSchema ={
+  name: 'AppData',
+  primaryKey: 'id',
+  properties: {
+    id: 'int',
+    currentTrans: {type: 'int', default: 0}
+  }
+};
+
+let realm = new Realm({schema: [BudgetSchema, TransactionSchema, AppDataSchema]});
 
 var BudgetWatch_ReactNative = React.createClass({
 
@@ -77,10 +87,26 @@ var BudgetWatch_ReactNative = React.createClass({
       // {...route.passProps}
       return React.createElement(route.component, {navigator, realm});
     }
+    if(route.name == 'Add revenue'){
+      // {...route.passProps}
+      return React.createElement(route.component, {navigator, realm});
+    }
 
   },
 
   render() {
+  let appData = realm.objects('AppData');
+
+  if(appData[0]===undefined){
+    console.log("Init appdata");
+    realm.write(() => {
+      let data = realm.create('AppData', {
+        id:0,
+        currentTrans: 0
+      });
+    });
+  }
+
   let transactions = realm.objects('Transaction');
 
   if(transactions[0]===undefined){
@@ -184,11 +210,13 @@ var BudgetWatch_ReactNative = React.createClass({
       <Navigator
         style={{flex:1}}
         initialRoute={{ name: 'Main', component: Main}}
-        renderScene={this.renderScene} 
+        renderScene={this.renderScene}
+        realm = {realm}
         navigationBar={
         <Navigator.NavigationBar
           style= {styles.navigationBar}
-          routeMapper={NavigationBarRouteMapper}/>
+          routeMapper={NavigationBarRouteMapper(realm)}
+          />
       }/>
     )
   }
