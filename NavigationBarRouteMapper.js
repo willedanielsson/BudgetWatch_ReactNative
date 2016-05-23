@@ -88,17 +88,20 @@ var NavigationBarRouteMapper = props => ({
   },
   goToBudgets(navigator){
     var transType;
+    var transID;
     if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
       transType= "Add transaction";
+      transId = 0;
     }else{
       transType= "Add revenue";
+      transId = 1;
     }
     console.log("ON PRESS");
     navigator.push({ 
       name: transType,
       component: AddTransaction,
       passProps: {
-        transactionType: transType
+        transactionType: transId
       }
     })
   },

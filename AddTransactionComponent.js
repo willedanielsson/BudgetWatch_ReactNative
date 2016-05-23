@@ -157,6 +157,8 @@ class AddTransaction extends React.Component{
   }
 
   _saveTransaction(event){
+    var transactionTypeId = this.props.typeTrans.transactionType;
+    console.log(transactionTypeId);
     var realm = this.props.realm;
     var length = realm.objects('Transaction').length;
 
@@ -170,7 +172,12 @@ class AddTransaction extends React.Component{
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
       var budget = this.props.realm.objects('Budget').filtered("name = $0", transBudget);
       var budgetId = budget[0].id;
-      var sumValue = budget[0].value + transValue;
+      if(transactionTypeId===0){
+        var sumValue = budget[0].value + transValue;
+      }else if(transactionTypeId===1){
+        var sumValue = budget[0].value - transValue;
+      }
+      
       realm.write(() => {
         realm.create('Budget', {id: budgetId, value: sumValue}, true);
       });
@@ -178,7 +185,7 @@ class AddTransaction extends React.Component{
       realm.write(() => {
         let budget = realm.create('Transaction', {
           id: length,
-          transactionType: 1,
+          transactionType: transactionTypeId,
           name: transName,
           budget: transBudget,
           account: transAccount,
@@ -186,8 +193,6 @@ class AddTransaction extends React.Component{
           note: transNote,
           date: transDate
         });
-
-
       });
       
       this.props.navigator.pop();

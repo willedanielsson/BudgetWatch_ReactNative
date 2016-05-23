@@ -84,12 +84,13 @@ var BudgetWatch_ReactNative = React.createClass({
       return React.createElement(route.component, {navigator, realm});
     }
     if(route.name == 'Add transaction'){
-      // {...route.passProps}
-      return React.createElement(route.component, {navigator, realm});
+      console.log(route.passProps);
+      var typeTrans = route.passProps;
+      return React.createElement(route.component, {navigator, realm, typeTrans});
     }
     if(route.name == 'Add revenue'){
-      // {...route.passProps}
-      return React.createElement(route.component, {navigator, realm});
+      var typeTrans = route.passProps;
+      return React.createElement(route.component, {navigator, realm, typeTrans});
     }
 
   },
@@ -114,7 +115,7 @@ var BudgetWatch_ReactNative = React.createClass({
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 0,
-        transactionType: 1,
+        transactionType: 0,
         name: 'Shirt',
         budget: 'Clothing',
         account: 'Personal',
@@ -129,7 +130,7 @@ var BudgetWatch_ReactNative = React.createClass({
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 1,
-        transactionType: 1,
+        transactionType: 0,
         name: 'Pants',
         budget: 'Clothing',
         account: '',
@@ -144,7 +145,7 @@ var BudgetWatch_ReactNative = React.createClass({
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 2,
-        transactionType: 1,
+        transactionType: 0,
         name: 'Groceries',
         budget: 'Food',
         account: '',
@@ -159,7 +160,7 @@ var BudgetWatch_ReactNative = React.createClass({
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 3,
-        transactionType: 2,
+        transactionType: 1,
         name: 'Pant',
         budget: 'Food',
         account: '',
@@ -177,7 +178,12 @@ var BudgetWatch_ReactNative = React.createClass({
     var trans = realm.objects('Transaction').filtered('budget = "Clothing"');
     var totalValue = 0;
     for (var i = 0; i < trans.length; i++) {
-      totalValue = totalValue + trans[i].value;
+      if(trans[i].transactionType===0){
+        totalValue = totalValue + trans[i].value;
+      }else{
+        totalValue = totalValue - trans[i].value;
+      }
+      
     }
 
     realm.write(() => {
@@ -195,7 +201,11 @@ var BudgetWatch_ReactNative = React.createClass({
     var trans = realm.objects('Transaction').filtered('budget = "Food"');
     var totalValue = 0;
     for (var i = 0; i < trans.length; i++) {
-      totalValue = totalValue + trans[i].value;
+      if(trans[i].transactionType===0){
+        totalValue = totalValue + trans[i].value;
+      }else{
+        totalValue = totalValue - trans[i].value;
+      }
     }
     realm.write(() => {
       let budget = realm.create('Budget', {
