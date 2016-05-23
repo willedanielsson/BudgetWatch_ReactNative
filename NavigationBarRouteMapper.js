@@ -90,10 +90,10 @@ var NavigationBarRouteMapper = props => ({
     var transType;
     var transID;
     if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
-      transType= "Add transaction";
+      transType= "Add Expense";
       transId = 0;
     }else{
-      transType= "Add revenue";
+      transType= "Add Revenue";
       transId = 1;
     }
     console.log("ON PRESS");

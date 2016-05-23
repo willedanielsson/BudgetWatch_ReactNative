@@ -60,7 +60,7 @@ class Main extends React.Component{
       <View style={styles.container}>
         <View style={styles.listContainer}>
           <TouchableHighlight style={styles.button} onPress={ () => this.goToBudgets('yoyoyo')}>
-            <MainListItem name={'Test'} desc={'Create and manage budgets'} image={require('./images/purse.png')}/>
+            <MainListItem name={'Budgets'} desc={'Create and manage budgets'} image={require('./images/purse.png')}/>
           </TouchableHighlight>
 
           <TouchableHighlight style={styles.button} onPress={ () => this.goToTransactions('yoyoyo')}>

@@ -15,8 +15,8 @@ var TransactionList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var transactions = this.props.realm.objects('Transaction');
-    var expenses = transactions.filtered('transactionType = 1');
-    var revenues = transactions.filtered('transactionType = 2');
+    var expenses = transactions.filtered('transactionType = 0');
+    var revenues = transactions.filtered('transactionType = 1');
     if(this.props.type==='expenses'){
       return {
         dataSource: ds.cloneWithRows(expenses),
