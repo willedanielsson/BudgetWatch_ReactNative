@@ -27,7 +27,6 @@ class AddTransaction extends React.Component{
       inputNote: '',
       inputDate: date,
       displayDate: date.toString().substring(4,10) + "," + date.toString().substring(10,15),
-      testlang: ["Swed", "Dutch", "English", "meeh"],
     }
   }
     // Use `new Date()` for current date.
