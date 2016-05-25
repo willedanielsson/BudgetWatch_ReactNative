@@ -33,6 +33,18 @@ var BudgetList = React.createClass({
     );
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
+    console.log(rowData.name);
+    var totalValue = 0;
+    var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND name = 'Pants'", rowData.name);
+    for (var i = 0; i < transactions.length; i++) {
+      console.log(transactions[i].value);
+      if(transactions[i].transactionType===0){
+        totalValue += transactions[i].value;
+      }else{
+        totalValue -= transactions[i].value;
+      }
+    }
+    console.log("Total value: "+totalValue);
     return (
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>
@@ -45,10 +57,10 @@ var BudgetList = React.createClass({
                 indeterminate={false} 
                 backgroundStyle={{backgroundColor: 'blue', borderRadius: 5}}
                 color="grey" 
-                progress={rowData.value/rowData.maxValue}/>
+                progress={totalValue/rowData.maxValue}/>
           </View>
           <View style={styles.rightContainer}>
-            <Text style={styles.progressText}> {rowData.value}/{rowData.maxValue}</Text>
+            <Text style={styles.progressText}> {Math.round(totalValue * 100) / 100}/{Math.round(rowData.maxValue * 100) / 100}</Text>
           </View>
           
         </View>
@@ -56,6 +68,23 @@ var BudgetList = React.createClass({
     );
   },
 });
+
+/*
+
+      var budget = this.props.realm.objects('Budget').filtered("name = $0", transBudget);
+      var budgetId = budget[0].id;
+      if(transactionTypeId===0){
+        var sumValue = budget[0].value + transValue;
+      }else if(transactionTypeId===1){
+        var sumValue = budget[0].value - transValue;
+      }
+      
+      realm.write(() => {
+        realm.create('Budget', {id: budgetId, value: sumValue}, true);
+      });
+
+
+*/
 
 var styles = StyleSheet.create({
   list: {

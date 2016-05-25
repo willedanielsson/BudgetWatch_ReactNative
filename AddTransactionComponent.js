@@ -169,18 +169,6 @@ class AddTransaction extends React.Component{
     var transDate = this.state.displayDate;
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
-      var budget = this.props.realm.objects('Budget').filtered("name = $0", transBudget);
-      var budgetId = budget[0].id;
-      if(transactionTypeId===0){
-        var sumValue = budget[0].value + transValue;
-      }else if(transactionTypeId===1){
-        var sumValue = budget[0].value - transValue;
-      }
-      
-      realm.write(() => {
-        realm.create('Budget', {id: budgetId, value: sumValue}, true);
-      });
-
       realm.write(() => {
         let budget = realm.create('Transaction', {
           id: length,
