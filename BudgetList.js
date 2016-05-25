@@ -35,9 +35,9 @@ var BudgetList = React.createClass({
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
     console.log(rowData.name);
     var totalValue = 0;
-    var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND name = 'Pants'", rowData.name);
+    var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems<=$2", rowData.name, this.props.startTime, this.props.endTime);
     for (var i = 0; i < transactions.length; i++) {
-      console.log(transactions[i].value);
+      console.log(transactions[i].datems);
       if(transactions[i].transactionType===0){
         totalValue += transactions[i].value;
       }else{

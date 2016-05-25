@@ -22,11 +22,16 @@ class Budgets extends React.Component{
 
     var printFirstDate = this.formatDate(firstDay);
     var printLastDate = this.formatDate(lastDay);
+
+    var startDateTime = firstDay.getTime();
+    var endDateTime = lastDay.getTime();
     this.state = {
       startDate: firstDay,
       endDate: lastDay,
       startDatePrint: printFirstDate,
       endDatePrint: printLastDate,
+      startDateTime: startDateTime,
+      endDateTime: endDateTime
     }
   }
 
@@ -40,7 +45,7 @@ class Budgets extends React.Component{
             </Text>
           </TouchableHighlight>
         </View>
-        <BudgetList realm={this.props.realm}/>
+        <BudgetList realm={this.props.realm} startTime= {this.state.startDateTime} endTime={this.state.endDateTime}/>
       </View>
     )
   }

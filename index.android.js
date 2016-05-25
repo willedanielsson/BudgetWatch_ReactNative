@@ -49,6 +49,7 @@ const TransactionSchema ={
     value: {type: 'float', default: 0},
     note: {type: 'string', optional: true},
     date: 'string',
+    datems: 'int',
     receipt: {type: 'data', optional: true},
   }
 };
@@ -121,7 +122,8 @@ var BudgetWatch_ReactNative = React.createClass({
         account: 'Personal',
         value: 499.00,
         note: 'The blue shirt',
-        date: 'May 18, 2016'
+        date: 'May 18, 2016',
+        datems: 1464176573822,
       });
     });
   }
@@ -136,7 +138,8 @@ var BudgetWatch_ReactNative = React.createClass({
         account: '',
         value: 799.00,
         note: '',
-        date: 'May 20, 2016'
+        date: 'May 20, 2016',
+        datems: 1464176571822
       });
     });
   }
@@ -151,7 +154,8 @@ var BudgetWatch_ReactNative = React.createClass({
         account: '',
         value: 287.62,
         note: '',
-        date: 'May 10, 2016'
+        date: 'May 10, 2016',
+        datems: 1464176573222
       });
     });
   }
@@ -166,7 +170,8 @@ var BudgetWatch_ReactNative = React.createClass({
         account: '',
         value: 17.00,
         note: '',
-        date: 'May 17, 2016'
+        date: 'May 17, 2016',
+        datems: 1464176123822
       });
     });
   }

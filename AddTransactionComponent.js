@@ -167,6 +167,8 @@ class AddTransaction extends React.Component{
     var transValue = this.state.inputValue;
     var transNote = this.state.inputNote.trim();
     var transDate = this.state.displayDate;
+    var dateTime = this.state.inputDate.getTime();
+    console.log(dateTime);
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
       realm.write(() => {
@@ -178,7 +180,8 @@ class AddTransaction extends React.Component{
           account: transAccount,
           value: transValue,
           note: transNote,
-          date: transDate
+          date: transDate,
+          datems: dateTime
         });
       });
       
