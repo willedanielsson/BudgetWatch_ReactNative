@@ -16,15 +16,27 @@ import {
   View,
   Navigator,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  BackAndroid,
 } from 'react-native';
 
 import Realm from 'realm'
 
 var ToolbarAndroid = require('ToolbarAndroid');
+var navigator;
 
 var Main = require('./MainComponent.js');
+
 var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
+
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+    if (navigator && navigator.getCurrentRoutes().length > 1) {
+        navigator.pop();
+        return true;
+    }
+    return false;
+});
 
 const BudgetSchema ={
   name: 'Budget',
@@ -224,6 +236,7 @@ var BudgetWatch_ReactNative = React.createClass({
   }
     return (
       <Navigator
+        ref={(nav) => { navigator = nav; }}
         style={{flex:1}}
         initialRoute={{ name: 'Main', component: Main}}
         renderScene={this.renderScene}
