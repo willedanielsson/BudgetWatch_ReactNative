@@ -63,6 +63,7 @@ class AddTransaction extends React.Component{
           <Text style={styles.label}>Name</Text>
             <TextInput 
               ref="inputName"
+              autoFocus={true}
               style={styles.input}
               onChangeText={(inputName) => this.setState({inputName})}
               value={this.state.inputName}/>

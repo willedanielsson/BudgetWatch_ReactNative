@@ -30,6 +30,7 @@ class AddBudget extends React.Component{
           <Text style={styles.label}>Type</Text>
             <TextInput 
               ref="inputtype"
+              autoFocus={true}
               style={styles.input} 
               placeholder="Grocery"
               onChangeText={(inputtype) => this.setState({inputtype})}
