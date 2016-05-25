@@ -11,6 +11,7 @@ import {
   TouchableHighlight,
   DatePickerAndroid,
   Picker,
+  ToastAndroid,
 } from 'react-native';
 
 var Button = require('react-native-button');
@@ -185,8 +186,22 @@ class AddTransaction extends React.Component{
       });
       
       this.props.navigator.pop();
+      // required input missing
     } else{
-      console.log("Empty");
+
+      var message;
+      if(transName===''){
+        message="Name is empty";
+      }else if(transValue===0){
+        message="Value is empty";
+      }else if(transDate===undefined){
+        message="Date invalid";
+      }
+      console.log(message);
+      console.log(transName);
+      console.log(transValue);
+      console.log(transDate);
+      ToastAndroid.show(message, ToastAndroid.LONG);
     }
   }
 

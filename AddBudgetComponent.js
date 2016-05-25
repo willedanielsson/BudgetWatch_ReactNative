@@ -7,7 +7,8 @@ import {
   Navigator,
   Image,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  ToastAndroid,
 } from 'react-native';
 
 var Button = require('react-native-button');
@@ -83,6 +84,14 @@ class AddBudget extends React.Component{
       });
 
       this.props.navigator.pop();
+    }else{
+      var message;
+      if(budgetType===''){
+        message="Budget type is empty";
+      }else if(budgetValue===0){
+        message="Budget value is empty";
+      }
+      ToastAndroid.show(message, ToastAndroid.LONG);
     }
   }
 };
