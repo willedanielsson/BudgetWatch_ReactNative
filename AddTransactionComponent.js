@@ -168,7 +168,6 @@ class AddTransaction extends React.Component{
     var transNote = this.state.inputNote.trim();
     var transDate = this.state.displayDate;
     var dateTime = this.state.inputDate.getTime();
-    console.log(dateTime);
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
       realm.write(() => {

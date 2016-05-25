@@ -7,12 +7,11 @@ import {
   Navigator,
   Image,
   ListView,
-  UIExplorerBlock,
-  UIExplorerPage,
   TouchableHighlight
 } from 'react-native';
 
 var ProgressBar = require('ProgressBarAndroid');
+var Transactions = require('./TransactionsComponent.js');
 
 
 var BudgetList = React.createClass({
@@ -35,17 +34,16 @@ var BudgetList = React.createClass({
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
     console.log(rowData.name);
     var totalValue = 0;
-    var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems<=$2", rowData.name, this.props.startTime, this.props.endTime);
+    var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems <= $2", rowData.name, this.props.startTime, this.props.endTime);
     for (var i = 0; i < transactions.length; i++) {
-      console.log(transactions[i].datems);
       if(transactions[i].transactionType===0){
         totalValue += transactions[i].value;
       }else{
         totalValue -= transactions[i].value;
       }
     }
-    console.log("Total value: "+totalValue);
     return (
+      <TouchableHighlight onPress={ () => this.goToTransactions(rowData.name)}>
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.header}>{rowData.name}</Text>
@@ -65,8 +63,19 @@ var BudgetList = React.createClass({
           
         </View>
       </View>
+      </TouchableHighlight>
     );
   },
+
+  goToTransactions(budgetName){
+    this.props.navigator.push({
+      name: 'Transactions',
+      component: Transactions,
+      passProps: {
+        budgetName: budgetName
+      }
+    })
+  } 
 });
 
 /*

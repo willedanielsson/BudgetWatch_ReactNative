@@ -54,10 +54,10 @@ class Transactions extends React.Component{
           ref={viewPager => { this.viewPager = viewPager; }}>
 
           <View style={styles.pageStyle}>
-            <TransactionList type={'expenses'} realm={this.props.realm}/>
+            <TransactionList type={'expenses'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
           </View>
           <View style={styles.pageStyle}>
-             <TransactionList type={'revenues'} realm={this.props.realm}/>
+             <TransactionList type={'revenues'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
           </View>
         </ViewPagerAndroid>
       </View>

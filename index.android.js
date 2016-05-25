@@ -78,7 +78,8 @@ var BudgetWatch_ReactNative = React.createClass({
     }
     if(route.name == 'Transactions'){
       // {...route.passProps}
-      return React.createElement(route.component, {navigator, realm});
+      var budgetName = route.passProps.budgetName;
+      return React.createElement(route.component, {navigator, realm, budgetName});
     }
     if(route.name == 'Add budget'){
       // {...route.passProps}

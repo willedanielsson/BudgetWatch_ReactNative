@@ -15,8 +15,17 @@ var TransactionList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var transactions = this.props.realm.objects('Transaction');
-    var expenses = transactions.filtered('transactionType = 0');
-    var revenues = transactions.filtered('transactionType = 1');
+
+    var expenses;
+    var revenues;
+    if(this.props.budgetName!==undefined){
+      expenses = transactions.filtered('transactionType = 0 AND budget= $0', this.props.budgetName);
+      revenues = transactions.filtered('transactionType = 1 AND budget= $0', this.props.budgetName);
+    }else{
+      expenses = transactions.filtered('transactionType = 0');
+      revenues = transactions.filtered('transactionType = 1');
+    }
+    
     if(this.props.type==='expenses'){
       return {
         dataSource: ds.cloneWithRows(expenses),

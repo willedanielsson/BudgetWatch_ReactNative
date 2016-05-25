@@ -45,7 +45,7 @@ class Budgets extends React.Component{
             </Text>
           </TouchableHighlight>
         </View>
-        <BudgetList realm={this.props.realm} startTime= {this.state.startDateTime} endTime={this.state.endDateTime}/>
+        <BudgetList realm={this.props.realm} navigator = {this.props.navigator} startTime= {this.state.startDateTime} endTime={this.state.endDateTime}/>
       </View>
     )
   }
