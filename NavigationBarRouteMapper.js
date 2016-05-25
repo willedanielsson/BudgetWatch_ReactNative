@@ -34,12 +34,6 @@ var NavigationBarRouteMapper = props => ({
     if (route.name == "Budgets"){ 
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => this.setTimeForBudget()}>
-             <View style={styles.calendarContainer}>
-              <Image style={styles.calendarIcon} source={require('./images/calendar.png')}/>
-            </View>
-           </TouchableHighlight>
-
           <TouchableHighlight onPress={ () => navigator.push({ 
             name: 'Add budget',
             component: AddBudget,
@@ -98,11 +92,6 @@ var NavigationBarRouteMapper = props => ({
       }
     })
   },
-
-  setTimeForBudget(){
-    console.log("SET BDUGET");
-  },
-
 
   Title(route, navigator, index, navState) {
     return(

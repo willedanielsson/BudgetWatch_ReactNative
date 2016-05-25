@@ -6,7 +6,8 @@ import {
   View,
   Navigator,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Modal
 } from 'react-native';
 
 var BudgetList = require('./BudgetList.js');
@@ -14,18 +15,56 @@ var BudgetList = require('./BudgetList.js');
 //let persons = realm.objects('Person');
 
 class Budgets extends React.Component{
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      modalVisible: false,
+    }
+  }
   render(){
     return (
-      <View style={styles.container}>
-        <View style={styles.dateContainer}>
-          <Text style={styles.date}>
-            01/05/16 ~ 31/05/16
-          </Text>
+      <View>
+        <View style={styles.container}>
+          <View style={styles.dateContainer}>
+            <TouchableHighlight onPress={ () => this._setModalVisible(true)}>
+              <Text style={styles.date}>
+                01/05/16 ~ 31/05/16
+              </Text>
+            </TouchableHighlight>
+          </View>
+          <BudgetList realm={this.props.realm}/>
         </View>
-        <BudgetList realm={this.props.realm}/>
+
+        <Modal
+          animationType={'none'}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {this._setModalVisible(false)}}
+          >
+          <View style={styles.modal}>
+            <View>
+              <Text>This modal is nice</Text>
+              <TouchableHighlight onPress={ () => this._setModalVisible(false)}>
+                <Text style={styles.date}>
+                  CLOSE
+                </Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
       </View>
     )
   }
+
+  setTimeForBudget(){
+    console.log("SET BDUGET");
+  }
+
+   _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
 };
 
 var styles = StyleSheet.create({
@@ -40,7 +79,12 @@ var styles = StyleSheet.create({
   },
   date: {
     fontSize:20,
-  }
+  },
+  modal: {
+    flex: 1,
+    margin: 20,
+    backgroundColor: '#eeeeee'
+  },
 });
 
 
