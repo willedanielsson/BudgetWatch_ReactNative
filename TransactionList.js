@@ -14,7 +14,7 @@ import {
 var TransactionList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var transactions = this.props.realm.objects('Transaction');
+    var transactions = this.props.data;
 
     var expenses;
     var revenues;
@@ -28,12 +28,44 @@ var TransactionList = React.createClass({
     
     if(this.props.type==='expenses'){
       return {
+        data: this.props.data,
         dataSource: ds.cloneWithRows(expenses.sorted('datems', true)),
       };
     }else{
       return {
+        data: this.props.data,
         dataSource: ds.cloneWithRows(revenues.sorted('datems', true)),
       };
+    }
+  },
+
+  componentWillUpdate (nextProps, nextState) {
+    if (this.state.dataSource._cachedRowCount !== this.props.data.length) {
+      this.setState({
+        data: this.props.data,
+        dataSource: this.state.dataSource.cloneWithRows(this.props.data.sorted('datems', true)),
+      })
+     /* var expenses;
+      var revenues;
+      if(this.props.budgetName!==undefined){
+        expenses = this.props.data.filtered('transactionType = 0 AND budget= $0', this.props.budgetName);
+        revenues = this.props.data.filtered('transactionType = 1 AND budget= $0', this.props.budgetName);
+      }else{
+        expenses = this.props.data.filtered('transactionType = 0');
+        revenues = this.props.data.filtered('transactionType = 1');
+      }
+
+      if(this.props.type==='expenses'){
+        this.setState({
+          data: this.props.data,
+          dataSource: this.state.dataSource.cloneWithRows(expenses.sorted('datems', true)),
+        })
+      }else{
+        this.setState({
+          data: this.props.data,
+          dataSource: this.state.dataSource.cloneWithRows(revenues.sorted('datems', true)),
+        })
+      }*/
     }
   },
 

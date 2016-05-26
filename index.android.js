@@ -27,6 +27,7 @@ var navigator;
 
 var Main = require('./MainComponent.js');
 var Budgets = require('./BudgetsComponent.js');
+var Transactions = require('./TransactionsComponent.js');
 
 var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
 
@@ -92,9 +93,11 @@ var BudgetWatch_ReactNative = React.createClass({
       return <Budgets navigator={navigator} realm={realm} data={data} />
     }
     if(route.name == 'Transactions'){
-      // {...route.passProps}
+      var data = realm.objects('Transaction');
+      console.log(data);
       var budgetName = route.passProps.budgetName;
-      return React.createElement(route.component, {navigator, realm, budgetName});
+      //return React.createElement(route.component, {navigator, realm, budgetName});
+      return <Transactions navigator={navigator} realm={realm} data={data} budgetName={budgetName}/>
     }
     if(route.name == 'Add budget'){
       // {...route.passProps}
@@ -119,6 +122,11 @@ var BudgetWatch_ReactNative = React.createClass({
       //console.log(data.length);
       //return React.createElement(route.component, {navigator, realm, data});
       return <Budgets navigator={navigator} realm={realm} data={data} />
+    }
+    if(route.name==="Transactions"){
+       var data = realm.objects('Transaction');
+       var budgetName = route.passProps.budgetName;
+       return <Transactions navigator={navigator} realm={realm} data={data} budgetName={budgetName}/>
     }
 
   },

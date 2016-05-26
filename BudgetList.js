@@ -26,11 +26,7 @@ var BudgetList = React.createClass({
     };
   },
 
-  componentWillUpdate (nextProps) {
-    console.log("C");
-    console.log(this.state.data.length);
-    console.log(this.props.data.length);
-    console.log(nextProps.data.length);
+  componentWillUpdate (nextProps, nextState) {
     if (this.state.dataSource._cachedRowCount !== this.props.data.length) {
       this.setState({
         data: this.props.data,
