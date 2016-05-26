@@ -44,7 +44,6 @@ const BudgetSchema ={
   properties: {
     id: 'int',
     name: 'string',
-    value: {type: 'int', default: 0},
     maxValue: 'int',
   }
 };
@@ -107,6 +106,11 @@ var BudgetWatch_ReactNative = React.createClass({
       return React.createElement(route.component, {navigator, realm, typeTrans});
     }
 
+  },
+
+  onDidFocus(route){
+    console.log("onDidFocus");
+    console.log(route);
   },
 
   render() {
@@ -194,22 +198,11 @@ var BudgetWatch_ReactNative = React.createClass({
   if(budgets[0]===undefined){
     console.log("Create budget");
     var trans = realm.objects('Transaction').filtered('budget = "Clothing"');
-    var totalValue = 0;
-    for (var i = 0; i < trans.length; i++) {
-      if(trans[i].transactionType===0){
-        totalValue = totalValue + trans[i].value;
-      }else{
-        totalValue = totalValue - trans[i].value;
-      }
-      
-    }
-
     realm.write(() => {
       let budget = realm.create('Budget', {
         id: 0,
         name: 'Clothing',
-        maxValue: 1500,
-        value: totalValue,
+        maxValue: 1500
       });
     });
   }
@@ -217,29 +210,20 @@ var BudgetWatch_ReactNative = React.createClass({
   if(budgets[1]===undefined){
     console.log("Create budget2");
     var trans = realm.objects('Transaction').filtered('budget = "Food"');
-    var totalValue = 0;
-    for (var i = 0; i < trans.length; i++) {
-      if(trans[i].transactionType===0){
-        totalValue = totalValue + trans[i].value;
-      }else{
-        totalValue = totalValue - trans[i].value;
-      }
-    }
     realm.write(() => {
       let budget = realm.create('Budget', {
         id: 1,
         name: 'Food',
-        maxValue: 3500,
-        value: totalValue,
+        maxValue: 3500
       });
     });
   }
     return (
       <Navigator
-        ref={(nav) => { navigator = nav; }}
         style={{flex:1}}
         initialRoute={{ name: 'Main', component: Main}}
         renderScene={this.renderScene}
+        onDidFocus={this.onDidFocus}
         realm = {realm}
         navigationBar={
         <Navigator.NavigationBar

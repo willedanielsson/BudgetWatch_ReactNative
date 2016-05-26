@@ -80,11 +80,10 @@ class AddBudget extends React.Component{
           id: length,
           name: budgetType,
           maxValue: budgetValue,
-          vale: realm.objects('Transaction').filtered("budget = '\(budgetType)'").length
         });
       });
-
       this.props.navigator.pop();
+      
     }else{
       var message;
       if(budgetType===''){

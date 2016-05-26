@@ -78,23 +78,6 @@ var BudgetList = React.createClass({
   } 
 });
 
-/*
-
-      var budget = this.props.realm.objects('Budget').filtered("name = $0", transBudget);
-      var budgetId = budget[0].id;
-      if(transactionTypeId===0){
-        var sumValue = budget[0].value + transValue;
-      }else if(transactionTypeId===1){
-        var sumValue = budget[0].value - transValue;
-      }
-      
-      realm.write(() => {
-        realm.create('Budget', {id: budgetId, value: sumValue}, true);
-      });
-
-
-*/
-
 var styles = StyleSheet.create({
   list: {
     padding: 16
