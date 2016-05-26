@@ -72,7 +72,8 @@ class AddBudget extends React.Component{
     var realm = this.props.realm;
     var length = realm.objects('Budget').length;
     var budgetType = this.state.inputtype.trim();
-    var budgetValue = this.state.inputvalue;
+    var budgetValue = parseInt(this.state.inputvalue);
+    console.log(budgetValue);
 
     if(budgetType!=='' && budgetValue!==0){
       realm.write(() => {
@@ -83,7 +84,7 @@ class AddBudget extends React.Component{
         });
       });
       this.props.navigator.pop();
-      
+
     }else{
       var message;
       if(budgetType===''){
