@@ -140,7 +140,7 @@ var BudgetWatch_ReactNative = React.createClass({
         value: 499.00,
         note: 'The blue shirt',
         date: 'May 18, 2016',
-        datems: 1464176573822,
+        datems: 1463522400000,
       });
     });
   }
@@ -156,7 +156,7 @@ var BudgetWatch_ReactNative = React.createClass({
         value: 799.00,
         note: '',
         date: 'May 20, 2016',
-        datems: 1464176571822
+        datems: 1463695200000
       });
     });
   }
@@ -172,7 +172,7 @@ var BudgetWatch_ReactNative = React.createClass({
         value: 287.62,
         note: '',
         date: 'May 10, 2016',
-        datems: 1464176573222
+        datems: 1462831200000
       });
     });
   }
@@ -188,7 +188,7 @@ var BudgetWatch_ReactNative = React.createClass({
         value: 17.00,
         note: '',
         date: 'May 17, 2016',
-        datems: 1464176123822
+        datems: 1463436000000
       });
     });
   }

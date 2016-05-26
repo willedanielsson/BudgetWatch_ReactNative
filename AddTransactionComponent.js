@@ -166,7 +166,7 @@ class AddTransaction extends React.Component{
     var transName = this.state.inputName.trim();
     var transBudget = this.state.inputBudget;
     var transAccount = this.state.inputAccount.trim();
-    var transValue = this.state.inputValue;
+    var transValue = parseInt(this.state.inputValue);
     var transNote = this.state.inputNote.trim();
     var transDate = this.state.displayDate;
     var dateTime = this.state.inputDate.getTime();

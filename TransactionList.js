@@ -28,11 +28,11 @@ var TransactionList = React.createClass({
     
     if(this.props.type==='expenses'){
       return {
-        dataSource: ds.cloneWithRows(expenses),
+        dataSource: ds.cloneWithRows(expenses.sorted('datems', true)),
       };
     }else{
       return {
-        dataSource: ds.cloneWithRows(revenues),
+        dataSource: ds.cloneWithRows(revenues.sorted('datems', true)),
       };
     }
   },
