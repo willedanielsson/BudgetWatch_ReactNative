@@ -13,9 +13,9 @@ var BudgetList = require('./BudgetList.js');
 //import Realm from 'realm'
 //let persons = realm.objects('Person');
 
-class Budgets extends React.Component{
-  constructor(props) {
-    super(props)
+var Budgets = React.createClass({
+  getInitialState: function() {
+    //console.log("Initial state");
     var date = new Date();
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -25,17 +25,21 @@ class Budgets extends React.Component{
 
     var startDateTime = firstDay.getTime();
     var endDateTime = lastDay.getTime();
-    this.state = {
+    var propsdata = this.props.data;
+    return {
       startDate: firstDay,
       endDate: lastDay,
       startDatePrint: printFirstDate,
       endDatePrint: printLastDate,
       startDateTime: startDateTime,
-      endDateTime: endDateTime
-    }
-  }
+      endDateTime: endDateTime,
+      data: propsdata,
+    };
+  },
 
   render(){
+    //console.log("Render the view in Budgets");
+    //console.log(this.state.data.length);
     return (
       <View style={styles.container}>
         <View style={styles.dateContainer}>
@@ -45,10 +49,10 @@ class Budgets extends React.Component{
             </Text>
           </TouchableHighlight>
         </View>
-        <BudgetList realm={this.props.realm} navigator = {this.props.navigator} startTime= {this.state.startDateTime} endTime={this.state.endDateTime}/>
+        <BudgetList data={this.props.data} realm={this.props.realm} navigator = {this.props.navigator} startTime= {this.state.startDateTime} endTime={this.state.endDateTime}/>
       </View>
     )
-  }
+  },
 
   testFunc(){
     var date = new Date();
@@ -57,7 +61,7 @@ class Budgets extends React.Component{
 
     var printFirstDate = this.formatDate(firstDay);
     var printLastDate = this.formatDate(lastDay);
-  }
+  },
 
   formatDate(d){
     date = new Date(d)
@@ -69,7 +73,7 @@ class Budgets extends React.Component{
     return d = dd+'/'+mm+'/'+yyyy
   }
 
-};
+});
 
 var styles = StyleSheet.create({
   container: {

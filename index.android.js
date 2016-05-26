@@ -26,6 +26,7 @@ var ToolbarAndroid = require('ToolbarAndroid');
 var navigator;
 
 var Main = require('./MainComponent.js');
+var Budgets = require('./BudgetsComponent.js');
 
 var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
 
@@ -85,7 +86,10 @@ var BudgetWatch_ReactNative = React.createClass({
     }
     if(route.name == 'Budgets'){
       // {...route.passProps}
-      return React.createElement(route.component, {navigator, realm});
+      var data = realm.objects('Budget').sorted('name');
+      console.log("render");
+      console.log(data.length);
+      return <Budgets navigator={navigator} realm={realm} data={data} />
     }
     if(route.name == 'Transactions'){
       // {...route.passProps}
@@ -109,8 +113,14 @@ var BudgetWatch_ReactNative = React.createClass({
   },
 
   onDidFocus(route){
-    console.log("onDidFocus");
-    console.log(route);
+    if(route.name==='Budgets'){
+      //console.log("onDidFocus");
+      var data = realm.objects('Budget').sorted('name');
+      //console.log(data.length);
+      //return React.createElement(route.component, {navigator, realm, data});
+      return <Budgets navigator={navigator} realm={realm} data={data} />
+    }
+
   },
 
   render() {
