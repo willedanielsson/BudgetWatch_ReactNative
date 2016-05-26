@@ -220,6 +220,7 @@ var BudgetWatch_ReactNative = React.createClass({
   }
     return (
       <Navigator
+        ref={(nav) => { navigator = nav; }}
         style={{flex:1}}
         initialRoute={{ name: 'Main', component: Main}}
         renderScene={this.renderScene}
