@@ -7,11 +7,13 @@ import {
   Navigator,
   Image,
   ListView,
-  TouchableHighlight
+  TouchableHighlight,
+  Modal,
 } from 'react-native';
 
 var ProgressBar = require('ProgressBarAndroid');
 var Transactions = require('./TransactionsComponent.js');
+var AddBudget = require('./AddBudgetComponent.js');
 
 
 var BudgetList = React.createClass({
@@ -21,6 +23,7 @@ var BudgetList = React.createClass({
     return {
       data: this.props.data,
       dataSource: ds.cloneWithRows(this.props.data),
+      modalVisible: false,
     };
   },
 
@@ -35,12 +38,31 @@ var BudgetList = React.createClass({
 
   render: function() {
     return (
+      <View>
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this._renderRow}
         style={styles.list}
         />
+        <Modal
+          animationType={'none'}
+          transparent={false}
+          visible={this.state.modalVisible}>
+          <View style={modalStyle.modal}>
+            <View style={modalStyle.container}>
+              <TouchableHighlight 
+                onPress={this.editBudget.bind(this)}>
+                <Text style={modalStyle.text}>Edit</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
     );
+  },
+
+  _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   },
 
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
@@ -56,7 +78,7 @@ var BudgetList = React.createClass({
     return (
       <TouchableHighlight 
         onPress={ () => this.goToTransactions(rowData.name)}
-        onLongPress={() => this.editBudget(rowData)}
+        onLongPress={() => {this._setModalVisible(true)}}
       >
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>
@@ -92,7 +114,14 @@ var BudgetList = React.createClass({
   },
 
   editBudget(budget){
-    console.log("EDIT BDUGET");
+    this._setModalVisible(false);
+    this.props.navigator.push({
+      name: 'Add budget',
+      component: AddBudget,
+      passProps: {
+        edit: true
+      }
+    })
   } 
 });
 
@@ -125,6 +154,28 @@ var styles = StyleSheet.create({
   },
   progressText: {
   }
+});
+
+var modalStyle = StyleSheet.create({
+  modal:{
+    flex:1,
+    alignItems:'stretch',
+    justifyContent:'center',
+    marginRight: 30,
+    marginLeft: 30,
+  },
+  container: {
+    backgroundColor: '#eeeeee',
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 2,
+  },
+  text:{
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    color: 'black',
+  },
 });
 
 
