@@ -83,7 +83,6 @@ var NavigationBarRouteMapper = props => ({
       transType= "Add Revenue";
       transId = 1;
     }
-    console.log("ON PRESS");
     navigator.push({ 
       name: transType,
       component: AddTransaction,
@@ -94,7 +93,7 @@ var NavigationBarRouteMapper = props => ({
   },
 
   setTimeForBudget(){
-    console.log("SET BDUGET");
+
   },
 
 

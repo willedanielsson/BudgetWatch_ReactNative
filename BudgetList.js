@@ -18,8 +18,6 @@ var BudgetList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var data = this.props.data;
-    console.log("state budget list");
-    console.log(data.length);
     return {
       data: this.props.data,
       dataSource: ds.cloneWithRows(this.props.data),
@@ -36,8 +34,6 @@ var BudgetList = React.createClass({
   },
 
   render: function() {
-    console.log("render of budgetlist");
-    console.log(this.state.dataSource);
     return (
       <ListView
         dataSource={this.state.dataSource}
@@ -48,7 +44,6 @@ var BudgetList = React.createClass({
   },
 
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    //console.log(rowData.name);
     var totalValue = 0;
     var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems <= $2", rowData.name, this.props.startTime, this.props.endTime);
     for (var i = 0; i < transactions.length; i++) {
