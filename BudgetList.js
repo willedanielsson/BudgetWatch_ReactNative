@@ -54,7 +54,10 @@ var BudgetList = React.createClass({
       }
     }
     return (
-      <TouchableHighlight onPress={ () => this.goToTransactions(rowData.name)}>
+      <TouchableHighlight 
+        onPress={ () => this.goToTransactions(rowData.name)}
+        onLongPress={() => this.editBudget(rowData)}
+      >
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.header}>{rowData.name}</Text>
@@ -86,6 +89,10 @@ var BudgetList = React.createClass({
         budgetName: budgetName
       }
     })
+  },
+
+  editBudget(budget){
+    console.log("EDIT BDUGET");
   } 
 });
 
