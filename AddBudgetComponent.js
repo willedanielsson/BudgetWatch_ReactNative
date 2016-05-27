@@ -62,7 +62,7 @@ class AddBudget extends React.Component{
             <Button
               style={styles.buttonCancel}
               styleDisabled={{color: 'red'}}
-              onPress={this._handlePress}>
+              onPress={this.cancelView.bind(this)}>
               CANCEL
             </Button>
           </View>
@@ -70,7 +70,7 @@ class AddBudget extends React.Component{
             <Button
               style={styles.buttonSave}
               styleDisabled={{color: 'red'}}
-              onPress={this._handlePress.bind(this)}>
+              onPress={this.saveBudget.bind(this)}>
               SAVE
             </Button>
           </View>
@@ -95,30 +95,54 @@ class AddBudget extends React.Component{
     }
   }
 
-  _handlePress(event){
+  cancelView(){
+    console.log("CANCEL");
+    this.props.navigator.pop();
+  }
+
+  saveBudget(event){
     var realm = this.props.realm;
     var length = realm.objects('Budget').length;
     var budgetType = this.state.inputtype.trim();
     var budgetValue = parseInt(this.state.inputvalue);
 
-    if(budgetType!=='' && budgetValue!==0){
-      realm.write(() => {
-        let budget = realm.create('Budget', {
-          id: length,
-          name: budgetType,
-          maxValue: budgetValue,
+    // If we are editing budget
+    if(this.state.editValue!==''){
+      if(budgetValue!==0){
+        var bId = this.props.selectedBudget.id;
+        realm.write(() => {
+          realm.create('Budget', {
+            id: parseInt(bId), 
+            name: this.state.editText,
+            maxValue: budgetValue}, true);
         });
-      });
-      this.props.navigator.pop();
+
+        this.props.navigator.pop();
+        // No value given
+      }else{
+        ToastAndroid.show("Budget value is empty", ToastAndroid.LONG);
+      }
 
     }else{
-      var message;
-      if(budgetType===''){
-        message="Budget type is empty";
-      }else if(budgetValue===0){
-        message="Budget value is empty";
+      if(budgetType!=='' && budgetValue!==0){
+        realm.write(() => {
+          let budget = realm.create('Budget', {
+            id: length,
+            name: budgetType,
+            maxValue: budgetValue,
+          });
+        });
+        this.props.navigator.pop();
+
+      }else{
+        var message;
+        if(budgetType===''){
+          message="Budget type is empty";
+        }else if(budgetValue===0){
+          message="Budget value is empty";
+        }
+        ToastAndroid.show(message, ToastAndroid.LONG);
       }
-      ToastAndroid.show(message, ToastAndroid.LONG);
     }
   }
 };
