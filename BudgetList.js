@@ -119,8 +119,15 @@ var BudgetList = React.createClass({
     this.setState({ selectedBudget: inBudget });
   },
 
-  editBudget(budget){
+  editBudget(){
     this._setModalVisible(false);
+    console.log(this.state.selectedBudget.id);
+
+    var realm=this.props.realm;
+    realm.write(() => {
+      realm.create('AppData', {id: 0, currentEditBudget: this.state.selectedBudget.id}, true);
+    });
+
     this.props.navigator.push({
       name: 'Add budget',
       component: AddBudget,

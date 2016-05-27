@@ -72,6 +72,17 @@ var NavigationBarRouteMapper = props => ({
          </View>
       )
     }
+    if(route.name==="Add budget"){
+      return (
+        <View style={styles.rightButtonContainer}>
+          <TouchableHighlight onPress={ () => this.deleteBudget(navigator)}>
+            <View style={styles.addTransactionButtonContainer}>
+              <Image style={styles.transactionIcon} source={require('./images/delete.png')}/>
+            </View>
+          </TouchableHighlight>
+        </View>
+      )
+    }
   },
   addTransaction(navigator){
     var transType;
@@ -90,12 +101,16 @@ var NavigationBarRouteMapper = props => ({
         transactionType: transId
       }
     })
+  }, 
+
+  deleteBudget(navigator){
+    navigator.props.realm.write(() => {
+      var budgetID = navigator.props.realm.objects('AppData')[0].currentEditBudget;
+      var budgetToRemove = navigator.props.realm.objects('Budget').filtered('id = $0', budgetID);
+      navigator.props.realm.delete(budgetToRemove);
+    });
+    navigator.pop();
   },
-
-  setTimeForBudget(){
-
-  },
-
 
   Title(route, navigator, index, navState) {
     return(

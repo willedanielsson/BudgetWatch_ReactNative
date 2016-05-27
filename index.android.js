@@ -73,7 +73,9 @@ const AppDataSchema ={
   primaryKey: 'id',
   properties: {
     id: 'int',
-    currentTrans: {type: 'int', default: 0}
+    currentTrans: {type: 'int', default: 0},
+    currentEditBudget: {type: 'int', default: 99},
+    currentEditTrans: {type: 'int', default: 99}
   }
 };
 
