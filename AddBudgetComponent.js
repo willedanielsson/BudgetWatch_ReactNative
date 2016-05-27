@@ -17,9 +17,18 @@ class AddBudget extends React.Component{
   constructor(props) {
     super(props)
 
+    var inName='';
+    var inValue='';
+    if(this.props.selectedBudget!==undefined){
+      inName = this.props.selectedBudget.name;
+      inValue = this.props.selectedBudget.maxValue.toString(); 
+    }
+
     this.state = {
       inputtype: '',
       inputvalue: 0,
+      editText: inName, 
+      editValue: inValue,
     }
   }
 
@@ -32,7 +41,8 @@ class AddBudget extends React.Component{
               ref="inputtype"
               autoFocus={true}
               style={styles.input} 
-              placeholder="Grocery"
+              placeholder={this.givePlaceholder()}
+              editable={this.isTextEditable()}
               onChangeText={(inputtype) => this.setState({inputtype})}
               value={this.state.inputtype}/>
         </View>
@@ -43,6 +53,7 @@ class AddBudget extends React.Component{
               style={styles.input} 
               placeholder="100" 
               keyboardType="numeric"
+              defaultValue={this.state.editValue}
               onChangeText={(inputvalue) => this.setState({inputvalue})}
               value={this.state.inputvalue}/>
         </View>
@@ -66,6 +77,22 @@ class AddBudget extends React.Component{
         </View>
       </View>
     )
+  }
+
+  isTextEditable(){
+    if(this.state.editText===''){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  givePlaceholder(){
+    if(this.state.editText===''){
+      return "Grocery";
+    }else{
+      return this.state.editText;
+    }
   }
 
   _handlePress(event){

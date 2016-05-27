@@ -98,7 +98,8 @@ var BudgetWatch_ReactNative = React.createClass({
     }
     if(route.name == 'Add budget'){
       // {...route.passProps}
-      return React.createElement(route.component, {navigator, realm});
+      var selectedBudget = route.passProps.editBudget;
+      return React.createElement(route.component, {navigator, realm, selectedBudget});
     }
     if(route.name == 'Add Expense'){
       var typeTrans = route.passProps;

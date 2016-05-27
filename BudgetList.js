@@ -24,6 +24,7 @@ var BudgetList = React.createClass({
       data: this.props.data,
       dataSource: ds.cloneWithRows(this.props.data),
       modalVisible: false,
+      selectedBudget: {},
     };
   },
 
@@ -78,7 +79,7 @@ var BudgetList = React.createClass({
     return (
       <TouchableHighlight 
         onPress={ () => this.goToTransactions(rowData.name)}
-        onLongPress={() => {this._setModalVisible(true)}}
+        onLongPress={() => {this.openEditBudgetModal(rowData)}}
       >
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>
@@ -113,13 +114,18 @@ var BudgetList = React.createClass({
     })
   },
 
+  openEditBudgetModal(inBudget){
+    this._setModalVisible(true);
+    this.setState({ selectedBudget: inBudget });
+  },
+
   editBudget(budget){
     this._setModalVisible(false);
     this.props.navigator.push({
       name: 'Add budget',
       component: AddBudget,
       passProps: {
-        edit: true
+        editBudget: this.state.selectedBudget
       }
     })
   } 
