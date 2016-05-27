@@ -154,12 +154,10 @@ class AddTransaction extends React.Component{
   }
 
   _captureReceipt(event){
-    console.log("Press");
   }
 
   _saveTransaction(event){
     var transactionTypeId = this.props.typeTrans.transactionType;
-    console.log(transactionTypeId);
     var realm = this.props.realm;
     var length = realm.objects('Transaction').length;
 
@@ -198,10 +196,7 @@ class AddTransaction extends React.Component{
       }else if(transDate===undefined){
         message="Date invalid";
       }
-      console.log(message);
-      console.log(transName);
-      console.log(transValue);
-      console.log(transDate);
+
       ToastAndroid.show(message, ToastAndroid.LONG);
     }
   }

@@ -26,6 +26,8 @@ var ToolbarAndroid = require('ToolbarAndroid');
 var navigator;
 
 var Main = require('./MainComponent.js');
+var Budgets = require('./BudgetsComponent.js');
+var Transactions = require('./TransactionsComponent.js');
 
 var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
 
@@ -85,19 +87,20 @@ var BudgetWatch_ReactNative = React.createClass({
     }
     if(route.name == 'Budgets'){
       // {...route.passProps}
-      return React.createElement(route.component, {navigator, realm});
+      var data = realm.objects('Budget').sorted('name');
+      return <Budgets navigator={navigator} realm={realm} data={data} />
     }
     if(route.name == 'Transactions'){
-      // {...route.passProps}
+      var data = realm.objects('Transaction');
       var budgetName = route.passProps.budgetName;
-      return React.createElement(route.component, {navigator, realm, budgetName});
+      //return React.createElement(route.component, {navigator, realm, budgetName});
+      return <Transactions navigator={navigator} realm={realm} data={data} budgetName={budgetName}/>
     }
     if(route.name == 'Add budget'){
       // {...route.passProps}
       return React.createElement(route.component, {navigator, realm});
     }
     if(route.name == 'Add Expense'){
-      console.log(route.passProps);
       var typeTrans = route.passProps;
       return React.createElement(route.component, {navigator, realm, typeTrans});
     }
@@ -109,15 +112,23 @@ var BudgetWatch_ReactNative = React.createClass({
   },
 
   onDidFocus(route){
-    console.log("onDidFocus");
-    console.log(route);
+    if(route.name==='Budgets'){
+      var data = realm.objects('Budget').sorted('name');
+      //return React.createElement(route.component, {navigator, realm, data});
+      return <Budgets navigator={navigator} realm={realm} data={data} />
+    }
+    if(route.name==="Transactions"){
+       var data = realm.objects('Transaction');
+       var budgetName = route.passProps.budgetName;
+       return <Transactions navigator={navigator} realm={realm} data={data} budgetName={budgetName}/>
+    }
+
   },
 
   render() {
   let appData = realm.objects('AppData');
 
   if(appData[0]===undefined){
-    console.log("Init appdata");
     realm.write(() => {
       let data = realm.create('AppData', {
         id:0,
@@ -129,7 +140,6 @@ var BudgetWatch_ReactNative = React.createClass({
   let transactions = realm.objects('Transaction');
 
   if(transactions[0]===undefined){
-    console.log("Create first transaction");
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 0,
@@ -145,7 +155,6 @@ var BudgetWatch_ReactNative = React.createClass({
     });
   }
   if(transactions[1]===undefined){
-    console.log("Create second transaction");
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 1,
@@ -161,7 +170,6 @@ var BudgetWatch_ReactNative = React.createClass({
     });
   }
   if(transactions[2]===undefined){
-    console.log("Create first transaction");
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 2,
@@ -177,7 +185,6 @@ var BudgetWatch_ReactNative = React.createClass({
     });
   }
   if(transactions[3]===undefined){
-    console.log("Create first transaction");
     realm.write(() => {
       let transaction = realm.create('Transaction', {
         id: 3,
@@ -196,7 +203,6 @@ var BudgetWatch_ReactNative = React.createClass({
   let budgets = realm.objects('Budget');
 
   if(budgets[0]===undefined){
-    console.log("Create budget");
     var trans = realm.objects('Transaction').filtered('budget = "Clothing"');
     realm.write(() => {
       let budget = realm.create('Budget', {
@@ -208,7 +214,6 @@ var BudgetWatch_ReactNative = React.createClass({
   }
 
   if(budgets[1]===undefined){
-    console.log("Create budget2");
     var trans = realm.objects('Transaction').filtered('budget = "Food"');
     realm.write(() => {
       let budget = realm.create('Budget', {

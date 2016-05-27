@@ -14,19 +14,19 @@ import {
 import { Tab, TabLayout } from 'react-native-android-tablayout';
 var TransactionList = require('./TransactionList.js');
 
-class Transactions extends React.Component{
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      currentPage: 0
-    }
+var Transactions = React.createClass({
+  getInitialState: function() {
     var realm=this.props.realm;
     realm.write(() => {
       realm.create('AppData', {id: 0,currentTrans: 0}, true);
     });
-  }
+
+    var propsdata = this.props.data;
+    return {
+      currentPage: 0,
+      data: propsdata,
+    };
+  },
 
   render(){
     return (
@@ -35,7 +35,7 @@ class Transactions extends React.Component{
           <TabLayout
           selectedTab={this.state.currentPage}
           selectedTabIndicatorColor='#FF4081'
-          onTabSelected={this._onTabClicked.bind(this)}
+          onTabSelected={this._onTabClicked}
           style={styles.tabLayout}>
             <Tab 
               name="EXPENSES"
@@ -50,19 +50,19 @@ class Transactions extends React.Component{
         <ViewPagerAndroid
           style={styles.viewPager}
           initialPage={this.state.currentPage}
-          onPageSelected={this._onPageSelected.bind(this)}
+          onPageSelected={this._onPageSelected}
           ref={viewPager => { this.viewPager = viewPager; }}>
 
           <View style={styles.pageStyle}>
-            <TransactionList type={'expenses'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
+            <TransactionList data={this.props.data} type={'expenses'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
           </View>
           <View style={styles.pageStyle}>
-             <TransactionList type={'revenues'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
+             <TransactionList data={this.props.data} type={'revenues'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
           </View>
         </ViewPagerAndroid>
       </View>
     )
-  }
+  },
 
   _onPageSelected(e){
     this.setState({currentPage: e.nativeEvent.position});
@@ -72,7 +72,7 @@ class Transactions extends React.Component{
     });
     console.log("Should be: " + e.nativeEvent.position);
 
-  }
+  },
   _onTabClicked(e){
     this.setState({currentPage: e.nativeEvent.position});
     this.viewPager.setPage(e.nativeEvent.position);
@@ -81,7 +81,7 @@ class Transactions extends React.Component{
       realm.create('AppData', {id: 0,currentTrans: e.nativeEvent.position}, true);
     });
   }
-};
+});
 
 var styles = StyleSheet.create({
   container: {

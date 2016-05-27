@@ -17,9 +17,20 @@ var Transactions = require('./TransactionsComponent.js');
 var BudgetList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var data = this.props.data;
     return {
-      dataSource: ds.cloneWithRows(this.props.realm.objects('Budget').sorted('name')),
+      data: this.props.data,
+      dataSource: ds.cloneWithRows(this.props.data),
     };
+  },
+
+  componentWillUpdate (nextProps, nextState) {
+    if (this.state.dataSource._cachedRowCount !== this.props.data.length) {
+      this.setState({
+        data: this.props.data,
+        dataSource: this.state.dataSource.cloneWithRows(this.props.data)
+      })
+    }
   },
 
   render: function() {
@@ -31,8 +42,8 @@ var BudgetList = React.createClass({
         />
     );
   },
+
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    console.log(rowData.name);
     var totalValue = 0;
     var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems <= $2", rowData.name, this.props.startTime, this.props.endTime);
     for (var i = 0; i < transactions.length; i++) {
