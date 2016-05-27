@@ -40,33 +40,68 @@ var TransactionList = React.createClass({
   },
 
   componentWillUpdate (nextProps, nextState) {
-    if (this.state.dataSource._cachedRowCount !== this.props.data.length) {
-      this.setState({
-        data: this.props.data,
-        dataSource: this.state.dataSource.cloneWithRows(this.props.data.sorted('datems', true)),
-      })
-     /* var expenses;
-      var revenues;
-      if(this.props.budgetName!==undefined){
-        expenses = this.props.data.filtered('transactionType = 0 AND budget= $0', this.props.budgetName);
-        revenues = this.props.data.filtered('transactionType = 1 AND budget= $0', this.props.budgetName);
-      }else{
-        expenses = this.props.data.filtered('transactionType = 0');
-        revenues = this.props.data.filtered('transactionType = 1');
-      }
+    console.log("Component will update");
+    console.log(this.state.dataSource._cachedRowCount);
+    console.log(this.props.data.length);
 
-      if(this.props.type==='expenses'){
+    var expenses;
+    var revenues;
+    var transactions = this.props.data;
+
+    if(this.props.budgetName!==undefined){
+      expenses = transactions.filtered('transactionType = 0 AND budget= $0', this.props.budgetName);
+      revenues = transactions.filtered('transactionType = 1 AND budget= $0', this.props.budgetName);
+    }else{
+      expenses = transactions.filtered('transactionType = 0');
+      revenues = transactions.filtered('transactionType = 1');
+    }
+
+    if(this.props.type==='expenses'){
+      console.log("We are in expenses");
+      if(this.state.dataSource._cachedRowCount!==expenses.length){
+        console.log("Not same, update plz");
         this.setState({
           data: this.props.data,
           dataSource: this.state.dataSource.cloneWithRows(expenses.sorted('datems', true)),
         })
       }else{
+        console.log("They are same");
+      }
+    }else{
+      console.log("In revenues");
+      if(this.state.dataSource._cachedRowCount!==revenues.length){
+        console.log("Not same, update plz");
         this.setState({
           data: this.props.data,
           dataSource: this.state.dataSource.cloneWithRows(revenues.sorted('datems', true)),
         })
-      }*/
+      }else{
+        console.log("They are the same");
+      }
     }
+
+
+    /*
+    if(this.state.dataSource._cachedRowCount === this.props.data.length){
+      console.log("They are the same");
+    }else {
+      console.log("They are not the same");
+      var expenses;
+      var revenues;
+      var transactions = this.props.data;
+
+      expenses = transactions.filtered('transactionType = 0');
+      revenues = transactions.filtered('transactionType = 1');
+
+      if(this.props.type === 'expenses'){
+        this.setState({
+          data: this.props.data,
+          dataSource: this.state.dataSource.cloneWithRows(expenses.sorted('datems', true)),
+        })
+      }else{
+        console.log("revenues");
+      }
+    }*/
   },
 
   render: function() {
