@@ -111,6 +111,9 @@ class AddBudget extends React.Component{
       if(budgetValue!==0){
         var bId = this.props.selectedBudget.id;
         realm.write(() => {
+          realm.create('AppData', {id: 0, shouldForceUpdate: true}, true);
+        });
+        realm.write(() => {
           realm.create('Budget', {
             id: parseInt(bId), 
             name: this.state.editText,

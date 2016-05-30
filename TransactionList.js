@@ -61,7 +61,7 @@ var TransactionList = React.createClass({
 
     if(this.props.type==='expenses'){
       //console.log("We are in expenses");
-      if(this.state.dataSource._cachedRowCount!==expenses.length){
+      if(this.shouldListUpdate(expenses.length, this.props.realm)){
         //console.log("Not same, update plz");
         this.setState({
           data: this.props.data,
@@ -72,7 +72,7 @@ var TransactionList = React.createClass({
       }
     }else{
       //console.log("In revenues");
-      if(this.state.dataSource._cachedRowCount!==revenues.length){
+      if(this.shouldListUpdate(revenues.length, this.props.realm)){
         //console.log("Not same, update plz");
         this.setState({
           data: this.props.data,
@@ -82,30 +82,32 @@ var TransactionList = React.createClass({
         //console.log("They are the same");
       }
     }
-
-
-    /*
-    if(this.state.dataSource._cachedRowCount === this.props.data.length){
-      console.log("They are the same");
-    }else {
-      console.log("They are not the same");
-      var expenses;
-      var revenues;
-      var transactions = this.props.data;
-
-      expenses = transactions.filtered('transactionType = 0');
-      revenues = transactions.filtered('transactionType = 1');
-
-      if(this.props.type === 'expenses'){
-        this.setState({
-          data: this.props.data,
-          dataSource: this.state.dataSource.cloneWithRows(expenses.sorted('datems', true)),
-        })
-      }else{
-        console.log("revenues");
-      }
-    }*/
   },
+
+  shouldListUpdate(typeLength, realm){
+    var shouldUpdate = this.props.realm.objects('AppData')[0].shouldForceUpdate;
+    if(this.state.dataSource._cachedRowCount !== typeLength || shouldUpdate){
+      realm.write(() => {
+        realm.create('AppData', {id: 0, shouldForceUpdate: false}, true);
+      });
+      return true;
+    }else{
+      return false;
+    }
+  },
+
+  /*
+      var shouldForceUpdate = this.props.realm.objects('AppData')[0].shouldForceUpdate;
+    if(this.state.dataSource._cachedRowCount !== this.props.data.length || shouldForceUpdate){
+    this.props.realm.write(() => {
+      this.props.realm.create('AppData', {id: 0, shouldForceUpdate: false}, true);
+    });
+      return true;
+    }else{
+      return false;
+    }
+
+  */
 
   render: function() {
     return (

@@ -29,11 +29,25 @@ var BudgetList = React.createClass({
   },
 
   componentWillUpdate (nextProps, nextState) {
-    if (this.state.dataSource._cachedRowCount !== this.props.data.length) {
+
+    if (this.shouldListUpdate()) {
       this.setState({
         data: this.props.data,
         dataSource: this.state.dataSource.cloneWithRows(this.props.data)
       })
+    }
+  },
+
+  shouldListUpdate(){
+    console.log("Shoud list update");
+    var shouldForceUpdate = this.props.realm.objects('AppData')[0].shouldForceUpdate;
+    if(this.state.dataSource._cachedRowCount !== this.props.data.length || shouldForceUpdate){
+    this.props.realm.write(() => {
+      this.props.realm.create('AppData', {id: 0, shouldForceUpdate: false}, true);
+    });
+      return true;
+    }else{
+      return false;
     }
   },
 

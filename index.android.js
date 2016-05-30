@@ -75,7 +75,8 @@ const AppDataSchema ={
     id: 'int',
     currentTrans: {type: 'int', default: 0},
     currentEditBudget: {type: 'int', default: 99},
-    currentEditTrans: {type: 'int', default: 99}
+    currentEditTrans: {type: 'int', default: 99},
+    shouldForceUpdate: {type: 'bool', default: false}
   }
 };
 

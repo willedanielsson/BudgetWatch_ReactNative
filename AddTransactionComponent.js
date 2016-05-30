@@ -200,8 +200,10 @@ class AddTransaction extends React.Component{
       // If we are in edit-mode, save
       if(this.props.selectedTrans !== undefined){
         var transId = this.props.selectedTrans.id;
-        console.log(this.props.selectedTrans);
-        console.log(transId);
+        // Tell to forceUpdate later when poping to list
+        realm.write(() => {
+          realm.create('AppData', {id: 0, shouldForceUpdate: true}, true);
+        });
         realm.write(() => {
           realm.create('Transaction', {
             id: parseInt(transId),
