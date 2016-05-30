@@ -40,24 +40,13 @@ var Budgets = React.createClass({
     return (
       <View style={styles.container}>
         <View style={styles.dateContainer}>
-          <TouchableHighlight onPress={ () => this.testFunc()}>
-            <Text style={styles.date}>
-              {this.state.startDatePrint} ~ {this.state.endDatePrint}
-            </Text>
-          </TouchableHighlight>
+          <Text style={styles.date}>
+            {this.state.startDatePrint} ~ {this.state.endDatePrint}
+          </Text>
         </View>
         <BudgetList data={this.props.data} realm={this.props.realm} navigator = {this.props.navigator} startTime= {this.state.startDateTime} endTime={this.state.endDateTime}/>
       </View>
     )
-  },
-
-  testFunc(){
-    var date = new Date();
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-    var printFirstDate = this.formatDate(firstDay);
-    var printLastDate = this.formatDate(lastDay);
   },
 
   formatDate(d){
