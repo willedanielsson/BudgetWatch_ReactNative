@@ -83,6 +83,17 @@ var NavigationBarRouteMapper = props => ({
         </View>
       )
     }
+    if(route.name==="Edit Expense" || route.name==="Edit Revenue"){
+      return (
+        <View style={styles.rightButtonContainer}>
+          <TouchableHighlight onPress={ () => this.deteleTransaction(navigator)}>
+            <View style={styles.addTransactionButtonContainer}>
+              <Image style={styles.transactionIcon} source={require('./images/delete.png')}/>
+            </View>
+          </TouchableHighlight>
+        </View>
+      )
+    }
   },
   addTransaction(navigator){
     var transType;
@@ -109,6 +120,16 @@ var NavigationBarRouteMapper = props => ({
       var budgetToRemove = navigator.props.realm.objects('Budget').filtered('id = $0', budgetID);
       navigator.props.realm.delete(budgetToRemove);
     });
+    navigator.pop();
+  },
+
+  deteleTransaction(navigator){
+    navigator.props.realm.write(() => {
+      var transID = navigator.props.realm.objects('AppData')[0].currentEditTrans;
+      var transToRemove = navigator.props.realm.objects('Transaction').filtered('id = $0', transID);
+      navigator.props.realm.delete(transToRemove);
+    });
+
     navigator.pop();
   },
 
