@@ -185,7 +185,6 @@ class AddTransaction extends React.Component{
   }
 
   _saveTransaction(event){
-    var transactionTypeId = this.props.typeTrans.transactionType;
     var realm = this.props.realm;
     var length = realm.objects('Transaction').length;
 
@@ -198,19 +197,41 @@ class AddTransaction extends React.Component{
     var dateTime = this.state.inputDate.getTime();
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
-      realm.write(() => {
-        let budget = realm.create('Transaction', {
-          id: length,
-          transactionType: transactionTypeId,
-          name: transName,
-          budget: transBudget,
-          account: transAccount,
-          value: transValue,
-          note: transNote,
-          date: transDate,
-          datems: dateTime
+      // If we are in edit-mode, save
+      if(this.props.selectedTrans !== undefined){
+        var transId = this.props.selectedTrans.id;
+        console.log(this.props.selectedTrans);
+        console.log(transId);
+        realm.write(() => {
+          realm.create('Transaction', {
+            id: parseInt(transId),
+            transactionType: this.props.selectedTrans.transactionType,
+            name: transName,
+            budget: transBudget,
+            account: transAccount,
+            value: transValue,
+            note: transNote,
+            date: transDate,
+            datems: dateTime
+          }, true);
         });
-      });
+
+      }else{
+        var transactionTypeId = this.props.typeTrans.transactionType;
+        realm.write(() => {
+          let budget = realm.create('Transaction', {
+            id: length,
+            transactionType: transactionTypeId,
+            name: transName,
+            budget: transBudget,
+            account: transAccount,
+            value: transValue,
+            note: transNote,
+            date: transDate,
+            datems: dateTime
+          });
+        });
+      }
       
       this.props.navigator.pop();
       // required input missing
