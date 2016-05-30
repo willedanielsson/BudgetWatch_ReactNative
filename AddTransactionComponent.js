@@ -20,14 +20,32 @@ class AddTransaction extends React.Component{
   constructor(props) {
     super(props)
     var date = new Date();
+
+    var propName = '';
+    var propBudget = '';
+    var propAccount = '';
+    var propValue = 0;
+    var propNote = '';
+    var propDate = date;
+    var propDisplayDate = date.toString().substring(4,10) + "," + date.toString().substring(10,15);
+
+    if(this.props.selectedTrans !== undefined){
+      propName = this.props.selectedTrans.name.toString();
+      propBudget = this.props.selectedTrans.budget;
+      propAccount = this.props.selectedTrans.account;
+      propValue = this.props.selectedTrans.value;
+      propNote = this.props.selectedTrans.note;
+      propDisplayDate = this.props.selectedTrans.date;
+    }
+
     this.state = {
-      inputName: '',
-      inputBudget: '',
-      inputAccount: '',
-      inputValue: 0,
-      inputNote: '',
-      inputDate: date,
-      displayDate: date.toString().substring(4,10) + "," + date.toString().substring(10,15),
+      inputName: propName,
+      inputBudget: propBudget,
+      inputAccount: propAccount,
+      inputValue: propValue.toString(),
+      inputNote: propNote,
+      inputDate: propDate,
+      displayDate: propDisplayDate,
     }
   }
     // Use `new Date()` for current date.
@@ -53,6 +71,16 @@ class AddTransaction extends React.Component{
     this.setState({ displayDate: completeDate });
   }
 
+  formatDate(d){
+    date = new Date(d)
+    var dd = date.getDate(); 
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear(); 
+    if(dd<10){dd='0'+dd} 
+    if(mm<10){mm='0'+mm};
+    return d = dd+'/'+mm+'/'+yyyy
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -63,7 +91,6 @@ class AddTransaction extends React.Component{
           <Text style={styles.label}>Name</Text>
             <TextInput 
               ref="inputName"
-              autoFocus={true}
               style={styles.input}
               onChangeText={(inputName) => this.setState({inputName})}
               value={this.state.inputName}/>
@@ -96,6 +123,7 @@ class AddTransaction extends React.Component{
               ref="inputValue"
               style={styles.input} 
               keyboardType="numeric"
+              defaultValue={this.state.editValue}
               onChangeText={(inputValue) => this.setNumberToState(inputValue)}
               value={this.state.inputValue}/>
         </View>
