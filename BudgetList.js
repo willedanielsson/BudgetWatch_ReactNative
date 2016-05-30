@@ -62,7 +62,8 @@ var BudgetList = React.createClass({
         <Modal
           animationType={'none'}
           transparent={false}
-          visible={this.state.modalVisible}>
+          visible={this.state.modalVisible}
+          onRequestClose={() => {this._setModalVisible(false)}}>
           <View style={modalStyle.modal}>
             <View style={modalStyle.container}>
               <TouchableHighlight 
