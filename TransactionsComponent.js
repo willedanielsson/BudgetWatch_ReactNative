@@ -54,10 +54,10 @@ var Transactions = React.createClass({
           ref={viewPager => { this.viewPager = viewPager; }}>
 
           <View style={styles.pageStyle}>
-            <TransactionList data={this.props.data} type={'expenses'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
+            <TransactionList data={this.props.data} type={'expenses'} realm={this.props.realm} navigator = {this.props.navigator} budgetName = {this.props.budgetName}/>
           </View>
           <View style={styles.pageStyle}>
-             <TransactionList data={this.props.data} type={'revenues'} realm={this.props.realm} budgetName = {this.props.budgetName}/>
+             <TransactionList data={this.props.data} type={'revenues'} realm={this.props.realm} navigator = {this.props.navigator} budgetName = {this.props.budgetName}/>
           </View>
         </ViewPagerAndroid>
       </View>

@@ -8,8 +8,11 @@ import {
   Image,
   TouchableHighlight,
   ViewPagerAndroid,
-  ListView
+  ListView,
+  Modal
 } from 'react-native';
+
+var AddTransaction = require('./AddTransactionComponent.js');
 
 var TransactionList = React.createClass({
   getInitialState: function() {
@@ -30,20 +33,20 @@ var TransactionList = React.createClass({
       return {
         data: this.props.data,
         dataSource: ds.cloneWithRows(expenses.sorted('datems', true)),
+        modalVisible: false,
+        selectedTransaction: {},
       };
     }else{
       return {
         data: this.props.data,
         dataSource: ds.cloneWithRows(revenues.sorted('datems', true)),
+        modalVisible: false,
+        selectedTransaction: {},
       };
     }
   },
 
   componentWillUpdate (nextProps, nextState) {
-    console.log("Component will update");
-    console.log(this.state.dataSource._cachedRowCount);
-    console.log(this.props.data.length);
-
     var expenses;
     var revenues;
     var transactions = this.props.data;
@@ -57,26 +60,26 @@ var TransactionList = React.createClass({
     }
 
     if(this.props.type==='expenses'){
-      console.log("We are in expenses");
+      //console.log("We are in expenses");
       if(this.state.dataSource._cachedRowCount!==expenses.length){
-        console.log("Not same, update plz");
+        //console.log("Not same, update plz");
         this.setState({
           data: this.props.data,
           dataSource: this.state.dataSource.cloneWithRows(expenses.sorted('datems', true)),
         })
       }else{
-        console.log("They are same");
+        //console.log("They are same");
       }
     }else{
-      console.log("In revenues");
+      //console.log("In revenues");
       if(this.state.dataSource._cachedRowCount!==revenues.length){
-        console.log("Not same, update plz");
+        //console.log("Not same, update plz");
         this.setState({
           data: this.props.data,
           dataSource: this.state.dataSource.cloneWithRows(revenues.sorted('datems', true)),
         })
       }else{
-        console.log("They are the same");
+        //console.log("They are the same");
       }
     }
 
@@ -106,40 +109,94 @@ var TransactionList = React.createClass({
 
   render: function() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this._renderRow}
-        style={styles.list}
+      <View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow}
+          style={styles.list}
         />
+        <Modal
+          animationType={'none'}
+          transparent={false}
+          visible={this.state.modalVisible}>
+          <View style={modalStyle.modal}>
+            <View style={modalStyle.container}>
+              <TouchableHighlight 
+                onPress={this.editTransaction}>
+                  <Text style={modalStyle.text}>Edit</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
     );
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
     return (
-      <View style={styles.itemContainer}>
-        <View style={styles.upperContainer}>
-          <View style={styles.leftContainer}>
-            <Text style={styles.name}>{rowData.name}</Text>
+      <TouchableHighlight 
+        onLongPress={() => {this.openEditTransactionModal(rowData)}}>
+        <View style={styles.itemContainer}>
+          <View style={styles.upperContainer}>
+            <View style={styles.leftContainer}>
+              <Text style={styles.name}>{rowData.name}</Text>
+            </View>
+
+            <View style={styles.rightContainer}>
+              <Text style={styles.price}>{Math.round(rowData.value * 100) / 100}</Text>
+            </View>
           </View>
 
-          <View style={styles.rightContainer}>
-            <Text style={styles.price}>{Math.round(rowData.value * 100) / 100}</Text>
+          <View style={styles.lowerContainer}>
+            <View style={styles.leftContainer}>
+              <Image style={styles.receiptIcon} source={require('./images/receipt.png')}/>
+              <Text style={styles.budget}>{rowData.budget}</Text>
+            </View>
+
+            <View style={styles.rightContainer}>
+              <Text style={styles.date}>{rowData.date}</Text>
+            </View>
           </View>
+
         </View>
-
-        <View style={styles.lowerContainer}>
-          <View style={styles.leftContainer}>
-            <Image style={styles.receiptIcon} source={require('./images/receipt.png')}/>
-            <Text style={styles.budget}>{rowData.budget}</Text>
-          </View>
-
-          <View style={styles.rightContainer}>
-            <Text style={styles.date}>{rowData.date}</Text>
-          </View>
-        </View>
-
-      </View>
+      </TouchableHighlight>
 
     );
+  },
+
+  openEditTransactionModal(inTrans){
+    this.setState({modalVisible: true});
+    this.setState({ selectedTransaction: inTrans });
+  },
+
+  editTransaction(){
+    console.log("Transaction");
+    this._setModalVisible(false);
+
+    var realm=this.props.realm;
+    realm.write(() => {
+      realm.create('AppData', {id: 0, currentEditTrans: this.state.selectedTransaction.id}, true);
+    });
+
+    var viewName;
+
+    if(this.state.selectedTransaction.transactionType===0){
+      viewName = "Edit Expense";
+    }else{
+      viewName = "Edit Revenue";
+    }
+
+    this.props.navigator.push({
+      name: viewName,
+      component: AddTransaction,
+      passProps: {
+        editTrans: this.state.selectedTransaction
+      }
+    })
+
+  },
+
+  _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   },
 });
 
@@ -175,6 +232,28 @@ var styles = StyleSheet.create({
     height: 18,
     width: 18,
     margin: 2,
+  },
+});
+
+var modalStyle = StyleSheet.create({
+  modal:{
+    flex:1,
+    alignItems:'stretch',
+    justifyContent:'center',
+    marginRight: 30,
+    marginLeft: 30,
+  },
+  container: {
+    backgroundColor: '#eeeeee',
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 2,
+  },
+  text:{
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    color: 'black',
   },
 });
 
