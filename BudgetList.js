@@ -129,7 +129,7 @@ var BudgetList = React.createClass({
     });
 
     this.props.navigator.push({
-      name: 'Add budget',
+      name: 'Edit budget',
       component: AddBudget,
       passProps: {
         editBudget: this.state.selectedBudget

@@ -72,7 +72,7 @@ var NavigationBarRouteMapper = props => ({
          </View>
       )
     }
-    if(route.name==="Add budget"){
+    if(route.name==="Edit budget"){
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight onPress={ () => this.deleteBudget(navigator)}>
