@@ -188,20 +188,21 @@ var modalStyle = StyleSheet.create({
     flex:1,
     alignItems:'stretch',
     justifyContent:'center',
-    marginRight: 30,
-    marginLeft: 30,
+    marginRight: 25,
+    marginLeft: 25,
   },
   container: {
     backgroundColor: '#eeeeee',
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 12,
+    paddingBottom: 12,
     borderRadius: 2,
   },
   text:{
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 20,
+    marginLeft: 25,
     color: 'black',
+    fontSize: 16,
   },
 });
 
