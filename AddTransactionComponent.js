@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 var Button = require('react-native-button');
+var Camera = require('./Camera.js');
 
 class AddTransaction extends React.Component{
   constructor(props) {
@@ -153,7 +154,7 @@ class AddTransaction extends React.Component{
                 <Button
                   style={styles.button}
                   styleDisabled={{color: 'red'}}
-                  onPress={this._captureReceipt}>
+                  onPress={this._captureReceipt.bind(this)}>
                   CAPTURE
                 </Button>
               </View>
@@ -187,6 +188,12 @@ class AddTransaction extends React.Component{
   }
 
   _captureReceipt(event){
+    this.props.navigator.push({
+      name: "Camera",
+      component: Camera,
+      passProps: {
+      }
+    })
   }
 
   _saveTransaction(event){
