@@ -5,39 +5,40 @@ import {
   Text,
   View,
   Navigator,
-  Image,
-  TouchableHighlight
+  Modal,
 } from 'react-native';
 
-//import Realm from 'realm'
-//let persons = realm.objects('Person');
 
-class Camera extends Component {
+class Camera extends React.Component{
   constructor(props) {
     super(props)
-
+    console.log("COnstructor "+this.props.visible)
     this.state = {
-      test: "Hello"
+      modalVisible: this.props.visible,
     }
   }
 
-  render(){
+  render() {
     return (
-      <View style={styles.container}>
-      <Text>Hello</Text>
+      <View style={cameraStyle.container}>
+          <Text>Hello from comp</Text>
       </View>
-    )
+    );
+  }
+
+  _setModalVisible(visible) {
+    console.log("Close")
+    this.setState({modalVisible: visible});
   }
 
 };
 
-var styles = StyleSheet.create({
-  container: {
+var cameraStyle = StyleSheet.create({
+  container:{
     flex:1,
-    alignItems: 'stretch',
-    marginTop: 56,
+    alignItems:'stretch',
+    backgroundColor: 'blue',
   },
 });
-
 
 module.exports = Camera;

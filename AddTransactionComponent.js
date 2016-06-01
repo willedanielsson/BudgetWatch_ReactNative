@@ -12,6 +12,7 @@ import {
   DatePickerAndroid,
   Picker,
   ToastAndroid,
+  Modal
 } from 'react-native';
 
 var Button = require('react-native-button');
@@ -47,6 +48,7 @@ class AddTransaction extends React.Component{
       inputNote: propNote,
       inputDate: propDate,
       displayDate: propDisplayDate,
+      modalVisible: false,
     }
   }
     // Use `new Date()` for current date.
@@ -179,21 +181,28 @@ class AddTransaction extends React.Component{
           </View>
         </View>
       </ScrollView>
+      <Modal
+        animationType={'none'}
+        transparent={false}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {this._setModalVisible(false)}}>
+          <Camera />
+        </Modal>
       </View>
     )
   }
+
+  _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   setNumberToState(inputString){
     var integer = parseFloat(inputString);
     this.setState({ inputValue: integer });
   }
 
   _captureReceipt(event){
-    this.props.navigator.push({
-      name: "Camera",
-      component: Camera,
-      passProps: {
-      }
-    })
+    this._setModalVisible(true);
   }
 
   _saveTransaction(event){
