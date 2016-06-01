@@ -120,6 +120,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':react-native-android-tablayout')
     compile project(':realm')
     compile fileTree(dir: "libs", include: ["*.jar"])

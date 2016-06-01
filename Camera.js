@@ -5,11 +5,15 @@ import {
   Text,
   View,
   Navigator,
-  Modal,
+  Dimensions,
+  TouchableHighlight,
+  Image
 } from 'react-native';
 
+import Camera from 'react-native-camera';
 
-class Camera extends React.Component{
+
+class CameraComponent extends React.Component{
   constructor(props) {
     super(props)
     console.log("COnstructor "+this.props.visible)
@@ -20,25 +24,75 @@ class Camera extends React.Component{
 
   render() {
     return (
-      <View style={cameraStyle.container}>
-          <Text>Hello from comp</Text>
+      <View style={styles.container}>
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          style={styles.preview}
+          aspect={Camera.constants.Aspect.fill}>
+        </Camera>
+        <TouchableHighlight 
+          style={styles.actionButton}
+          onPress={this.takePicture.bind(this)}>
+
+          <View style={styles.buttonContainer}>
+            <Image
+              style={styles.cameraButton} 
+              source={require('./images/camera-icon.png')} />
+          </View> 
+        </TouchableHighlight>
+
       </View>
     );
   }
 
-  _setModalVisible(visible) {
-    console.log("Close")
-    this.setState({modalVisible: visible});
+  takePicture() {
+    this.camera.capture()
+      .then((data) => console.log(data))
+      .catch(err => console.error(err));
   }
 
 };
 
-var cameraStyle = StyleSheet.create({
-  container:{
-    flex:1,
+var styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  preview: {
+    flex: 1,
+
+  },
+  buttonContainer: {
+    height: 70,
+    borderRadius: 50,
+    width: 70,
+    backgroundColor: '#eeeeee',
     alignItems:'stretch',
-    backgroundColor: 'blue',
+    justifyContent:'center'
+  },
+  cameraButton:{
+    resizeMode:'contain',
+    height: 30,
+    width: 30,
+    marginLeft: 20,
+  },
+  actionButton: {
+    position: 'absolute',
+    bottom: 0,
+    padding: 10,
+    right: 20,
+    left: 20,
+    alignItems: 'center',
   },
 });
 
-module.exports = Camera;
+module.exports = CameraComponent;
+/*
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width
+    <Image source={require('./images/camera-icon2.png')} />
+
+*/

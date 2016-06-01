@@ -1,6 +1,7 @@
 package com.budgetwatch_reactnative;
 
 import com.facebook.react.ReactActivity;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.xebia.reactnative.TabLayoutPackage;
 import io.realm.react.RealmReactPackage;
 import com.facebook.react.ReactPackage;
@@ -37,6 +38,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RCTCameraPackage(),
             new TabLayoutPackage(),
             new RealmReactPackage()
         );

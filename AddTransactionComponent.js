@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 var Button = require('react-native-button');
-var Camera = require('./Camera.js');
+var CameraComponent = require('./Camera.js');
 
 class AddTransaction extends React.Component{
   constructor(props) {
@@ -186,7 +186,7 @@ class AddTransaction extends React.Component{
         transparent={false}
         visible={this.state.modalVisible}
         onRequestClose={() => {this._setModalVisible(false)}}>
-          <Camera />
+          <CameraComponent />
         </Modal>
       </View>
     )
