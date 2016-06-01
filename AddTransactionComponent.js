@@ -54,12 +54,17 @@ class AddTransaction extends React.Component{
     try {
       var newState = {};
       const {action, year, month, day} = await DatePickerAndroid.open(options);
-      var date = new Date(year, month, day);
-      this.setState({ inputDate: date });
-      this.setRightTime();
-      this.setState(newState);
+
+      // If the user did not close the DataPicker
+      if (action !== DatePickerAndroid.dismissedAction) {
+        var date = new Date(year, month, day);
+        this.setState({ inputDate: date });
+        this.setRightTime();
+        this.setState(newState);
+      }
 
     } catch ({code, message}) {
+      console.log("ERROR");
       console.warn(`Error in showicker`, message);
     }
   }
