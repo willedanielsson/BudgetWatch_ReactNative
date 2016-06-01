@@ -40,8 +40,8 @@ var NavigationBarRouteMapper = props => ({
             passProps: {
               name: 'Test'
             }})}>
-             <View style={styles.calendarContainer}>
-              <Image style={styles.calendarIcon} source={require('./images/add.png')}/>
+             <View style={styles.addBudgetButtonContainer}>
+              <Image style={styles.addBudgetIcon} source={require('./images/add.png')}/>
             </View>
            </TouchableHighlight>
          </View>
@@ -55,20 +55,6 @@ var NavigationBarRouteMapper = props => ({
               <Image style={styles.transactionIcon} source={require('./images/add.png')}/>
             </View>
            </TouchableHighlight>
-
-          <TouchableHighlight onPress={ () => navigator.push({ 
-            name: 'Add budget',
-            component: AddBudget,
-            passProps: {
-              name: 'Test'
-            }})}>
-             <View style={styles.addBudgetButtonContainer}>
-              <Image
-                style={styles.addBudgetIcon}
-                source={require('./images/purse.png')}/>
-            </View>
-           </TouchableHighlight>
-
          </View>
       )
     }
@@ -167,18 +153,6 @@ var styles = StyleSheet.create({
   rightButtonContainer:{
     height: 56,
     flexDirection: 'row',
-  },
-  calendarContainer: {
-    flex: 1,
-    paddingRight: 12,
-    paddingLeft: 8
-  },
-  calendarIcon: {
-    marginTop: 12,
-    marginLeft: 0,
-    resizeMode:'contain',
-    height: 32,
-    width: 32,
   },
   addBudgetButtonContainer: {
     flex:1,
