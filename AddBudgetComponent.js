@@ -26,7 +26,6 @@ class AddBudget extends React.Component{
 
     this.state = {
       inputtype: '',
-      inputvalue: 0,
       editText: inName, 
       editValue: inValue,
     }
@@ -53,9 +52,8 @@ class AddBudget extends React.Component{
               style={styles.input} 
               placeholder="100" 
               keyboardType="numeric"
-              defaultValue={this.state.editValue}
-              onChangeText={(inputvalue) => this.setState({inputvalue})}
-              value={this.state.inputvalue}/>
+              onChangeText={(editValue) => this.setState({editValue})}
+              value={this.state.editValue}/>
         </View>
         <View style={styles.itemRow}>
            <View style={styles.buttonContainer}>

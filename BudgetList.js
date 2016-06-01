@@ -67,7 +67,7 @@ var BudgetList = React.createClass({
           <View style={modalStyle.modal}>
             <View style={modalStyle.container}>
               <TouchableHighlight 
-                onPress={this.editBudget.bind(this)}>
+                onPress={this.editBudget}>
                 <Text style={modalStyle.text}>Edit</Text>
               </TouchableHighlight>
             </View>
