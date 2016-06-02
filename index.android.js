@@ -85,7 +85,7 @@ let realm = new Realm({schema: [BudgetSchema, TransactionSchema, AppDataSchema]}
 var BudgetWatch_ReactNative = React.createClass({
 
   renderScene(route, navigator){
-    if(route.name == 'Main'){
+    if(route.name == 'Application1'){
       return React.createElement(route.component, {navigator});
     }
     if(route.name == 'Budgets'){
@@ -151,7 +151,7 @@ var BudgetWatch_ReactNative = React.createClass({
       <Navigator
         ref={(nav) => { navigator = nav; }}
         style={{flex:1}}
-        initialRoute={{ name: 'Main', component: Main}}
+        initialRoute={{ name: 'Application1', component: Main}}
         renderScene={this.renderScene}
         onDidFocus={this.onDidFocus}
         realm = {realm}
