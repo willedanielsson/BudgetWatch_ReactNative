@@ -15,8 +15,9 @@ import {
   Modal
 } from 'react-native';
 
+import Camera from 'react-native-camera';
+
 var Button = require('react-native-button');
-var CameraComponent = require('./Camera.js');
 
 class AddTransaction extends React.Component{
   constructor(props) {
@@ -186,10 +187,40 @@ class AddTransaction extends React.Component{
         transparent={false}
         visible={this.state.modalVisible}
         onRequestClose={() => {this._setModalVisible(false)}}>
-          <CameraComponent />
+          <View style={cameraStyles.container}>
+            <Camera
+              ref={(cam) => {
+                this.camera = cam;
+              }}
+              style={cameraStyles.preview}
+              aspect={Camera.constants.Aspect.fill}>
+            </Camera>
+            <TouchableHighlight 
+              style={cameraStyles.actionButton}
+              onPress={this.takePicture.bind(this)}>
+
+              <View style={cameraStyles.buttonContainer}>
+                <Image
+                  style={cameraStyles.cameraButton} 
+                  source={require('./images/camera-icon.png')} />
+              </View> 
+            </TouchableHighlight>
+          </View>
         </Modal>
       </View>
     )
+  }
+
+  takePicture() {
+    var navigator = this.props.navigator;
+    var thisComponent = this;
+    this.camera.capture()
+      .then(function(data){
+        console.log(data);
+        thisComponent._setModalVisible(false);
+      })
+      .catch(err => console.error(err));
+
   }
 
   _setModalVisible(visible) {
@@ -353,6 +384,39 @@ var styles = StyleSheet.create({
     marginTop: 5,
   },
 });
+
+var cameraStyles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  preview: {
+    flex: 1,
+
+  },
+  buttonContainer: {
+    height: 70,
+    borderRadius: 50,
+    width: 70,
+    backgroundColor: '#eeeeee',
+    alignItems:'stretch',
+    justifyContent:'center'
+  },
+  cameraButton:{
+    resizeMode:'contain',
+    height: 30,
+    width: 30,
+    marginLeft: 20,
+  },
+  actionButton: {
+    position: 'absolute',
+    bottom: 0,
+    padding: 10,
+    right: 20,
+    left: 20,
+    alignItems: 'center',
+  },
+});
+
 
 
 module.exports = AddTransaction;
