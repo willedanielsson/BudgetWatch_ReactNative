@@ -31,6 +31,7 @@ class AddTransaction extends React.Component{
     var propNote = '';
     var propDate = date;
     var propDisplayDate = date.toString().substring(4,10) + "," + date.toString().substring(10,15);
+    var propReceipt= '';
 
     if(this.props.selectedTrans !== undefined){
       propName = this.props.selectedTrans.name.toString();
@@ -39,7 +40,10 @@ class AddTransaction extends React.Component{
       propValue = this.props.selectedTrans.value;
       propNote = this.props.selectedTrans.note;
       propDisplayDate = this.props.selectedTrans.date;
+      propReceipt = this.props.selectedTrans.receipt;
     }
+
+    console.log("Receipt is " + propReceipt);
 
     this.state = {
       inputName: propName,
@@ -48,6 +52,7 @@ class AddTransaction extends React.Component{
       inputValue: propValue.toString(),
       inputNote: propNote,
       inputDate: propDate,
+      inputReceipt: '',
       displayDate: propDisplayDate,
       modalVisible: false,
     }
@@ -152,16 +157,7 @@ class AddTransaction extends React.Component{
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.label}>Receipt</Text>
-            <View style={styles.receiptButtonContainer}>
-              <View style={styles.buttonContainer}>
-                <Button
-                  style={styles.button}
-                  styleDisabled={{color: 'red'}}
-                  onPress={this._captureReceipt.bind(this)}>
-                  CAPTURE
-                </Button>
-              </View>
-            </View>
+            
         </View>
         <View style={styles.itemRow}>
            <View style={styles.buttonContainer}>
@@ -211,12 +207,28 @@ class AddTransaction extends React.Component{
     )
   }
 
+  /*
+<View style={styles.receiptButtonContainer}>
+              <View style={styles.buttonContainer}>
+                <Button
+                  style={styles.button}
+                  styleDisabled={{height: 'red'}}
+                  disabled={true}
+                  onPress={this._captureReceipt.bind(this)}>
+                  CAPTURE
+                </Button>
+              </View>
+            </View>
+
+  */
+
   takePicture() {
     var navigator = this.props.navigator;
     var thisComponent = this;
     this.camera.capture()
       .then(function(data){
-        console.log(data);
+        console.log(data.path);
+        thisComponent.setState({inputReceipt: data.path});
         thisComponent._setModalVisible(false);
       })
       .catch(err => console.error(err));
@@ -246,6 +258,7 @@ class AddTransaction extends React.Component{
     var transValue = parseInt(this.state.inputValue);
     var transNote = this.state.inputNote.trim();
     var transDate = this.state.displayDate;
+    var transReceipt = this.state.inputReceipt;
     var dateTime = this.state.inputDate.getTime();
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
@@ -266,6 +279,7 @@ class AddTransaction extends React.Component{
             value: transValue,
             note: transNote,
             date: transDate,
+            receipt: transReceipt,
             datems: dateTime
           }, true);
         });
@@ -282,6 +296,7 @@ class AddTransaction extends React.Component{
             value: transValue,
             note: transNote,
             date: transDate,
+            receipt: transReceipt,
             datems: dateTime
           });
         });
@@ -305,7 +320,8 @@ class AddTransaction extends React.Component{
   }
 
   _cancelTransaction(event){
-      this.props.navigator.pop()
+      //this.props.navigator.pop();
+      console.log(this.state.inputReceipt);
   }
 
   isRequiredInputEmpty(transName, transValue, transDate){

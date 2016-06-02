@@ -63,7 +63,7 @@ const TransactionSchema ={
     note: {type: 'string', optional: true},
     date: 'string',
     datems: 'int',
-    receipt: {type: 'data', optional: true},
+    receipt: {type: 'string', optional: true},
   }
 };
 
@@ -218,7 +218,8 @@ var BudgetWatch_ReactNative = React.createClass({
           value: 287.62,
           note: '',
           date: 'May 10, 2016',
-          datems: 1465423200000
+          datems: 1465423200000,
+          receipt: 'content://media/external/images/media/2839',
         });
       });
     }
