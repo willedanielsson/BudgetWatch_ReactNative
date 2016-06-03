@@ -105,7 +105,7 @@ var BudgetList = React.createClass({
               <ProgressBar 
                 styleAttr="Horizontal" 
                 indeterminate={false} 
-                backgroundStyle={{backgroundColor: 'blue', borderRadius: 5}}
+                backgroundStyle={{borderRadius: 5}}
                 color="grey" 
                 progress={totalValue/rowData.maxValue}/>
           </View>
