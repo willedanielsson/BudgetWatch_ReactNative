@@ -100,10 +100,10 @@ class AddBudget extends React.Component{
     var realm = this.props.realm;
     var length = realm.objects('Budget').length;
     var budgetType = this.state.inputtype.trim();
-    var budgetValue = parseInt(this.state.inputvalue);
+    var budgetValue = parseInt(this.state.editValue);
 
     // If we are editing budget
-    if(this.state.editValue!==''){
+    if(this.props.selectedBudget!==undefined){
       if(budgetValue!==0){
         var bId = this.props.selectedBudget.id;
         realm.write(() => {
@@ -123,10 +123,12 @@ class AddBudget extends React.Component{
       }
 
     }else{
+      console.log(budgetType);
+      console.log(budgetValue);
       if(budgetType!=='' && budgetValue!==0){
         realm.write(() => {
           let budget = realm.create('Budget', {
-            id: length,
+            id: parseInt(length),
             name: budgetType,
             maxValue: budgetValue,
           });
