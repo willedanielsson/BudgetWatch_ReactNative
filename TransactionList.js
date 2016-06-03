@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 var AddTransaction = require('./AddTransactionComponent.js');
+var ReceiptIcon = require('./ReceiptIconComponent.js');
 
 var TransactionList = React.createClass({
   getInitialState: function() {
@@ -137,11 +138,7 @@ var TransactionList = React.createClass({
           </View>
 
           <View style={styles.lowerContainer}>
-            <View style={styles.leftContainer}>
-              <Image style={styles.receiptIcon} source={require('./images/receipt.png')}/>
-              <Text style={styles.budget}>{rowData.budget}</Text>
-            </View>
-
+            <ReceiptIcon budget={rowData.budget} receipt={rowData.receipt}/>
             <View style={styles.rightContainer}>
               <Text style={styles.date}>{rowData.date}</Text>
             </View>
