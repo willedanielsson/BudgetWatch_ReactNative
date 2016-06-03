@@ -5,9 +5,7 @@ import {
   Text,
   View,
   Navigator,
-  Image,
   TextInput,
-  TouchableHighlight,
   ToastAndroid,
 } from 'react-native';
 

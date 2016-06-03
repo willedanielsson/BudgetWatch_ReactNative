@@ -5,8 +5,6 @@ import {
   Text,
   View,
   Navigator,
-  Image,
-  TouchableHighlight,
   ViewPagerAndroid,
   ListView
 } from 'react-native';

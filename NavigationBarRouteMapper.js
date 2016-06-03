@@ -34,7 +34,9 @@ var NavigationBarRouteMapper = props => ({
     if (route.name == "Budgets"){ 
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => navigator.push({ 
+          <TouchableHighlight 
+            underlayColor="transparent"
+            onPress={ () => navigator.push({ 
             name: 'Add budget',
             component: AddBudget,
             passProps: {
@@ -50,7 +52,9 @@ var NavigationBarRouteMapper = props => ({
     if(route.name == "Transactions"){
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => this.addTransaction(navigator)}>
+          <TouchableHighlight
+            underlayColor="transparent"
+            onPress={ () => this.addTransaction(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
               <Image style={styles.transactionIcon} source={require('./images/add.png')}/>
             </View>
@@ -61,7 +65,9 @@ var NavigationBarRouteMapper = props => ({
     if(route.name==="Edit budget"){
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => this.deleteBudget(navigator)}>
+          <TouchableHighlight 
+            underlayColor="transparent"
+            onPress={ () => this.deleteBudget(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
               <Image style={styles.transactionIcon} source={require('./images/delete.png')}/>
             </View>
@@ -72,7 +78,9 @@ var NavigationBarRouteMapper = props => ({
     if(route.name==="Edit Expense" || route.name==="Edit Revenue"){
       return (
         <View style={styles.rightButtonContainer}>
-          <TouchableHighlight onPress={ () => this.deteleTransaction(navigator)}>
+          <TouchableHighlight 
+            underlayColor="transparent"
+            onPress={ () => this.deteleTransaction(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
               <Image style={styles.transactionIcon} source={require('./images/delete.png')}/>
             </View>

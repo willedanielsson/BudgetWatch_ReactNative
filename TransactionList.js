@@ -112,7 +112,8 @@ var TransactionList = React.createClass({
           onRequestClose={() => {this._setModalVisible(false)}}>
           <View style={modalStyle.modal}>
             <View style={modalStyle.container}>
-              <TouchableHighlight 
+              <TouchableHighlight
+                underlayColor="#d6d6d6"
                 onPress={this.editTransaction}>
                   <Text style={modalStyle.text}>Edit</Text>
               </TouchableHighlight>
@@ -124,7 +125,8 @@ var TransactionList = React.createClass({
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
     return (
-      <TouchableHighlight 
+      <TouchableHighlight
+        underlayColor="#d6d6d6"
         onLongPress={() => {this.openEditTransactionModal(rowData)}}>
         <View style={styles.itemContainer}>
           <View style={styles.upperContainer}>

@@ -15,8 +15,6 @@ import {
   Text,
   View,
   Navigator,
-  Image,
-  TouchableHighlight,
   BackAndroid,
 } from 'react-native';
 

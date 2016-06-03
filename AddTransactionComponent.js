@@ -152,7 +152,10 @@ class AddTransaction extends React.Component{
           </View>
           <View style={styles.itemRow}>
             <Text style={styles.label}>Date</Text>
-              <TouchableHighlight style={styles.dateButton} onPress={ () => this.showPicker({date: this.state.inputDate})}>
+              <TouchableHighlight 
+              style={styles.dateButton} 
+              onPress={ () => this.showPicker({date: this.state.inputDate})}
+              underlayColor="#d6d6d6">
                 <Text style={styles.dateText}>{this.state.displayDate}</Text>
             </TouchableHighlight>
           </View>
@@ -201,7 +204,8 @@ class AddTransaction extends React.Component{
               </Camera>
               <TouchableHighlight 
                 style={cameraStyles.actionButton}
-                onPress={this.takePicture.bind(this)}>
+                onPress={this.takePicture.bind(this)}
+                underlayColor="#d6d6d6">
 
                 <View style={cameraStyles.buttonContainer}>
                   <Image
@@ -269,7 +273,10 @@ class AddTransaction extends React.Component{
           </View>
           <View style={styles.itemRow}>
             <Text style={styles.label}>Date</Text>
-              <TouchableHighlight style={styles.dateButton} onPress={ () => this.showPicker({date: this.state.inputDate})}>
+              <TouchableHighlight 
+                style={styles.dateButton} 
+                onPress={ () => this.showPicker({date: this.state.inputDate})}
+                underlayColor="#d6d6d6">
                 <Text style={styles.dateText}>{this.state.displayDate}</Text>
             </TouchableHighlight>
           </View>
@@ -326,7 +333,8 @@ class AddTransaction extends React.Component{
               </Camera>
               <TouchableHighlight 
                 style={cameraStyles.actionButton}
-                onPress={this.takePicture.bind(this)}>
+                onPress={this.takePicture.bind(this)}
+                underlayColor="#d6d6d6">
 
                 <View style={cameraStyles.buttonContainer}>
                   <Image
@@ -342,20 +350,6 @@ class AddTransaction extends React.Component{
     
   }
 
-  /*
-<View style={styles.receiptButtonContainer}>
-  <View style={styles.buttonContainer}>
-    <Button
-      style={styles.button}
-      disabled={true}
-      onPress={this._captureReceipt.bind(this)}>
-      CAPTURE
-    </Button>
-  </View>
-</View>
-
-  */
-
   takePicture() {
     var navigator = this.props.navigator;
     var thisComponent = this;
@@ -365,7 +359,6 @@ class AddTransaction extends React.Component{
         thisComponent._setModalVisible(false);
       })
       .catch(err => console.error(err));
-
   }
 
   _setModalVisible(visible) {
@@ -574,7 +567,5 @@ var cameraStyles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
 
 module.exports = AddTransaction;

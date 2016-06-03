@@ -5,8 +5,6 @@ import {
   Text,
   View,
   Navigator,
-  Image,
-  TouchableHighlight
 } from 'react-native';
 
 var BudgetList = require('./BudgetList.js');

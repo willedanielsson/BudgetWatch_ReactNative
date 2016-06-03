@@ -5,7 +5,6 @@ import {
   Text,
   View,
   Navigator,
-  Image,
   ListView,
   TouchableHighlight,
   Modal,
@@ -67,7 +66,8 @@ var BudgetList = React.createClass({
           <View style={modalStyle.modal}>
             <View style={modalStyle.container}>
               <TouchableHighlight 
-                onPress={this.editBudget}>
+                onPress={this.editBudget}
+                underlayColor="#d6d6d6">
                 <Text style={modalStyle.text}>Edit</Text>
               </TouchableHighlight>
             </View>
@@ -95,7 +95,7 @@ var BudgetList = React.createClass({
       <TouchableHighlight 
         onPress={ () => this.goToTransactions(rowData.name)}
         onLongPress={() => {this.openEditBudgetModal(rowData)}}
-      >
+        underlayColor="#d6d6d6">
       <View style={styles.itemContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.header}>{rowData.name}</Text>
