@@ -98,6 +98,15 @@ var TransactionList = React.createClass({
   },
 
   render: function() {
+    if(this.state.dataSource._cachedRowCount===0){
+      var transType = this.props.type;
+      var displayTrans = transType.substring(0, transType.length-1);
+      return(
+        <View style={styles.emptyListContainer}>
+          <Text style={styles.noDataText}>You don't have any {displayTrans} transactions for budget "{this.props.budgetName}"</Text>
+        </View>
+      )
+    }
     return (
       <View>
         <ListView
@@ -190,6 +199,16 @@ var TransactionList = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  emptyListContainer:{
+    flex: 1,
+    padding: 21,
+    alignItems:'stretch',
+    justifyContent:'center'
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'black',
+  },
   itemContainer:{
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
