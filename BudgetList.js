@@ -48,30 +48,43 @@ var BudgetList = React.createClass({
   },
 
   render: function() {
-    return (
-      <View>
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this._renderRow}
-        style={styles.list}
-        />
-        <Modal
-          animationType={'none'}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {this._setModalVisible(false)}}>
-          <View style={modalStyle.modal}>
-            <View style={modalStyle.container}>
-              <TouchableHighlight 
-                onPress={this.editBudget}
-                underlayColor="#d6d6d6">
-                <Text style={modalStyle.text}>Edit</Text>
-              </TouchableHighlight>
+    if(this.state.dataSource._cachedRowCount===0){
+      return(
+        <View style={styles.emptyListContainer}>
+          <Text style={styles.noDataText}>
+          You don't have any budgets at the moment. Click the + (plus) button up top to get started.
+          </Text>
+          <Text style={styles.noDataText2}>
+            Budget Watch lets you create budgets, then track spending during the month.
+          </Text>
+        </View>
+      )
+    }else{
+      return (
+        <View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow}
+          style={styles.list}
+          />
+          <Modal
+            animationType={'none'}
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {this._setModalVisible(false)}}>
+            <View style={modalStyle.modal}>
+              <View style={modalStyle.container}>
+                <TouchableHighlight 
+                  onPress={this.editBudget}
+                  underlayColor="#d6d6d6">
+                  <Text style={modalStyle.text}>Edit</Text>
+                </TouchableHighlight>
+              </View>
             </View>
-          </View>
-        </Modal>
-      </View>
-    );
+          </Modal>
+        </View>
+      );
+    }
   },
 
   _setModalVisible(visible) {
@@ -151,6 +164,21 @@ var BudgetList = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  emptyListContainer:{
+    flex: 1,
+    padding: 35,
+    alignItems:'stretch',
+    justifyContent:'center'
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'black',
+    paddingBottom: 10,
+  },
+  noDataText2: {
+    fontSize: 16,
+    color: 'black',
+  },
   list: {
     padding: 16
   },
