@@ -131,6 +131,7 @@ var BudgetWatch_ReactNative = React.createClass({
   },
 
   render() {
+    this.createInitialItemsForDatabase();
     return (
       <Navigator
         ref={(nav) => { navigator = nav; }}
@@ -146,7 +147,20 @@ var BudgetWatch_ReactNative = React.createClass({
           />
       }/>
     )
+  },
+
+  createInitialItemsForDatabase(){    
+    let appData = realm.objects('AppData');   
+    if(appData[0]===undefined){   
+      realm.write(() => {   
+        let data = realm.create('AppData', {    
+          id:0,   
+          currentTrans: 0   
+        });   
+      });   
+    }   
   }
+
 });
 
 var styles = StyleSheet.create({

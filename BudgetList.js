@@ -52,7 +52,7 @@ var BudgetList = React.createClass({
       return(
         <View style={styles.emptyListContainer}>
           <Text style={styles.noDataText}>
-          You don't have any budgets at the moment. Click the + (plus) button up top to get started.
+          You dont have any budgets at the moment. Click the + (plus) button up top to get started.
           </Text>
           <Text style={styles.noDataText2}>
             Budget Watch lets you create budgets, then track spending during the month.
@@ -92,42 +92,49 @@ var BudgetList = React.createClass({
   },
 
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    var totalValue = 0;
-    var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems <= $2", rowData.name, this.props.startTime, this.props.endTime);
-    for (var i = 0; i < transactions.length; i++) {
-      if(transactions[i].transactionType===0){
-        totalValue += transactions[i].value;
-      }else{
-        totalValue -= transactions[i].value;
+    // Needed for when adding a trans but removing directly afterwards
+    if(rowData === undefined){
+      return(
+        <View></View>
+      );
+    }else{
+      var totalValue = 0;
+      var transactions = this.props.realm.objects('Transaction').filtered("budget = $0 AND datems >= $1 AND datems <= $2", rowData.name, this.props.startTime, this.props.endTime);
+      for (var i = 0; i < transactions.length; i++) {
+        if(transactions[i].transactionType===0){
+          totalValue += transactions[i].value;
+        }else{
+          totalValue -= transactions[i].value;
+        }
       }
+      return (
+        <TouchableHighlight 
+          onPress={ () => this.goToTransactions(rowData.name)}
+          onLongPress={() => {this.openEditBudgetModal(rowData)}}
+          underlayColor="#d6d6d6">
+        <View style={styles.itemContainer}>
+          <View>
+            <Text style={styles.header}>{rowData.name}</Text>
+          </View>
+          <View style={styles.lowerContainer}>
+            <View style={styles.leftContainer}>
+                <ProgressBar 
+                  styleAttr="Horizontal" 
+                  indeterminate={false} 
+                  backgroundStyle={{borderRadius: 5}}
+                  color="grey" 
+                  progress={totalValue/rowData.maxValue}/>
+            </View>
+            <View style={styles.rightContainer}>
+              <Text> 
+                {Math.round(totalValue * 100) / 100}/{Math.round(rowData.maxValue * 100) / 100}
+              </Text>
+            </View>
+          </View>
+        </View>
+        </TouchableHighlight>
+      );
     }
-    return (
-      <TouchableHighlight 
-        onPress={ () => this.goToTransactions(rowData.name)}
-        onLongPress={() => {this.openEditBudgetModal(rowData)}}
-        underlayColor="#d6d6d6">
-      <View style={styles.itemContainer}>
-        <View>
-          <Text style={styles.header}>{rowData.name}</Text>
-        </View>
-        <View style={styles.lowerContainer}>
-          <View style={styles.leftContainer}>
-              <ProgressBar 
-                styleAttr="Horizontal" 
-                indeterminate={false} 
-                backgroundStyle={{borderRadius: 5}}
-                color="grey" 
-                progress={totalValue/rowData.maxValue}/>
-          </View>
-          <View style={styles.rightContainer}>
-            <Text> 
-              {Math.round(totalValue * 100) / 100}/{Math.round(rowData.maxValue * 100) / 100}
-            </Text>
-          </View>
-        </View>
-      </View>
-      </TouchableHighlight>
-    );
   },
 
   goToTransactions(budgetName){
