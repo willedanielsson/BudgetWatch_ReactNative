@@ -14,7 +14,6 @@ class ReceiptIcon extends React.Component{
   }
 
   render(){
-    console.log(this.props.receipt);
     if(this.props.receipt === null){
       return (
         <View style={styles.leftContainer}>

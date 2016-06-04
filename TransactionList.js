@@ -96,12 +96,21 @@ var TransactionList = React.createClass({
     if(this.state.dataSource._cachedRowCount===0){
       var transType = this.props.type;
       var displayTrans = transType.substring(0, transType.length-1);
-      return(
-        <View style={styles.emptyListContainer}>
-          <Text style={styles.noDataText}>You don't have any {displayTrans} transactions for budget "{this.props.budgetName}"</Text>
-        </View>
-      )
-    }
+      // If we come from a budget
+      if(this.props.budgetName!==undefined){
+        return(
+          <View style={styles.emptyListContainer}>
+            <Text style={styles.noDataText}>You don't have any {displayTrans} transactions for budget "{this.props.budgetName}"</Text>
+          </View>
+        )
+      }else{
+        return(
+          <View style={styles.emptyListContainer}>
+            <Text style={styles.noDataText}>You don't have any {displayTrans} transactions at the moment. Click the + (plus) button up top to get started.</Text>
+          </View>
+        )
+      }
+    }else{
     return (
       <View>
         <ListView
@@ -126,8 +135,15 @@ var TransactionList = React.createClass({
         </Modal>
       </View>
     );
+    }
   },
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
+    // Needed for when adding a trans but removing directly afterwards
+    if(rowData === undefined){
+      return(
+        <View></View>
+      );
+    }else{
     return (
       <TouchableHighlight
         underlayColor="#d6d6d6"
@@ -153,6 +169,7 @@ var TransactionList = React.createClass({
         </View>
       </TouchableHighlight>
     );
+    }
   },
 
   viewTransaction(inTransaction){

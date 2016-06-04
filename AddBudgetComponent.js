@@ -121,8 +121,6 @@ class AddBudget extends React.Component{
       }
     // If we are adding a new budget
     }else{
-      console.log(budgetType);
-      console.log(budgetValue);
       if(budgetType!=='' && budgetValue!==0){
         realm.write(() => {
           let budget = realm.create('Budget', {
@@ -193,6 +191,5 @@ var styles = StyleSheet.create({
     fontWeight: 'normal',
   }
 });
-
 
 module.exports = AddBudget;

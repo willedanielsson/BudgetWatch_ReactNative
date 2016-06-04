@@ -27,11 +27,11 @@ class AddTransaction extends React.Component{
     var propName = '';
     var propBudget = '';
     var propAccount = '';
-    var propValue = 0;
+    var propValue;
     var propNote = '';
     var propDate = date;
     var propDisplayDate = date.toString().substring(4,10) + "," + date.toString().substring(10,15);
-    var propReceipt= '';
+    var propReceipt;
 
     if(this.props.selectedTrans !== undefined){
       propName = this.props.selectedTrans.name.toString();
@@ -47,7 +47,7 @@ class AddTransaction extends React.Component{
       inputName: propName,
       inputBudget: propBudget,
       inputAccount: propAccount,
-      inputValue: propValue.toString(),
+      inputValue: propValue,
       inputNote: propNote,
       inputDate: propDate,
       inputReceipt: propReceipt,
@@ -263,9 +263,8 @@ class AddTransaction extends React.Component{
                 ref="inputValue"
                 style={styles.input} 
                 keyboardType="numeric"
-                defaultValue={this.state.editValue}
                 onChangeText={(inputValue) => this.setNumberToState(inputValue)}
-                value={this.state.inputValue}/>
+                value={this.state.inputValue.toString()}/>
           </View>
           <View style={styles.itemRow}>
             <Text style={styles.label}>Note</Text>
