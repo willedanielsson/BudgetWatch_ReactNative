@@ -139,7 +139,6 @@ class AddTransaction extends React.Component{
                 ref="inputValue"
                 style={styles.input} 
                 keyboardType="numeric"
-                defaultValue={this.state.editValue}
                 onChangeText={(inputValue) => this.setNumberToState(inputValue)}
                 value={this.state.inputValue}/>
           </View>

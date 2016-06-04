@@ -13,6 +13,7 @@ import {
 
 var AddTransaction = require('./AddTransactionComponent.js');
 var ReceiptIcon = require('./ReceiptIconComponent.js');
+var ViewTransaction = require('./ViewTransactionComponent.js');
 
 var TransactionList = React.createClass({
   getInitialState: function() {
@@ -130,6 +131,7 @@ var TransactionList = React.createClass({
     return (
       <TouchableHighlight
         underlayColor="#d6d6d6"
+        onPress={() => {this.viewTransaction(rowData)}}
         onLongPress={() => {this.openEditTransactionModal(rowData)}}>
         <View style={styles.itemContainer}>
           <View style={styles.upperContainer}>
@@ -151,6 +153,22 @@ var TransactionList = React.createClass({
         </View>
       </TouchableHighlight>
     );
+  },
+
+  viewTransaction(inTransaction){
+    var viewName;
+    if(this.state.selectedTransaction.transactionType === 0){
+      viewName = "View Expense";
+    }else{
+      viewName = "View Revenue";
+    }
+    this.props.navigator.push({
+      name: viewName,
+      component: ViewTransaction,
+      passProps: {
+        editTrans: inTransaction
+      }
+    })
   },
 
   openEditTransactionModal(inTrans){
