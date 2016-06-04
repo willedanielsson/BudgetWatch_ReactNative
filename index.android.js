@@ -202,7 +202,7 @@ var BudgetWatch_ReactNative = React.createClass({
           name: 'Groceries',
           budget: 'Food',
           account: '',
-          value: 287.62,
+          value: 287,
           note: '',
           date: 'May 10, 2016',
           datems: 1465423200000,
