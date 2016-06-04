@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-/*
-
-        <Text style={styles.welcome}>
-          Welcome to React Native Wiliam!
-        </Text>
-*/
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -26,15 +16,13 @@ var navigator;
 var Main = require('./MainComponent.js');
 var Budgets = require('./BudgetsComponent.js');
 var Transactions = require('./TransactionsComponent.js');
-
 var NavigationBarRouteMapper = require('./NavigationBarRouteMapper.js');
 
-
 BackAndroid.addEventListener('hardwareBackPress', () => {
-    if (navigator && navigator.getCurrentRoutes().length > 1) {
-        navigator.pop();
-        return true;
-    }
+  if (navigator && navigator.getCurrentRoutes().length > 1) {
+    navigator.pop();
+    return true;
+  }
     return false;
 });
 
@@ -64,7 +52,6 @@ const TransactionSchema ={
     receipt: {type: 'string', optional: true},
   }
 };
-
 
 const AppDataSchema ={
   name: 'AppData',
@@ -132,7 +119,6 @@ var BudgetWatch_ReactNative = React.createClass({
   onDidFocus(route){
     if(route.name==='Budgets'){
       var data = realm.objects('Budget').sorted('name');
-      //return React.createElement(route.component, {navigator, realm, data});
       return <Budgets navigator={navigator} realm={realm} data={data} />
     }
     if(route.name==="Transactions"){
@@ -140,7 +126,6 @@ var BudgetWatch_ReactNative = React.createClass({
        var budgetName = route.passProps.budgetName;
        return <Transactions navigator={navigator} realm={realm} data={data} budgetName={budgetName}/>
     }
-
   },
 
   render() {
@@ -250,7 +235,6 @@ var BudgetWatch_ReactNative = React.createClass({
         });
       });
     }
-
     if(budgets[1]===undefined){
       var trans = realm.objects('Transaction').filtered('budget = "Food"');
       realm.write(() => {
@@ -270,7 +254,6 @@ var styles = StyleSheet.create({
     backgroundColor: '#3F51B5',
     elevation: 3
   }
-
 });
 
 AppRegistry.registerComponent('BudgetWatch_ReactNative', () => BudgetWatch_ReactNative);

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -37,12 +36,10 @@ var Transactions = React.createClass({
           style={styles.tabLayout}>
             <Tab 
               name="EXPENSES"
-              textColor='white'
-              style={styles.tab}/>
+              textColor='white'/>
             <Tab 
               name="REVENUES"
-              textColor='white'
-              style={styles.tab}/>
+              textColor='white'/>
           </TabLayout>
         </View>
         <ViewPagerAndroid
@@ -52,10 +49,20 @@ var Transactions = React.createClass({
           ref={viewPager => { this.viewPager = viewPager; }}>
 
           <View style={styles.pageStyle}>
-            <TransactionList data={this.props.data} type={'expenses'} realm={this.props.realm} navigator = {this.props.navigator} budgetName = {this.props.budgetName}/>
+            <TransactionList 
+              data={this.props.data} 
+              type={'expenses'} 
+              realm={this.props.realm} 
+              navigator = {this.props.navigator} 
+              budgetName = {this.props.budgetName}/>
           </View>
           <View style={styles.pageStyle}>
-             <TransactionList data={this.props.data} type={'revenues'} realm={this.props.realm} navigator = {this.props.navigator} budgetName = {this.props.budgetName}/>
+             <TransactionList 
+              data={this.props.data} 
+              type={'revenues'} 
+              realm={this.props.realm} 
+              navigator = {this.props.navigator} 
+              budgetName = {this.props.budgetName}/>
           </View>
         </ViewPagerAndroid>
       </View>
@@ -65,16 +72,17 @@ var Transactions = React.createClass({
   _onPageSelected(e){
     this.setState({currentPage: e.nativeEvent.position});
     var realm= this.props.realm;
+
     realm.write(() => {
       realm.create('AppData', {id: 0,currentTrans: e.nativeEvent.position}, true);
     });
-    console.log("Should be: " + e.nativeEvent.position);
-
   },
+
   _onTabClicked(e){
     this.setState({currentPage: e.nativeEvent.position});
     this.viewPager.setPage(e.nativeEvent.position);
      var realm=this.props.realm;
+
     realm.write(() => {
       realm.create('AppData', {id: 0,currentTrans: e.nativeEvent.position}, true);
     });
@@ -90,14 +98,12 @@ var styles = StyleSheet.create({
   tabLayout:{
     backgroundColor: '#3F51B5'
   },
-  tab:{
-  },
   viewPager: {
     flex:1,
   },
   pageStyle: {
     padding: 16
-  },
+  }
 });
 
 module.exports = Transactions;

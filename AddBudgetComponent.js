@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -56,7 +55,7 @@ class AddBudget extends React.Component{
         <View style={styles.itemRow}>
            <View style={styles.buttonContainer}>
             <Button
-              style={styles.buttonCancel}
+              style={styles.button}
               styleDisabled={{color: 'red'}}
               onPress={this.cancelView.bind(this)}>
               CANCEL
@@ -64,7 +63,7 @@ class AddBudget extends React.Component{
           </View>
           <View style={styles.buttonContainer}>
             <Button
-              style={styles.buttonSave}
+              style={styles.button}
               styleDisabled={{color: 'red'}}
               onPress={this.saveBudget.bind(this)}>
               SAVE
@@ -92,7 +91,6 @@ class AddBudget extends React.Component{
   }
 
   cancelView(){
-    console.log("CANCEL");
     this.props.navigator.pop();
   }
 
@@ -121,7 +119,7 @@ class AddBudget extends React.Component{
       }else{
         ToastAndroid.show("Budget value is empty", ToastAndroid.LONG);
       }
-
+    // If we are adding a new budget
     }else{
       console.log(budgetType);
       console.log(budgetValue);
@@ -159,7 +157,6 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
   },
-
   label: {
     fontSize: 16,
     marginTop: 12,
@@ -190,13 +187,7 @@ var styles = StyleSheet.create({
     elevation: 2
   },
 
-  buttonCancel: {
-    fontSize: 14,
-    color: 'black',
-    fontWeight: 'normal',
-  },
-
-  buttonSave: {
+  button: {
     fontSize: 14,
     color: 'black',
     fontWeight: 'normal',

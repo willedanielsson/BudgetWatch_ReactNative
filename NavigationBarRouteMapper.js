@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -31,7 +30,7 @@ var NavigationBarRouteMapper = props => ({
   },
 
   RightButton(route, navigator, index, navState) {
-    if (route.name == "Budgets"){ 
+    if (route.name === "Budgets"){ 
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight 
@@ -43,46 +42,54 @@ var NavigationBarRouteMapper = props => ({
               name: 'Test'
             }})}>
              <View style={styles.addBudgetButtonContainer}>
-              <Image style={styles.addBudgetIcon} source={require('./images/add.png')}/>
+              <Image 
+                style={styles.addBudgetIcon} 
+                source={require('./images/add.png')}/>
             </View>
            </TouchableHighlight>
          </View>
       )
     }
-    if(route.name == "Transactions"){
+    if(route.name === "Transactions"){
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight
             underlayColor="transparent"
             onPress={ () => this.addTransaction(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
-              <Image style={styles.transactionIcon} source={require('./images/add.png')}/>
+              <Image 
+                style={styles.transactionIcon} 
+                source={require('./images/add.png')}/>
             </View>
            </TouchableHighlight>
          </View>
       )
     }
-    if(route.name==="Edit budget"){
+    if(route.name === "Edit budget"){
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight 
             underlayColor="transparent"
             onPress={ () => this.deleteBudget(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
-              <Image style={styles.transactionIcon} source={require('./images/delete.png')}/>
+              <Image 
+                style={styles.transactionIcon} 
+                source={require('./images/delete.png')}/>
             </View>
           </TouchableHighlight>
         </View>
       )
     }
-    if(route.name==="Edit Expense" || route.name==="Edit Revenue"){
+    if(route.name === "Edit Expense" || route.name === "Edit Revenue"){
       return (
         <View style={styles.rightButtonContainer}>
           <TouchableHighlight 
             underlayColor="transparent"
             onPress={ () => this.deteleTransaction(navigator)}>
             <View style={styles.addTransactionButtonContainer}>
-              <Image style={styles.transactionIcon} source={require('./images/delete.png')}/>
+              <Image 
+                style={styles.transactionIcon} 
+                source={require('./images/delete.png')}/>
             </View>
           </TouchableHighlight>
         </View>
@@ -92,7 +99,7 @@ var NavigationBarRouteMapper = props => ({
   addTransaction(navigator){
     var transType;
     var transID;
-    if(navigator.props.realm.objects('AppData')[0].currentTrans===0){
+    if(navigator.props.realm.objects('AppData')[0].currentTrans === 0){
       transType= "Add Expense";
       transId = 0;
     }else{
@@ -130,10 +137,11 @@ var NavigationBarRouteMapper = props => ({
   Title(route, navigator, index, navState) {
     return(
       <View style={styles.titleContainer}>
-      <Text style={ styles.title }>
-        {route.name}
-      </Text>
-      </View>)
+        <Text style={ styles.title }>
+          {route.name}
+        </Text>
+      </View>
+    )
   }
 });
 
@@ -186,8 +194,7 @@ var styles = StyleSheet.create({
     resizeMode:'contain',
     height: 25,
     width: 25,
-  },
-
+  }
 });
 
 module.exports = NavigationBarRouteMapper;

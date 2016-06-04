@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -72,7 +71,6 @@ class AddTransaction extends React.Component{
       }
 
     } catch ({code, message}) {
-      console.log("ERROR");
       console.warn(`Error in showicker`, message);
     }
   }
@@ -96,7 +94,6 @@ class AddTransaction extends React.Component{
 
   render(){
     if(this.props.selectedTrans === undefined){
-      console.log("New");
       return(
         <View style={styles.container}>
         <ScrollView
@@ -119,7 +116,11 @@ class AddTransaction extends React.Component{
                 onValueChange={(budget) => this.setState({inputBudget: budget})}>
                   {this.props.realm.objects('Budget').map((budget, i) => {
                     return (
-                      <Picker.Item value={budget.name} label={budget.name} key={i} style={styles.pickerItem}/>
+                      <Picker.Item 
+                        value={budget.name} 
+                        label={budget.name} 
+                        key={i} 
+                        style={styles.pickerItem}/>
                     ) 
                   })}
               </Picker>
@@ -240,7 +241,11 @@ class AddTransaction extends React.Component{
                 onValueChange={(budget) => this.setState({inputBudget: budget})}>
                   {this.props.realm.objects('Budget').map((budget, i) => {
                     return (
-                      <Picker.Item value={budget.name} label={budget.name} key={i} style={styles.pickerItem}/>
+                      <Picker.Item 
+                      value={budget.name} 
+                      label={budget.name} 
+                      key={i} 
+                      style={styles.pickerItem}/>
                     ) 
                   })}
               </Picker>
@@ -347,7 +352,6 @@ class AddTransaction extends React.Component{
         </View>
       )
     }
-    
   }
 
   takePicture() {
@@ -439,9 +443,9 @@ class AddTransaction extends React.Component{
       }
       
       this.props.navigator.pop();
-      // required input missing
-    } else{
 
+    // required input missing
+    }else {
       var message;
       if(transName===''){
         message="Name is empty";

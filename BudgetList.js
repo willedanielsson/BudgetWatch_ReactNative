@@ -14,7 +14,6 @@ var ProgressBar = require('ProgressBarAndroid');
 var Transactions = require('./TransactionsComponent.js');
 var AddBudget = require('./AddBudgetComponent.js');
 
-
 var BudgetList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -28,7 +27,6 @@ var BudgetList = React.createClass({
   },
 
   componentWillUpdate (nextProps, nextState) {
-
     if (this.shouldListUpdate()) {
       this.setState({
         data: this.props.data,
@@ -38,7 +36,6 @@ var BudgetList = React.createClass({
   },
 
   shouldListUpdate(){
-    console.log("Shoud list update");
     var shouldForceUpdate = this.props.realm.objects('AppData')[0].shouldForceUpdate;
     if(this.state.dataSource._cachedRowCount !== this.props.data.length || shouldForceUpdate){
     this.props.realm.write(() => {
@@ -97,7 +94,7 @@ var BudgetList = React.createClass({
         onLongPress={() => {this.openEditBudgetModal(rowData)}}
         underlayColor="#d6d6d6">
       <View style={styles.itemContainer}>
-        <View style={styles.headerContainer}>
+        <View>
           <Text style={styles.header}>{rowData.name}</Text>
         </View>
         <View style={styles.lowerContainer}>
@@ -110,9 +107,10 @@ var BudgetList = React.createClass({
                 progress={totalValue/rowData.maxValue}/>
           </View>
           <View style={styles.rightContainer}>
-            <Text style={styles.progressText}> {Math.round(totalValue * 100) / 100}/{Math.round(rowData.maxValue * 100) / 100}</Text>
+            <Text> 
+              {Math.round(totalValue * 100) / 100}/{Math.round(rowData.maxValue * 100) / 100}
+            </Text>
           </View>
-          
         </View>
       </View>
       </TouchableHighlight>
@@ -136,9 +134,8 @@ var BudgetList = React.createClass({
 
   editBudget(){
     this._setModalVisible(false);
-    console.log(this.state.selectedBudget.id);
-
     var realm=this.props.realm;
+
     realm.write(() => {
       realm.create('AppData', {id: 0, currentEditBudget: this.state.selectedBudget.id}, true);
     });
@@ -164,9 +161,6 @@ var styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  headerContainer: {
-    
-  },
   header: {
     fontSize: 20
   },
@@ -179,8 +173,6 @@ var styles = StyleSheet.create({
   rightContainer: {
     flex:1,
     alignItems: 'flex-end'
-  },
-  progressText: {
   }
 });
 
@@ -204,8 +196,7 @@ var modalStyle = StyleSheet.create({
     marginLeft: 25,
     color: 'black',
     fontSize: 16,
-  },
+  }
 });
-
 
 module.exports = BudgetList;

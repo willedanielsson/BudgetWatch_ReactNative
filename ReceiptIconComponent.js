@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Navigator,
   Image,
 } from 'react-native';
 
@@ -12,14 +10,12 @@ import {
 class ReceiptIcon extends React.Component{
   constructor(props) {
     super(props)
-
-    this.state = {
-    }
+    this.state = {}
   }
 
   render(){
     console.log(this.props.receipt);
-    if(this.props.receipt===null){
+    if(this.props.receipt === null){
       return (
         <View style={styles.leftContainer}>
           <Text>{this.props.budget}</Text>
@@ -48,8 +44,7 @@ var styles = StyleSheet.create({
     height: 18,
     width: 18,
     margin: 2,
-  },
+  }
 });
-
 
 module.exports = ReceiptIcon;

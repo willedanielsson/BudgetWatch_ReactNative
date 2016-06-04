@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -22,7 +21,7 @@ var TransactionList = React.createClass({
 
     var expenses;
     var revenues;
-    if(this.props.budgetName!==undefined){
+    if(this.props.budgetName !== undefined){
       expenses = transactions.filtered('transactionType = 0 AND budget= $0', this.props.budgetName);
       revenues = transactions.filtered('transactionType = 1 AND budget= $0', this.props.budgetName);
     }else{
@@ -30,7 +29,7 @@ var TransactionList = React.createClass({
       revenues = transactions.filtered('transactionType = 1');
     }
     
-    if(this.props.type==='expenses'){
+    if(this.props.type === 'expenses'){
       return {
         data: this.props.data,
         dataSource: ds.cloneWithRows(expenses.sorted('datems', true)),
@@ -61,26 +60,21 @@ var TransactionList = React.createClass({
     }
 
     if(this.props.type==='expenses'){
-      //console.log("We are in expenses");
       if(this.shouldListUpdate(expenses.length, this.props.realm)){
-        //console.log("Not same, update plz");
+        // Not same, update list
         this.setState({
           data: this.props.data,
           dataSource: this.state.dataSource.cloneWithRows(expenses.sorted('datems', true)),
         })
-      }else{
-        //console.log("They are same");
       }
     }else{
-      //console.log("In revenues");
+      // revenues
       if(this.shouldListUpdate(revenues.length, this.props.realm)){
-        //console.log("Not same, update plz");
+        // Not same, update list
         this.setState({
           data: this.props.data,
           dataSource: this.state.dataSource.cloneWithRows(revenues.sorted('datems', true)),
         })
-      }else{
-        //console.log("They are the same");
       }
     }
   },
@@ -139,25 +133,23 @@ var TransactionList = React.createClass({
         onLongPress={() => {this.openEditTransactionModal(rowData)}}>
         <View style={styles.itemContainer}>
           <View style={styles.upperContainer}>
+
             <View style={styles.leftContainer}>
               <Text style={styles.name}>{rowData.name}</Text>
             </View>
-
             <View style={styles.rightContainer}>
               <Text style={styles.price}>{Math.round(rowData.value * 100) / 100}</Text>
             </View>
-          </View>
 
+          </View>
           <View style={styles.lowerContainer}>
             <ReceiptIcon budget={rowData.budget} receipt={rowData.receipt}/>
             <View style={styles.rightContainer}>
               <Text style={styles.date}>{rowData.date}</Text>
             </View>
           </View>
-
         </View>
       </TouchableHighlight>
-
     );
   },
 
@@ -167,16 +159,14 @@ var TransactionList = React.createClass({
   },
 
   editTransaction(){
-    console.log("Transaction");
     this._setModalVisible(false);
-
     var realm=this.props.realm;
+
     realm.write(() => {
       realm.create('AppData', {id: 0, currentEditTrans: this.state.selectedTransaction.id}, true);
     });
 
     var viewName;
-
     if(this.state.selectedTransaction.transactionType===0){
       viewName = "Edit Expense";
     }else{
@@ -190,12 +180,11 @@ var TransactionList = React.createClass({
         editTrans: this.state.selectedTransaction
       }
     })
-
   },
 
   _setModalVisible(visible) {
     this.setState({modalVisible: visible});
-  },
+  }
 });
 
 var styles = StyleSheet.create({
@@ -240,7 +229,7 @@ var styles = StyleSheet.create({
     height: 18,
     width: 18,
     margin: 2,
-  },
+  }
 });
 
 var modalStyle = StyleSheet.create({
@@ -263,8 +252,7 @@ var modalStyle = StyleSheet.create({
     marginLeft: 25,
     color: 'black',
     fontSize: 16,
-  },
+  }
 });
-
 
 module.exports = TransactionList;

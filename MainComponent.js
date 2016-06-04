@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -24,10 +23,8 @@ var MainListItem = React.createClass({
             style={styles.icon}
             source={this.props.image}/>
           <View style={styles.textContainer}>
-
             <Text style={styles.header}>{this.props.name}</Text>
             <Text>{this.props.desc}</Text>
-
           </View>
         </View>
     )
@@ -72,7 +69,6 @@ class Main extends React.Component{
             underlayColor="#d6d6d6">
             <MainListItem name={'Transactions'} desc={'Enter transactions and revenues'} image={require('./images/transaction.png')}/>
           </TouchableHighlight>
-
         </View>
       </View>
     )
@@ -107,9 +103,7 @@ var styles = StyleSheet.create({
   },
   header: {
     fontSize: 20
-  },
-
+  }
 });
-
 
 module.exports = Main;

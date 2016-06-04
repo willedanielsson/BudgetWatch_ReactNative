@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -12,13 +11,10 @@ import {
 class ViewReceipt extends React.Component{
   constructor(props) {
     super(props)
-
-    this.state = {
-    }
+    this.state = {}
   }
 
   render(){
-    console.log(this.props.path);
     return (
       <View style={styles.container}>
         <Image
@@ -40,6 +36,5 @@ var styles = StyleSheet.create({
     alignItems: 'stretch',
   },
 });
-
 
 module.exports = ViewReceipt;

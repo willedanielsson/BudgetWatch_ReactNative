@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -8,8 +7,6 @@ import {
 } from 'react-native';
 
 var BudgetList = require('./BudgetList.js');
-//import Realm from 'realm'
-//let persons = realm.objects('Person');
 
 var Budgets = React.createClass({
   getInitialState: function() {
@@ -73,6 +70,5 @@ var styles = StyleSheet.create({
     fontSize:20,
   }
 });
-
 
 module.exports = Budgets;
