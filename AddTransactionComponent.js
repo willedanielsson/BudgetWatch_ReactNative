@@ -164,7 +164,6 @@ class AddTransaction extends React.Component{
               <View style={styles.buttonContainer}>
                 <Button
                   style={styles.button}
-                  disabled={true}
                   onPress={this._captureReceipt.bind(this)}>
                   CAPTURE
                 </Button>
