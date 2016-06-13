@@ -17,7 +17,6 @@ import {
 import Camera from 'react-native-camera';
 
 var Button = require('react-native-button');
-var ReceiptRow = require('./ReceiptRow.js');
 
 class AddTransaction extends React.Component{
   constructor(props) {
@@ -31,7 +30,6 @@ class AddTransaction extends React.Component{
     var propNote = '';
     var propDate = date;
     var propDisplayDate = date.toString().substring(4,10) + "," + date.toString().substring(10,15);
-    var propReceipt= '';
 
     if(this.props.selectedTrans !== undefined){
       propName = this.props.selectedTrans.name.toString();
@@ -40,7 +38,6 @@ class AddTransaction extends React.Component{
       propValue = this.props.selectedTrans.value;
       propNote = this.props.selectedTrans.note;
       propDisplayDate = this.props.selectedTrans.date;
-      propReceipt = this.props.selectedTrans.receipt;
     }
 
     this.state = {
@@ -50,7 +47,6 @@ class AddTransaction extends React.Component{
       inputValue: propValue.toString(),
       inputNote: propNote,
       inputDate: propDate,
-      inputReceipt: propReceipt,
       displayDate: propDisplayDate,
       modalVisible: false,
     }
@@ -156,7 +152,6 @@ class AddTransaction extends React.Component{
               <Text style={styles.dateText}>{this.state.displayDate}</Text>
           </View>
         </View>
-        <ReceiptRow navigator={this.props.navigator} inputReceipt={this.state.inputReceipt}/>
       </ScrollView>
       </View>
     )
@@ -197,10 +192,6 @@ var styles = StyleSheet.create({
   },
   pickerItem:{
     fontSize: 10,
-  },
-  receiptButtonContainer: {
-    flex:1,
-    height: 45,
   },
   buttonContainer:{
     flex: 1,

@@ -49,7 +49,6 @@ const TransactionSchema ={
     note: {type: 'string', optional: true},
     date: 'string',
     datems: 'int',
-    receipt: {type: 'string', optional: true},
   }
 };
 
@@ -107,10 +106,6 @@ var BudgetWatch_ReactNative = React.createClass({
     if(route.name === 'Edit Revenue'){
       var selectedTrans = route.passProps.editTrans;
       return React.createElement(route.component, {navigator, realm, selectedTrans});
-    }
-    if(route.name === 'Receipt'){
-      var path = route.passProps.path;
-      return React.createElement(route.component, {navigator, path});
     }
     if(route.name === 'View Expense' || route.name === 'View Revenue'){
       var selectedTrans = route.passProps.editTrans;

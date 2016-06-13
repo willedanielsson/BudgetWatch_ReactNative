@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 
 var AddTransaction = require('./AddTransactionComponent.js');
-var ReceiptIcon = require('./ReceiptIconComponent.js');
 var ViewTransaction = require('./ViewTransactionComponent.js');
 
 var TransactionList = React.createClass({
@@ -161,7 +160,9 @@ var TransactionList = React.createClass({
 
           </View>
           <View style={styles.lowerContainer}>
-            <ReceiptIcon budget={rowData.budget} receipt={rowData.receipt}/>
+            <View style={styles.leftContainer}>
+              <Text>{rowData.budget}</Text>
+            </View>
             <View style={styles.rightContainer}>
               <Text style={styles.date}>{rowData.date}</Text>
             </View>
@@ -259,12 +260,6 @@ var styles = StyleSheet.create({
   price:{
     fontSize: 18
   },
-  receiptIcon:{
-    resizeMode:'contain',
-    height: 18,
-    width: 18,
-    margin: 2,
-  }
 });
 
 var modalStyle = StyleSheet.create({

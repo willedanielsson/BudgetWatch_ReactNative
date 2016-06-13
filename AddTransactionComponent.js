@@ -11,13 +11,9 @@ import {
   DatePickerAndroid,
   Picker,
   ToastAndroid,
-  Modal
 } from 'react-native';
 
-import Camera from 'react-native-camera';
-
 var Button = require('react-native-button');
-var ReceiptViewer = require('./ViewReceiptComponent.js');
 
 class AddTransaction extends React.Component{
   constructor(props) {
@@ -31,7 +27,6 @@ class AddTransaction extends React.Component{
     var propNote = '';
     var propDate = date;
     var propDisplayDate = date.toString().substring(4,10) + "," + date.toString().substring(10,15);
-    var propReceipt;
 
     if(this.props.selectedTrans !== undefined){
       propName = this.props.selectedTrans.name.toString();
@@ -40,7 +35,6 @@ class AddTransaction extends React.Component{
       propValue = this.props.selectedTrans.value;
       propNote = this.props.selectedTrans.note;
       propDisplayDate = this.props.selectedTrans.date;
-      propReceipt = this.props.selectedTrans.receipt;
     }
 
     this.state = {
@@ -50,7 +44,6 @@ class AddTransaction extends React.Component{
       inputValue: propValue,
       inputNote: propNote,
       inputDate: propDate,
-      inputReceipt: propReceipt,
       displayDate: propDisplayDate,
       modalVisible: false,
     }
@@ -93,296 +86,97 @@ class AddTransaction extends React.Component{
   }
 
   render(){
-    if(this.props.selectedTrans === undefined){
-      return(
-        <View style={styles.container}>
-        <ScrollView
-          ref={(scrollView) => { _scrollView = scrollView; }}
-          style={styles.scrollView}>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Name</Text>
-              <TextInput 
-                ref="inputName"
-                style={styles.input}
-                onChangeText={(inputName) => this.setState({inputName})}
-                value={this.state.inputName}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Budget</Text>
-              <Picker
-                style={styles.picker}
-                selectedValue={this.state.inputBudget}
-                mode={'dropdown'}
-                onValueChange={(budget) => this.setState({inputBudget: budget})}>
-                  {this.props.realm.objects('Budget').map((budget, i) => {
-                    return (
-                      <Picker.Item 
-                        value={budget.name} 
-                        label={budget.name} 
-                        key={i} 
-                        style={styles.pickerItem}/>
-                    ) 
-                  })}
-              </Picker>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Account</Text>
-              <TextInput 
-                ref="inputAccount"
-                style={styles.input}
-                onChangeText={(inputAccount) => this.setState({inputAccount})}
-                value={this.state.inputAccount}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Value</Text>
-              <TextInput 
-                ref="inputValue"
-                style={styles.input} 
-                keyboardType="numeric"
-                onChangeText={(inputValue) => this.setNumberToState(inputValue)}
-                value={this.state.inputValue}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Note</Text>
-              <TextInput 
-                ref="inputNote"
-                style={styles.input}
-                onChangeText={(inputNote) => this.setState({inputNote})}
-                value={this.state.inputNote}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Date</Text>
-              <TouchableHighlight 
-              style={styles.dateButton} 
-              onPress={ () => this.showPicker({date: this.state.inputDate})}
-              underlayColor="#d6d6d6">
-                <Text style={styles.dateText}>{this.state.displayDate}</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Receipt</Text>
-              <View style={styles.buttonContainer}>
-                <Button
-                  style={styles.button}
-                  onPress={this._captureReceipt.bind(this)}>
-                  CAPTURE
-                </Button>
-            </View>
-          </View>
-          <View style={styles.itemRow}>
-             <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                styleDisabled={{color: 'red'}}
-                onPress={this._cancelTransaction.bind(this)}>
-                CANCEL
-              </Button>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                styleDisabled={{color: 'red'}}
-                onPress={this._saveTransaction.bind(this)}>
-                SAVE
-              </Button>
-            </View>
-          </View>
-        </ScrollView>
-        <Modal
-          animationType={'none'}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {this._setModalVisible(false)}}>
-            <View style={cameraStyles.container}>
-              <Camera
-                ref={(cam) => {
-                  this.camera = cam;
-                }}
-                style={cameraStyles.preview}
-                aspect={Camera.constants.Aspect.fill}>
-              </Camera>
-              <TouchableHighlight 
-                style={cameraStyles.actionButton}
-                onPress={this.takePicture.bind(this)}
-                underlayColor="#d6d6d6">
-
-                <View style={cameraStyles.buttonContainer}>
-                  <Image
-                    style={cameraStyles.cameraButton} 
-                    source={require('./images/camera-icon.png')} />
-                </View> 
-              </TouchableHighlight>
-            </View>
-          </Modal>
+    return(
+      <View style={styles.container}>
+      <ScrollView
+        ref={(scrollView) => { _scrollView = scrollView; }}
+        style={styles.scrollView}>
+        <View style={styles.itemRow}>
+          <Text style={styles.label}>Name</Text>
+            <TextInput 
+              ref="inputName"
+              style={styles.input}
+              onChangeText={(inputName) => this.setState({inputName})}
+              value={this.state.inputName}/>
         </View>
-      )
-    }else{
-      return (
-        <View style={styles.container}>
-        <ScrollView
-          ref={(scrollView) => { _scrollView = scrollView; }}
-          style={styles.scrollView}>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Name</Text>
-              <TextInput 
-                ref="inputName"
-                style={styles.input}
-                onChangeText={(inputName) => this.setState({inputName})}
-                value={this.state.inputName}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Budget</Text>
-              <Picker
-                style={styles.picker}
-                selectedValue={this.state.inputBudget}
-                mode={'dropdown'}
-                onValueChange={(budget) => this.setState({inputBudget: budget})}>
-                  {this.props.realm.objects('Budget').map((budget, i) => {
-                    return (
-                      <Picker.Item 
+        <View style={styles.itemRow}>
+          <Text style={styles.label}>Budget</Text>
+            <Picker
+              style={styles.picker}
+              selectedValue={this.state.inputBudget}
+              mode={'dropdown'}
+              onValueChange={(budget) => this.setState({inputBudget: budget})}>
+                {this.props.realm.objects('Budget').map((budget, i) => {
+                  return (
+                    <Picker.Item 
                       value={budget.name} 
                       label={budget.name} 
                       key={i} 
                       style={styles.pickerItem}/>
-                    ) 
-                  })}
-              </Picker>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Account</Text>
-              <TextInput 
-                ref="inputAccount"
-                style={styles.input}
-                onChangeText={(inputAccount) => this.setState({inputAccount})}
-                value={this.state.inputAccount}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Value</Text>
-              <TextInput 
-                ref="inputValue"
-                style={styles.input} 
-                keyboardType="numeric"
-                onChangeText={(inputValue) => this.setNumberToState(inputValue)}
-                value={this.state.inputValue.toString()}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Note</Text>
-              <TextInput 
-                ref="inputNote"
-                style={styles.input}
-                onChangeText={(inputNote) => this.setState({inputNote})}
-                value={this.state.inputNote}/>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Date</Text>
-              <TouchableHighlight 
-                style={styles.dateButton} 
-                onPress={ () => this.showPicker({date: this.state.inputDate})}
-                underlayColor="#d6d6d6">
-                <Text style={styles.dateText}>{this.state.displayDate}</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.itemRow}>
-            <Text style={styles.label}>Receipt</Text>
-              <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                styleDisabled={{color: 'red'}}
-                onPress={this._viewReceipt.bind(this)}>
-                VIEW
-              </Button>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                styleDisabled={{color: 'red'}}
-                onPress={this._captureReceipt.bind(this)}>
-                UPDATE
-              </Button>
-            </View>  
-          </View>
-          <View style={styles.itemRow}>
-             <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                styleDisabled={{color: 'red'}}
-                onPress={this._cancelTransaction.bind(this)}>
-                CANCEL
-              </Button>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                styleDisabled={{color: 'red'}}
-                onPress={this._saveTransaction.bind(this)}>
-                SAVE
-              </Button>
-            </View>
-          </View>
-        </ScrollView>
-        <Modal
-          animationType={'none'}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {this._setModalVisible(false)}}>
-            <View style={cameraStyles.container}>
-              <Camera
-                ref={(cam) => {
-                  this.camera = cam;
-                }}
-                style={cameraStyles.preview}
-                aspect={Camera.constants.Aspect.fill}>
-              </Camera>
-              <TouchableHighlight 
-                style={cameraStyles.actionButton}
-                onPress={this.takePicture.bind(this)}
-                underlayColor="#d6d6d6">
-
-                <View style={cameraStyles.buttonContainer}>
-                  <Image
-                    style={cameraStyles.cameraButton} 
-                    source={require('./images/camera-icon.png')} />
-                </View> 
-              </TouchableHighlight>
-            </View>
-          </Modal>
+                  ) 
+                })}
+            </Picker>
         </View>
-      )
-    }
-  }
-
-  takePicture() {
-    var navigator = this.props.navigator;
-    var thisComponent = this;
-    this.camera.capture()
-      .then(function(data){
-        thisComponent.setState({inputReceipt: data.path});
-        thisComponent._setModalVisible(false);
-      })
-      .catch(err => console.error(err));
-  }
-
-  _setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+        <View style={styles.itemRow}>
+          <Text style={styles.label}>Account</Text>
+            <TextInput 
+              ref="inputAccount"
+              style={styles.input}
+              onChangeText={(inputAccount) => this.setState({inputAccount})}
+              value={this.state.inputAccount}/>
+        </View>
+        <View style={styles.itemRow}>
+          <Text style={styles.label}>Value</Text>
+            <TextInput 
+              ref="inputValue"
+              style={styles.input} 
+              keyboardType="numeric"
+              onChangeText={(inputValue) => this.setNumberToState(inputValue)}
+              value={this.state.inputValue}/>
+        </View>
+        <View style={styles.itemRow}>
+          <Text style={styles.label}>Note</Text>
+            <TextInput 
+              ref="inputNote"
+              style={styles.input}
+              onChangeText={(inputNote) => this.setState({inputNote})}
+              value={this.state.inputNote}/>
+        </View>
+        <View style={styles.itemRow}>
+          <Text style={styles.label}>Date</Text>
+            <TouchableHighlight 
+            style={styles.dateButton} 
+            onPress={ () => this.showPicker({date: this.state.inputDate})}
+            underlayColor="#d6d6d6">
+              <Text style={styles.dateText}>{this.state.displayDate}</Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.itemRow}>
+           <View style={styles.buttonContainer}>
+            <Button
+              style={styles.button}
+              styleDisabled={{color: 'red'}}
+              onPress={this._cancelTransaction.bind(this)}>
+              CANCEL
+            </Button>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              style={styles.button}
+              styleDisabled={{color: 'red'}}
+              onPress={this._saveTransaction.bind(this)}>
+              SAVE
+            </Button>
+          </View>
+        </View>
+      </ScrollView>
+      </View>
+    )
   }
 
   setNumberToState(inputString){
     var integer = parseFloat(inputString);
     this.setState({ inputValue: integer });
-  }
-
-  _captureReceipt(event){
-    this._setModalVisible(true);
-  }
-
-  _viewReceipt(){
-    this.props.navigator.push({
-      name: 'Receipt',
-      component: ReceiptViewer,
-      passProps: {
-        path: this.state.inputReceipt
-      }
-    })
   }
 
   _saveTransaction(event){
@@ -395,7 +189,6 @@ class AddTransaction extends React.Component{
     var transValue = parseInt(this.state.inputValue);
     var transNote = this.state.inputNote.trim();
     var transDate = this.state.displayDate;
-    var transReceipt = this.state.inputReceipt;
     var dateTime = this.state.inputDate.getTime();
 
     if(!this.isRequiredInputEmpty(transName, transValue, transDate)){
@@ -416,7 +209,6 @@ class AddTransaction extends React.Component{
             value: transValue,
             note: transNote,
             date: transDate,
-            receipt: transReceipt,
             datems: dateTime
           }, true);
         });
@@ -433,7 +225,6 @@ class AddTransaction extends React.Component{
             value: transValue,
             note: transNote,
             date: transDate,
-            receipt: transReceipt,
             datems: dateTime
           });
         });
@@ -503,10 +294,6 @@ var styles = StyleSheet.create({
   },
   pickerItem:{
     fontSize: 10,
-  },
-  receiptButtonContainer: {
-    flex:1,
-    height: 45,
   },
   buttonContainer:{
     flex: 1,
