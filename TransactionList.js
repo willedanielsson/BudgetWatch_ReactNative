@@ -5,7 +5,7 @@ import {
   View,
   Navigator,
   Image,
-  TouchableHighlight,
+  TouchableNativeFeedback,
   ViewPagerAndroid,
   ListView,
   Modal
@@ -124,11 +124,13 @@ var TransactionList = React.createClass({
           onRequestClose={() => {this._setModalVisible(false)}}>
           <View style={modalStyle.modal}>
             <View style={modalStyle.container}>
-              <TouchableHighlight
-                underlayColor="#d6d6d6"
+              <TouchableNativeFeedback
+                background={TouchableNativeFeedback.Ripple('#d6d6d6')}
                 onPress={this.editTransaction}>
-                  <Text style={modalStyle.text}>Edit</Text>
-              </TouchableHighlight>
+                  <View>
+                    <Text style={modalStyle.text}>Edit</Text>
+                  </View>
+              </TouchableNativeFeedback>
             </View>
           </View>
         </Modal>
@@ -144,8 +146,8 @@ var TransactionList = React.createClass({
       );
     }else{
     return (
-      <TouchableHighlight
-        underlayColor="#d6d6d6"
+      <TouchableNativeFeedback
+        background={TouchableNativeFeedback.Ripple('#d6d6d6')}
         onPress={() => {this.viewTransaction(rowData)}}
         onLongPress={() => {this.openEditTransactionModal(rowData)}}>
         <View style={styles.itemContainer}>
@@ -168,7 +170,7 @@ var TransactionList = React.createClass({
             </View>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableNativeFeedback>
     );
     }
   },

@@ -5,7 +5,7 @@ import {
   View,
   Navigator,
   Image,
-  TouchableHighlight
+  TouchableNativeFeedback
 } from 'react-native';
 
 var Budgets = require('./BudgetsComponent.js');
@@ -56,19 +56,21 @@ class Main extends React.Component{
     return(
       <View style={styles.container}>
         <View style={styles.listContainer}>
-          <TouchableHighlight 
-            style={styles.button} 
+          <TouchableNativeFeedback
             onPress={ () => this.goToBudgets('yoyoyo')}
-            underlayColor="#d6d6d6">
-            <MainListItem name={'Budgets'} desc={'Create and manage budgets'} image={require('./images/purse.png')}/>
-          </TouchableHighlight>
+            background={TouchableNativeFeedback.Ripple('#d6d6d6')}>
+            <View style={styles.button}>
+              <MainListItem name={'Budgets'} desc={'Create and manage budgets'} image={require('./images/purse.png')}/>
+            </View>
+          </TouchableNativeFeedback>
 
-          <TouchableHighlight 
-            style={styles.button} 
+          <TouchableNativeFeedback 
             onPress={ () => this.goToTransactions('yoyoyo')}
-            underlayColor="#d6d6d6">
-            <MainListItem name={'Transactions'} desc={'Enter transactions and revenues'} image={require('./images/transaction.png')}/>
-          </TouchableHighlight>
+            background={TouchableNativeFeedback.Ripple('#d6d6d6')}>
+            <View style={styles.button}>
+              <MainListItem name={'Transactions'} desc={'Enter transactions and revenues'} image={require('./images/transaction.png')}/>
+            </View>
+          </TouchableNativeFeedback>
         </View>
       </View>
     )

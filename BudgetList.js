@@ -6,7 +6,7 @@ import {
   View,
   Navigator,
   ListView,
-  TouchableHighlight,
+  TouchableNativeFeedback,
   Modal,
 } from 'react-native';
 
@@ -74,11 +74,13 @@ var BudgetList = React.createClass({
             onRequestClose={() => {this._setModalVisible(false)}}>
             <View style={modalStyle.modal}>
               <View style={modalStyle.container}>
-                <TouchableHighlight 
+                <TouchableNativeFeedback 
                   onPress={this.editBudget}
-                  underlayColor="#d6d6d6">
+                  background={TouchableNativeFeedback.Ripple('#d6d6d6')}>
+                  <View>
                   <Text style={modalStyle.text}>Edit</Text>
-                </TouchableHighlight>
+                  </View>
+                </TouchableNativeFeedback>
               </View>
             </View>
           </Modal>
@@ -107,11 +109,12 @@ var BudgetList = React.createClass({
           totalValue -= transactions[i].value;
         }
       }
+
       return (
-        <TouchableHighlight 
+        <TouchableNativeFeedback 
           onPress={ () => this.goToTransactions(rowData.name)}
           onLongPress={() => {this.openEditBudgetModal(rowData)}}
-          underlayColor="#d6d6d6">
+          background={TouchableNativeFeedback.Ripple('#d6d6d6')}>
         <View style={styles.itemContainer}>
           <View>
             <Text style={styles.header}>{rowData.name}</Text>
@@ -132,7 +135,7 @@ var BudgetList = React.createClass({
             </View>
           </View>
         </View>
-        </TouchableHighlight>
+        </TouchableNativeFeedback>
       );
     }
   },

@@ -7,7 +7,6 @@ import {
   Navigator,
   Image,
   TextInput,
-  TouchableHighlight,
   DatePickerAndroid,
   Picker,
   ToastAndroid,
